@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://shohojbd.pages.dev/sitemap.xml
