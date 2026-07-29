@@ -1,0 +1,23 @@
+---
+---
+const { title, description, url, image, alternateTag = false, jsonLd } = Astro.props;
+const caretTitle = title ? `${title}` : "Shohoj BD";
+const pageUrl = url || "https://shohojbd.pages.dev";
+const pageImage = image || "/social-share-default.svg";
+---
+
+<title>{caretTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={pageUrl} />
+{alternateTag ? <link rel="alternate" hreflang="en" href={`${pageUrl}`} /> : null}
+<meta property="og:type" content="website" />
+<meta property="og:title" content={caretTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={pageImage} />
+<meta property="og:url" content={pageUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={caretTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={pageImage} />
+<meta name="robots" content="index, follow" />
+{jsonLd ? <script type="application/ld+json">{JSON.stringify(jsonLd)}</script> : null}
