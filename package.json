@@ -1,0 +1,32 @@
+{
+  "name": "shohojbd",
+  "version": "1.0.0",
+  "description": "Bangla guide website for government, exam, and local guides.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asgod154-byte/shohojbd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asgod154-byte/shohojbd/issues"
+  },
+  "homepage": "https://github.com/asgod154-byte/shohojbd#readme",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.1.5",
+    "tailwindcss": "^4.3.3"
+  }
+}
