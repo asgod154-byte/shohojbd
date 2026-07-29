@@ -27,8 +27,8 @@ if (!tag) {
 if (!tag) throw new Error(`Tag ${slug} not found`);
 const siteUrl = `https://shohojbd.pages.dev/tag/${slug}/`;
 const breadcrumbItems = [
-  { title: "প্রথম পাতা", href: "/" },
-  { title: "ট্যাগ", href: "/tag/" },
+  { title: "হোম", href: "/" },
+  { title: "Tags", href: "/tag/" },
   { title: tag.label, href: siteUrl },
 ];
 const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
@@ -37,8 +37,8 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
   <Breadcrumb items={breadcrumbItems} />
   <section class="section-surface rounded-[2rem] border border-slate-200 p-6 shadow-sm sm:p-10">
     <div class="max-w-3xl">
-      <h1 class="text-4xl font-bold text-slate-900">ট্যাগ: {tag.label}</h1>
-      <p class="mt-4 text-lg leading-8 text-slate-600">এই ট্যাগের সমস্ত গাইড একসাথে।</p>
+      <h1 class="text-4xl font-bold text-slate-900">Tag: {tag.label}</h1>
+      <p class="mt-4 text-lg leading-8 text-slate-600">এই ট্যাগের সব পোস্ট এখানে দেখুন।</p>
     </div>
   </section>
   <section class="mt-8 grid gap-6 md:grid-cols-2">
