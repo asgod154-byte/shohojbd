@@ -19,6 +19,11 @@ async function walk(dir) {
 }
 
 (async () => {
+  // Skip critical in CI environments where headless Chrome dependencies aren't available
+  if (process.env.CI) {
+    console.log('CI environment detected — skipping critical CSS inlining.');
+    return;
+  }
   try {
     const htmlFiles = await walk(DIST);
     for (const file of htmlFiles) {
