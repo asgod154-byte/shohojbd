@@ -69,6 +69,15 @@ export async function getRecentPosts(limit = 5): Promise<any[]> {
     .slice(0, limit);
 }
 
+export async function getTopPostsLastDay(limit = 3): Promise<any[]> {
+  const all = await getAllPosts();
+  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+  return all
+    .filter((p) => new Date(p.data.pubDate).getTime() >= oneDayAgo)
+    .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+    .slice(0, limit);
+}
+
 export async function getPostsByCollection(collectionName: string): Promise<any[]> {
   const posts = await getCollection(collectionName as any);
   return posts.filter((e) => !e.data.draft);
