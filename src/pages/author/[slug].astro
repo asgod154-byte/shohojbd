@@ -46,7 +46,12 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
         {author.label.charAt(0)}
       </div>
       <div>
-        <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">{author.label}</h1>
+        <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">
+          {author.label}
+          <span class="inline-flex items-center text-emerald-600 ml-2" title="Verified author" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+        </h1>
         <p class="mt-1 text-lg text-slate-600">{author.entries.length}টি পোস্ট</p>
       </div>
     </div>
