@@ -10,21 +10,21 @@ const sortedCategories = Array.from(categories.entries()).sort((a, b) => b[1].en
 
 const breadcrumbItems = [
   { title: "হোম", href: "/" },
-  { title: "বিভাগ", href: "/category/" },
+  { title: "ক্যাটাগরি", href: "/category/" },
 ];
 const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
 ---
 
 <LayoutWithSidebar
-  title="বিভাগ"
-  description="Shohoj BD-র সব বিভাগ। বিভিন্ন বিষয় অনুযায়ী পোস্ট ব্রাউজ করুন।"
+  title="ক্যাটাগরি"
+  description="Shohoj BD-র সব ক্যাটাগরি। বিভিন্ন বিষয় অনুযায়ী পোস্ট ব্রাউজ করুন।"
   url="https://shohojbd.pages.dev/category/"
   jsonLd={jsonLd}
 >
   <Breadcrumb items={breadcrumbItems} />
   <section class="mb-8">
-    <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">সব বিভাগ</h1>
-    <p class="mt-3 text-lg text-slate-600">বিভাগ অনুযায়ী পোস্ট ব্রাউজ করুন।</p>
+    <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">সব ক্যাটাগরি</h1>
+    <p class="mt-3 text-lg text-slate-600">ক্যাটাগরি অনুযায়ী পোস্ট ব্রাউজ করুন।</p>
   </section>
   <div class="grid gap-4 sm:grid-cols-2">
     {sortedCategories.map(([slug, data]) => (

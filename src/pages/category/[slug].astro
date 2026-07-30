@@ -27,22 +27,22 @@ if (!category) throw new Error(`Category ${slug} not found`);
 const siteUrl = `https://shohojbd.pages.dev/category/${slug}/`;
 const breadcrumbItems = [
   { title: "হোম", href: "/" },
-  { title: "বিভাগ", href: "/category/" },
+  { title: "ক্যাটাগরি", href: "/category/" },
   { title: category.label, href: siteUrl },
 ];
 const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
 ---
 
 <LayoutWithSidebar
-  title={`বিভাগ: ${category.label}`}
-  description={`${category.label} বিভাগের সব পোস্ট। মোট ${category.entries.length}টি পোস্ট।`}
+  title={`ক্যাটাগরি: ${category.label}`}
+  description={`${category.label} ক্যাটাগরির সব পোস্ট। মোট ${category.entries.length}টি পোস্ট।`}
   url={siteUrl}
   jsonLd={jsonLd}
 >
   <Breadcrumb items={breadcrumbItems} />
   <section class="mb-8">
-    <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">বিভাগ: {category.label}</h1>
-    <p class="mt-3 text-lg text-slate-600">এই বিভাগের {category.entries.length}টি পোস্ট।</p>
+    <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">ক্যাটাগরি: {category.label}</h1>
+    <p class="mt-3 text-lg text-slate-600">এই ক্যাটাগরির {category.entries.length}টি পোস্ট।</p>
   </section>
   <section class="grid gap-6 sm:grid-cols-2">
     {category.entries.map((entry) => (

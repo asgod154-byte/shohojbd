@@ -1,5 +1,5 @@
 ---
-import { getAllPosts, getRecentPosts, buildTaxonomyIndex, getCollectionRoute, getCollectionLabel, slugify } from "../lib/content";
+import { getAllPosts, getRecentPosts, buildTaxonomyIndex, getCollectionRoute, slugify } from "../lib/content";
 
 const allPosts = await getAllPosts();
 const recentPosts = await getRecentPosts(5);
@@ -7,12 +7,6 @@ const { categories, tags } = buildTaxonomyIndex(allPosts);
 
 const sortedCategories = Array.from(categories.entries()).sort((a, b) => b[1].entries.length - a[1].entries.length);
 const sortedTags = Array.from(tags.entries()).sort((a, b) => b[1].entries.length - a[1].entries.length);
-
-const sectionCollections = [
-  { name: "sorkari-seba", label: getCollectionLabel("sorkari-seba"), href: "/sorkari-seba/" },
-  { name: "exam-o-vorti", label: getCollectionLabel("exam-o-vorti"), href: "/exam-o-vorti/" },
-  { name: "local-guide", label: getCollectionLabel("local-guide"), href: "/local-guide/" },
-];
 ---
 
 <div class="space-y-6">
@@ -60,15 +54,15 @@ const sectionCollections = [
   <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
     <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-      বিভাগ
+      ক্যাটাগরি
     </h3>
     <ul class="space-y-2">
-      {sectionCollections.map((sec) => (
+      {sortedCategories.slice(0, 10).map(([slug, data]) => (
         <li>
-          <a href={sec.href} class="flex items-center justify-between text-sm text-slate-600 hover:text-emerald-700 transition group">
-            <span>{sec.label}</span>
+          <a href={`/category/${slug}/`} class="flex items-center justify-between text-sm text-slate-600 hover:text-emerald-700 transition group">
+            <span>{data.label}</span>
             <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-400 group-hover:bg-emerald-50 group-hover:text-emerald-600 transition">
-              {allPosts.filter(p => p.collection === sec.name).length}
+              {data.entries.length}
             </span>
           </a>
         </li>
@@ -76,15 +70,15 @@ const sectionCollections = [
     </ul>
   </div>
 
-  {/* Tag Cloud */}
+  {/* Tag */}
   {sortedTags.length > 0 && (
     <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
-        ট্যাগ ক্লাউড
+        ট্যাগ
       </h3>
       <div class="flex flex-wrap gap-2">
-        {sortedTags.slice(0, 20).map(([slug, data]) => (
+        {sortedTags.slice(0, 10).map(([slug, data]) => (
           <a
             href={`/tag/${slug}/`}
             class="rounded-full bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600 border border-slate-100 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 transition"
