@@ -7,13 +7,21 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "node scripts/inline-critical.js",
     "preview": "astro preview"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asgod154-byte/shohojbd.git"
   },
-  "keywords": ["bangla", "blog", "sarkari", "chakri", "shikkha", "bangladesh"],
+  "keywords": [
+    "bangla",
+    "blog",
+    "sarkari",
+    "chakri",
+    "shikkha",
+    "bangladesh"
+  ],
   "author": "Shohoj BD Team",
   "license": "ISC",
   "bugs": {
@@ -29,5 +37,8 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.1.5",
     "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "critical": "^6.0.5"
   }
 }
