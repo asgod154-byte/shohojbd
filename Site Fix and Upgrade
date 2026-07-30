@@ -1,0 +1,368 @@
+this is a complete, production-ready rebuild plan. Let me first examine every single file in your repository to understand the current state fully. 
+ Based on my thorough analysis of your repository, I now have a complete picture of every file. Let me present the **comprehensive master plan** to transform your site into a professional WordPress-like blog with full header, footer, sidebar, and all features — built for **GitHub + Cloudflare Pages + CloudCannon**.
+
+---
+
+# 🏗️ SHOHOJ BD — COMPLETE REBUILD MASTER PLAN
+
+## Current State Analysis (18 Files Total)
+
+| Component | Status | Issue |
+|-----------|--------|-------|
+| `astro.config.mjs` | ❌ **MISSING** | Site won't build without this |
+| `src/content/` directories | ❌ **MISSING** | No content folders = build crash |
+| `src/pages/index.astro` | ❌ **MISSING** | No homepage |
+| `src/pages/sorkari-seba/` | ❌ **MISSING** | No index page (only `[slug]` exists) |
+| `src/pages/exam-o-vorti/` | ❌ **MISSING** | No index page |
+| `src/pages/local-guide/` | ❌ **MISSING** | No index page |
+| `src/pages/about.astro` | ❌ **MISSING** | Linked in navbar but doesn't exist |
+| `src/pages/contact.astro` | ❌ **MISSING** | Linked in navbar but doesn't exist |
+| `src/pages/tag/index.astro` | ❌ **MISSING** | Tag archive index missing |
+| `src/pages/category/` | ❌ **MISSING** | No category pages at all |
+| `src/pages/author/` | ❌ **MISSING** | No author pages at all |
+| `src/pages/404.astro` | ❌ **MISSING** | No custom 404 |
+| `src/pages/rss.xml.js` | ❌ **MISSING** | No RSS feed |
+| `public/` assets | ❌ **MISSING** | No favicon, OG image, robots.txt |
+| `Navbar` | ⚠️ Basic | No search, no dropdowns, no social links |
+| `Footer` | ⚠️ Basic | No widgets, no newsletter, no sitemap links |
+| `Layout` | ⚠️ Basic | No sidebar support, no sticky elements |
+| `GuideCard` | ⚠️ Basic | No image, no date, no author, no category badge |
+| `Meta` | ⚠️ Basic | Missing viewport, charset, theme-color |
+| `content.config.ts` | ✅ OK | Schema is good |
+| `lib/content.ts` | ⚠️ OK | Minor regex escaping issues |
+| `lib/schema.ts` | ✅ OK | JSON-LD builders work |
+| `global.css` | ✅ OK | Tailwind v4 setup is correct |
+| `cloudcannon.json` | ⚠️ OK | Preview paths need fixing |
+
+---
+
+## 📋 COMPLETE FILE CHECKLIST (45+ Files)
+
+### **ROOT CONFIGURATION FILES**
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 1 | `astro.config.mjs` | **NEW** | Core Astro config (site URL, output, integrations) |
+| 2 | `package.json` | **UPDATE** | Add `@astrojs/rss`, `@astrojs/mdx` |
+| 3 | `tsconfig.json` | **KEEP** | Already correct |
+| 4 | `.gitignore` | **KEEP** | Already correct |
+| 5 | `cloudcannon.json` | **UPDATE** | Fix preview paths, add structures |
+| 6 | `CLOUDCANNON_SETUP.md` | **UPDATE** | Add new build instructions |
+
+### **PUBLIC ASSETS** (`public/`)
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 7 | `public/favicon.svg` | **NEW** | Site favicon |
+| 8 | `public/robots.txt` | **NEW** | SEO crawler instructions |
+| 9 | `public/social-share-default.svg` | **NEW** | OG/Twitter default image |
+| 10 | `public/_headers` | **NEW** | Cloudflare security headers |
+| 11 | `public/manifest.json` | **NEW** | PWA manifest |
+
+### **CONTENT DIRECTORIES**
+
+| # | Directory | Action | Purpose |
+|---|-----------|--------|---------|
+| 12 | `src/content/govt-guides/` | **NEW** | Government guides markdown |
+| 13 | `src/content/exam-guides/` | **NEW** | Exam guides markdown |
+| 14 | `src/content/local-guides/` | **NEW** | Local guides markdown |
+| 15 | `src/assets/images/` | **NEW** | Image uploads for CloudCannon |
+
+### **LAYOUTS**
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 16 | `src/layouts/Layout.astro` | **REWRITE** | Full HTML shell with sidebar support |
+| 17 | `src/layouts/LayoutWithSidebar.astro` | **NEW** | 2-column layout (content + sidebar) |
+
+### **COMPONENTS** (`src/components/`)
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 18 | `src/components/Navbar.astro` | **REWRITE** | Full header with search, dropdowns, social |
+| 19 | `src/components/Footer.astro` | **REWRITE** | Professional footer with widgets |
+| 20 | `src/components/Sidebar.astro` | **NEW** | Right sidebar (popular, categories, tags) |
+| 21 | `src/components/Meta.astro` | **UPDATE** | Add viewport, charset, theme-color |
+| 22 | `src/components/Breadcrumb.astro` | **UPDATE** | Keep, minor fixes |
+| 23 | `src/components/GuideCard.astro` | **REWRITE** | Rich card with image, date, author, category |
+| 24 | `src/components/PostCard.astro` | **NEW** | Horizontal card for sidebar lists |
+| 25 | `src/components/SearchBox.astro` | **NEW** | Client-side search component |
+| 26 | `src/components/Newsletter.astro` | **NEW** | Email subscription widget |
+| 27 | `src/components/Pagination.astro` | **NEW** | Page navigation for archives |
+| 28 | `src/components/ShareButtons.astro` | **NEW** | Social share on article pages |
+| 29 | `src/components/RelatedPosts.astro` | **NEW** | "You may also like" section |
+| 30 | `src/components/TableOfContents.astro` | **NEW** | Auto-generated TOC for articles |
+| 31 | `src/components/TagCloud.astro` | **NEW** | Visual tag cloud for sidebar |
+| 32 | `src/components/AuthorBox.astro` | **NEW** | Author bio box at end of articles |
+| 33 | `src/components/ReadingProgress.astro` | **NEW** | Top reading progress bar |
+
+### **PAGES** (`src/pages/`)
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 34 | `src/pages/index.astro` | **NEW** | Homepage with hero, featured, latest |
+| 35 | `src/pages/sorkari-seba/index.astro` | **NEW** | Category archive index |
+| 36 | `src/pages/sorkari-seba/[slug].astro` | **NEW** | Individual guide detail page |
+| 37 | `src/pages/exam-o-vorti/index.astro` | **NEW** | Category archive index |
+| 38 | `src/pages/exam-o-vorti/[slug].astro` | **NEW** | Individual guide detail page |
+| 39 | `src/pages/local-guide/index.astro` | **NEW** | Category archive index |
+| 40 | `src/pages/local-guide/[slug].astro` | **NEW** | Individual guide detail page |
+| 41 | `src/pages/tag/index.astro` | **NEW** | Tag cloud archive |
+| 42 | `src/pages/tag/[slug].astro` | **KEEP/UPDATE** | Tag detail (already exists, enhance) |
+| 43 | `src/pages/category/index.astro` | **NEW** | Category listing |
+| 44 | `src/pages/category/[slug].astro` | **NEW** | Category detail |
+| 45 | `src/pages/author/index.astro` | **NEW** | Author listing |
+| 46 | `src/pages/author/[slug].astro` | **NEW** | Author detail |
+| 47 | `src/pages/about.astro` | **NEW** | About page |
+| 48 | `src/pages/contact.astro` | **NEW** | Contact page with form |
+| 49 | `src/pages/privacy.astro` | **NEW** | Privacy policy |
+| 50 | `src/pages/404.astro` | **NEW** | Custom 404 page |
+| 51 | `src/pages/rss.xml.js` | **NEW** | RSS feed |
+| 52 | `src/pages/search.astro` | **NEW** | Search results page |
+
+### **LIBRARIES**
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 53 | `src/lib/content.ts` | **UPDATE** | Fix regex, add pagination helpers |
+| 54 | `src/lib/schema.ts` | **KEEP** | Already good |
+| 55 | `src/lib/utils.ts` | **NEW** | Date formatting, reading time, truncate |
+
+### **STYLES**
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 56 | `src/styles/global.css` | **UPDATE** | Add sidebar grid, sticky styles |
+
+### **CI/CD**
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 57 | `.github/workflows/pages.yml` | **UPDATE** | Update to v3/v4 actions, add caching |
+
+---
+
+## 🎯 PROFESSIONAL WORDPRESS-LIKE FEATURES TO ADD
+
+### **Header (Navbar) Enhancements**
+- [ ] **Logo** with site branding
+- [ ] **Primary navigation** with dropdown mega-menus for categories
+- [ ] **Search bar** with autocomplete (client-side Fuse.js)
+- [ ] **Social media icons** (Facebook, Twitter, YouTube)
+- [ ] **Dark mode toggle** button
+- [ ] **Sticky header** on scroll (already partially done)
+- [ ] **Mobile hamburger menu** with slide-out drawer (improve current)
+
+### **Right Sidebar Widgets**
+- [ ] **🔥 Popular Posts** — Most viewed guides (static for now, can be dynamic later)
+- [ ] **📂 Categories** — List of all categories with post counts
+- [ ] **🏷️ Tag Cloud** — Visual cloud of all tags
+- [ ] **📧 Newsletter** — Email signup form (works with Formspree)
+- [ ] **👤 About Widget** — Short site description with logo
+- [ ] **📅 Recent Posts** — Latest 5 guides across all categories
+- [ ] **🔗 Social Links** — Follow buttons
+
+### **Footer Enhancements**
+- [ ] **4-Column Widget Layout:**
+  - Column 1: About + Logo + Description
+  - Column 2: Quick Links (Home, About, Contact, Privacy)
+  - Column 3: Categories (Govt, Exam, Local)
+  - Column 4: Newsletter + Social Icons
+- [ ] **Copyright bar** with current year auto-update
+- [ ] **Back to top** button
+- [ ] **Sitemap link**
+
+### **Article Page Enhancements**
+- [ ] **Hero image** with overlay
+- [ ] **Reading time** estimation
+- [ ] **Table of contents** (auto-generated from headings)
+- [ ] **Author bio box** with avatar placeholder
+- [ ] **Social share buttons** (Facebook, Twitter, WhatsApp, Copy Link)
+- [ ] **Related posts** (same category/tags)
+- [ ] **FAQ accordion** (if FAQ data exists)
+- [ ] **Official links box** (if links exist)
+- [ ] **Post navigation** (Previous/Next)
+- [ ] **Comment section placeholder** (for future Disqus integration)
+
+### **Archive/List Page Enhancements**
+- [ ] **Pagination** (9 posts per page)
+- [ ] **Filter by category** tabs
+- [ ] **Sort options** (Latest, Popular, A-Z)
+- [ ] **Grid/List view toggle**
+
+### **SEO & Performance**
+- [ ] **Sitemap.xml** (via `@astrojs/sitemap`)
+- [ ] **RSS Feed** (`/rss.xml`)
+- [ ] **Structured data** JSON-LD (already partially done)
+- [ ] **Open Graph images** per post
+- [ ] **Twitter Cards**
+- [ ] **Canonical URLs**
+- [ ] **Security headers** via `_headers`
+- [ ] **Preconnect** to Google Fonts
+
+---
+
+## 📁 COMPLETE FILE STRUCTURE (After Rebuild)
+
+```
+shohojbd/
+├── .github/
+│   └── workflows/
+│       └── pages.yml                    # CI/CD (UPDATED)
+├── public/
+│   ├── favicon.svg                      # NEW
+│   ├── robots.txt                       # NEW
+│   ├── social-share-default.svg         # NEW
+│   ├── manifest.json                    # NEW
+│   └── _headers                         # NEW
+├── src/
+│   ├── assets/
+│   │   └── images/                      # NEW (for CloudCannon uploads)
+│   ├── components/
+│   │   ├── AuthorBox.astro              # NEW
+│   │   ├── Breadcrumb.astro             # UPDATE
+│   │   ├── Footer.astro                 # REWRITE
+│   │   ├── GuideCard.astro              # REWRITE
+│   │   ├── Meta.astro                   # UPDATE
+│   │   ├── Navbar.astro                 # REWRITE
+│   │   ├── Newsletter.astro             # NEW
+│   │   ├── Pagination.astro             # NEW
+│   │   ├── PostCard.astro               # NEW
+│   │   ├── ReadingProgress.astro        # NEW
+│   │   ├── RelatedPosts.astro           # NEW
+│   │   ├── SearchBox.astro              # NEW
+│   │   ├── ShareButtons.astro           # NEW
+│   │   ├── Sidebar.astro                # NEW
+│   │   ├── TableOfContents.astro        # NEW
+│   │   └── TagCloud.astro               # NEW
+│   ├── content/
+│   │   ├── govt-guides/                 # NEW
+│   │   │   └── .gitkeep
+│   │   ├── exam-guides/                 # NEW
+│   │   │   └── .gitkeep
+│   │   └── local-guides/                # NEW
+│   │       └── .gitkeep
+│   ├── layouts/
+│   │   ├── Layout.astro                 # REWRITE
+│   │   └── LayoutWithSidebar.astro      # NEW
+│   ├── lib/
+│   │   ├── content.ts                   # UPDATE
+│   │   ├── schema.ts                    # KEEP
+│   │   └── utils.ts                     # NEW
+│   ├── pages/
+│   │   ├── index.astro                  # NEW
+│   │   ├── about.astro                  # NEW
+│   │   ├── contact.astro                # NEW
+│   │   ├── privacy.astro                # NEW
+│   │   ├── 404.astro                    # NEW
+│   │   ├── rss.xml.js                   # NEW
+│   │   ├── search.astro                 # NEW
+│   │   ├── sorkari-seba/
+│   │   │   ├── index.astro              # NEW
+│   │   │   └── [slug].astro             # NEW
+│   │   ├── exam-o-vorti/
+│   │   │   ├── index.astro              # NEW
+│   │   │   └── [slug].astro             # NEW
+│   │   ├── local-guide/
+│   │   │   ├── index.astro              # NEW
+│   │   │   └── [slug].astro             # NEW
+│   │   ├── tag/
+│   │   │   ├── index.astro              # NEW
+│   │   │   └── [slug].astro             # KEEP/UPDATE
+│   │   ├── category/
+│   │   │   ├── index.astro              # NEW
+│   │   │   └── [slug].astro             # NEW
+│   │   └── author/
+│   │       ├── index.astro              # NEW
+│   │       └── [slug].astro             # NEW
+│   └── styles/
+│       └── global.css                   # UPDATE
+├── astro.config.mjs                       # NEW
+├── cloudcannon.json                     # UPDATE
+├── CLOUDCANNON_SETUP.md                 # UPDATE
+├── package.json                         # UPDATE
+├── tsconfig.json                        # KEEP
+└── .gitignore                           # KEEP
+```
+
+---
+
+## 🔧 EXECUTION PLAN
+
+Since I cannot directly push to your repo, here's the **step-by-step execution plan** for you or a developer to implement:
+
+### **Phase 1: Foundation (Critical — Must Do First)**
+1. Create `astro.config.mjs`
+2. Create `public/` assets (favicon, robots.txt, etc.)
+3. Create `src/content/` directories with `.gitkeep`
+4. Update `package.json` with new dependencies
+5. Test `npm run build` locally
+
+### **Phase 2: Core Layout & Components**
+6. Rewrite `Layout.astro` with sidebar support
+7. Create `LayoutWithSidebar.astro`
+8. Rewrite `Navbar.astro` with search + social
+9. Rewrite `Footer.astro` with 4-column widgets
+10. Create `Sidebar.astro` with all widgets
+
+### **Phase 3: Pages (The Missing 90%)**
+11. Create `index.astro` (homepage)
+12. Create all category index pages (`sorkari-seba/index.astro`, etc.)
+13. Create all `[slug].astro` detail pages
+14. Create `about.astro`, `contact.astro`, `privacy.astro`
+15. Create `404.astro`
+16. Create `rss.xml.js`
+
+### **Phase 4: Enhanced Components**
+17. Rewrite `GuideCard.astro` with rich metadata
+18. Create `PostCard.astro`, `Pagination.astro`
+19. Create `ShareButtons.astro`, `RelatedPosts.astro`
+20. Create `TableOfContents.astro`, `AuthorBox.astro`
+
+### **Phase 5: Polish & SEO**
+21. Update `Meta.astro` with full SEO
+22. Update `cloudcannon.json` with correct paths
+23. Update GitHub Actions workflow
+24. Add sample content for testing
+25. Test build → Deploy → Verify
+
+---
+
+## 🚀 DEPLOYMENT CONFIGURATION
+
+### **Cloudflare Pages Settings**
+| Setting | Value |
+|---------|-------|
+| Build command | `npm ci && npm run build` |
+| Build output directory | `dist` |
+| Node version | `22` |
+| Root directory | `/` |
+
+### **CloudCannon Settings**
+| Setting | Value |
+|---------|-------|
+| Build command | `npm ci && npm run build` |
+| Publish directory | `dist` |
+| Node version | `22.12.0` |
+
+---
+
+## ✅ FINAL CHECKLIST FOR 100% PROFESSIONAL SITE
+
+- [ ] **Build succeeds** with zero errors
+- [ ] **All navbar links** work (no 404s)
+- [ ] **Homepage** shows featured + latest content
+- [ ] **Category pages** list all guides with pagination
+- [ ] **Detail pages** render markdown with TOC, author, share buttons
+- [ ] **Tag/Category/Author archives** work with index pages
+- [ ] **Sidebar** appears on all list/detail pages
+- [ ] **Search** finds content client-side
+- [ ] **RSS feed** validates at `/rss.xml`
+- [ ] **Sitemap** generates automatically
+- [ ] **SEO meta tags** present on every page
+- [ ] **JSON-LD structured data** on articles
+- [ ] **Mobile responsive** on all screen sizes
+- [ ] **Dark mode** toggle works
+- [ ] **CloudCannon** editors can create/edit/delete content
+- [ ] **Images** upload correctly via CloudCannon
+- [ ] **Build time** under 2 minutes

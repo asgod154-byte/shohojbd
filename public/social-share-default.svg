@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#006a4e"/>
+  <rect x="40" y="40" width="1120" height="550" rx="24" fill="#f8fafc"/>
+  <text x="600" y="260" text-anchor="middle" fill="#0f172a" font-size="72" font-weight="800" font-family="'Noto Sans Bengali', system-ui, sans-serif">Shohoj BD</text>
+  <text x="600" y="340" text-anchor="middle" fill="#006a4e" font-size="36" font-weight="600" font-family="'Noto Sans Bengali', system-ui, sans-serif">বাংলাদেশের সব তথ্য — সহজ ও দ্রুত</text>
+  <text x="600" y="420" text-anchor="middle" fill="#64748b" font-size="24" font-family="system-ui, sans-serif">shohojbd.pages.dev</text>
+</svg>

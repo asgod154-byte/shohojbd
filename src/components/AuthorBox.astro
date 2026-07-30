@@ -1,0 +1,22 @@
+---
+interface Props {
+  author: string;
+}
+
+const { author } = Astro.props;
+---
+
+<div class="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
+  <div class="flex items-start gap-4">
+    <div class="shrink-0 w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xl font-bold">
+      {author.charAt(0)}
+    </div>
+    <div>
+      <h3 class="font-bold text-slate-900">{author}</h3>
+      <p class="text-sm text-slate-500 mt-1">Shohoj BD-র লেখক</p>
+      <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+        বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্য নিয়ে কাজ করছি। সঠিক ও যাচাই করা তথ্য আপনাদের সামনে তুলে ধরার চেষ্টা করি।
+      </p>
+    </div>
+  </div>
+</div>

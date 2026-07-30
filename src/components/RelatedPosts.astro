@@ -1,0 +1,33 @@
+---
+import PostCard from "./PostCard.astro";
+
+interface Props {
+  currentPost: any;
+  posts: any[];
+}
+
+const { currentPost, posts } = Astro.props;
+
+const related = posts
+  .filter((p) => p.id !== currentPost.id)
+  .filter((p) => {
+    const sameCategory = p.data.category === currentPost.data.category;
+    const sameTags = (p.data.tags || []).some((t) => (currentPost.data.tags || []).includes(t));
+    return sameCategory || sameTags;
+  })
+  .slice(0, 3);
+---
+
+{related.length > 0 && (
+  <section class="mt-12 pt-8 border-t border-slate-200">
+    <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+      আরও পড়তে পারেন
+    </h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {related.map((post) => (
+        <PostCard post={post} variant="vertical" />
+      ))}
+    </div>
+  </section>
+)}

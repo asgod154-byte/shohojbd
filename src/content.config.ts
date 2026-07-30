@@ -1,17 +1,18 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
-const guideSchema = z.object({
+const postSchema = z.object({
   title: z.string(),
   description: z.string().max(160),
   pubDate: z.coerce.date(),
   updatedDate: z.coerce.date().optional(),
-  author: z.string().default("[Site Name] Team"),
+  author: z.string().default("Shohoj BD"),
   category: z.string(),
   tags: z.array(z.string()).default([]),
   redirectFrom: z.array(z.string()).default([]),
   coverImage: z.string().optional(),
   coverImageAlt: z.string().optional(),
+  featured: z.boolean().default(false),
   officialLinks: z
     .array(z.object({ label: z.string(), url: z.string().url() }))
     .default([]),
@@ -21,19 +22,19 @@ const guideSchema = z.object({
   draft: z.boolean().default(false),
 });
 
-const govtGuides = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/govt-guides" }),
-  schema: guideSchema,
+const sorkariSeba = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/sorkari-seba" }),
+  schema: postSchema,
 });
 
-const examGuides = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/exam-guides" }),
-  schema: guideSchema,
+const examOVorti = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/exam-o-vorti" }),
+  schema: postSchema,
 });
 
-const localGuides = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/local-guides" }),
-  schema: guideSchema.extend({
+const localGuide = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/local-guide" }),
+  schema: postSchema.extend({
     placeType: z.enum(["tourist-spot", "business", "service"]),
     division: z.string(),
     district: z.string(),
@@ -44,8 +45,7 @@ const localGuides = defineCollection({
 });
 
 export const collections = {
-  "govt-guides": govtGuides,
-  "exam-guides": examGuides,
-  "local-guides": localGuides,
+  "sorkari-seba": sorkariSeba,
+  "exam-o-vorti": examOVorti,
+  "local-guide": localGuide,
 };
-

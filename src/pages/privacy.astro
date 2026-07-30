@@ -1,0 +1,70 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import { buildBreadcrumbJsonLd } from "../lib/schema";
+
+const breadcrumbItems = [
+  { title: "হোম", href: "/" },
+  { title: "গোপনীয়তা নীতি", href: "/privacy/" },
+];
+const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
+---
+
+<Layout
+  title="গোপনীয়তা নীতি"
+  description="Shohoj BD-র গোপনীয়তা নীতি। আমরা কীভাবে আপনার তথ্য সংগ্রহ ও ব্যবহার করি।"
+  url="https://shohojbd.pages.dev/privacy/"
+  jsonLd={jsonLd}
+>
+  <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <Breadcrumb items={breadcrumbItems} />
+    <div class="mx-auto max-w-3xl">
+      <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mb-6">গোপনীয়তা নীতি</h1>
+      <div class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-emerald-700">
+        <p class="text-lg text-slate-600">
+          <strong>Shohoj BD</strong>-তে আপনার গোপনীয়তা আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ। এই নীতিতে আমরা ব্যাখ্যা করছি কীভাবে আমরা আপনার তথ্য সংগ্রহ, ব্যবহার ও সুরক্ষা করি।
+        </p>
+
+        <h2>তথ্য সংগ্রহ</h2>
+        <p>আমরা নিম্নলিখিত তথ্য সংগ্রহ করতে পারি:</p>
+        <ul>
+          <li><strong>ব্রাউজিং তথ্য:</strong> IP ঠিকানা, ব্রাউজার টাইপ, ভিজিটের সময় ও তারিখ</li>
+          <li><strong>কুকিজ:</strong> আপনার ব্রাউজিং অভিজ্ঞতা উন্নত করার জন্য</li>
+          <li><strong>ফর্ম তথ্য:</strong> যোগাযোগ ফর্ম পূরণ করলে আপনার নাম, ইমেইল ও বার্তা</li>
+        </ul>
+
+        <h2>তথ্য ব্যবহার</h2>
+        <p>আমরা আপনার তথ্য নিম্নলিখিত উদ্দেশ্যে ব্যবহার করি:</p>
+        <ul>
+          <li>ওয়েবসাইটের কার্যকারিতা উন্নত করা</li>
+          <li>নতুন পোস্ট ও আপডেট সম্পর্কে জানানো</li>
+          <li>আপনার প্রশ্নের উত্তর দেওয়া</li>
+          <li>সাইটের নিরাপত্তা নিশ্চিত করা</li>
+        </ul>
+
+        <h2>তৃতীয় পক্ষের সেবা</h2>
+        <p>আমরা নিম্নলিখিত তৃতীয় পক্ষের সেবা ব্যবহার করি:</p>
+        <ul>
+          <li><strong>Cloudflare Pages:</strong> ওয়েবসাইট হোস্টিং</li>
+          <li><strong>Google Analytics:</strong> ভিজিটর পরিসংখ্যান (ঐচ্ছিক)</li>
+        </ul>
+
+        <h2>আপনার অধিকার</h2>
+        <p>আপনার নিম্নলিখিত অধিকার রয়েছে:</p>
+        <ul>
+          <li>আপনার তথ্য দেখার অধিকার</li>
+          <li>ভুল তথ্য সংশোধনের অধিকার</li>
+          <li>তথ্য মুছে ফেলার অনুরোধ করার অধিকার</li>
+          <li>কুকিজ বন্ধ করার অধিকার</li>
+        </ul>
+
+        <h2>যোগাযোগ</h2>
+        <p>
+          গোপনীয়তা নীতি সম্পর্কিত যেকোনো প্রশ্নের জন্য আমাদের <a href="/contact/">যোগাযোগ পেজ</a> ব্যবহার করুন।
+        </p>
+
+        <p class="text-sm text-slate-500 mt-8">শেষ হালনাগাদ: ৩০ জুলাই ২০২৬</p>
+      </div>
+    </div>
+  </div>
+</Layout>

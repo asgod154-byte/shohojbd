@@ -15,14 +15,27 @@ export function slugify(value: any): string {
     .replace(/^-+|-+$/g, "");
 }
 
-export function getCollectionRoute(collectionName: any): string {
+export function getCollectionRoute(collectionName: string): string {
   switch (collectionName) {
-    case "govt-guides":
+    case "sorkari-seba":
       return "sorkari-seba";
-    case "exam-guides":
+    case "exam-o-vorti":
       return "exam-o-vorti";
-    case "local-guides":
+    case "local-guide":
       return "local-guide";
+    default:
+      return collectionName;
+  }
+}
+
+export function getCollectionLabel(collectionName: string): string {
+  switch (collectionName) {
+    case "sorkari-seba":
+      return "সরকারি সেবা";
+    case "exam-o-vorti":
+      return "পরীক্ষা ও ভর্তি";
+    case "local-guide":
+      return "স্থানীয় গাইড";
     default:
       return collectionName;
   }
@@ -36,14 +49,53 @@ export function getEntryUrl(entry: any): string {
   return `${siteBase}/${getCollectionRoute(entry.collection)}/${getEntrySlug(entry)}/`;
 }
 
-export async function getAllGuideEntries(): Promise<any[]> {
-  const govt = await getCollection("govt-guides");
-  const exam = await getCollection("exam-guides");
-  const local = await getCollection("local-guides");
-  return [...govt, ...exam, ...local];
+export async function getAllPosts(): Promise<any[]> {
+  const sorkari = await getCollection("sorkari-seba");
+  const exam = await getCollection("exam-o-vorti");
+  const local = await getCollection("local-guide");
+  return [...sorkari, ...exam, ...local].filter((e) => !e.data.draft);
 }
 
-function addTaxonomy(map: Map<any, any> | any, label: any, entry: any): void {
+export async function getFeaturedPosts(limit = 6): Promise<any[]> {
+  const all = await getAllPosts();
+  const featured = all.filter((e) => e.data.featured);
+  return featured.length > 0 ? featured.slice(0, limit) : all.slice(0, limit);
+}
+
+export async function getRecentPosts(limit = 5): Promise<any[]> {
+  const all = await getAllPosts();
+  return all
+    .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+    .slice(0, limit);
+}
+
+export async function getPostsByCollection(collectionName: string): Promise<any[]> {
+  const posts = await getCollection(collectionName as any);
+  return posts.filter((e) => !e.data.draft);
+}
+
+export function formatDate(date: Date | string): string {
+  const d = new Date(date);
+  return d.toLocaleDateString("bn-BD", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export function estimateReadingTime(content: string): number {
+  const wordsPerMinute = 200;
+  const text = content.replace(/<[^>]*>/g, "");
+  const wordCount = text.split(/\s+/).length;
+  return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+}
+
+export function truncate(text: string, length = 120): string {
+  if (text.length <= length) return text;
+  return text.slice(0, length).trim() + "...";
+}
+
+function addTaxonomy(map: Map<string, any>, label: string, entry: any): void {
   if (!label) return;
   const slug = slugify(label);
   const normalizedLabel = String(label).trim();
@@ -55,7 +107,7 @@ function addTaxonomy(map: Map<any, any> | any, label: any, entry: any): void {
   }
 }
 
-export function buildTaxonomyIndex(entries: any): { categories: Map<any, any>; tags: Map<any, any>; authors: Map<any, any> } {
+export function buildTaxonomyIndex(entries: any[]): { categories: Map<string, any>; tags: Map<string, any>; authors: Map<string, any> } {
   const categories = new Map();
   const tags = new Map();
   const authors = new Map();
@@ -70,13 +122,17 @@ export function buildTaxonomyIndex(entries: any): { categories: Map<any, any>; t
     }
   }
 
-  return {
-    categories,
-    tags,
-    authors,
-  };
+  return { categories, tags, authors };
 }
 
-export function getTaxonomyUrl(type: any, slug: any): string {
+export function getTaxonomyUrl(type: string, slug: string): string {
   return `${siteBase}/${type}/${slug}/`;
+}
+
+export function paginate<T>(items: T[], pageSize: number): T[][] {
+  const pages: T[][] = [];
+  for (let i = 0; i < items.length; i += pageSize) {
+    pages.push(items.slice(i, i + pageSize));
+  }
+  return pages;
 }

@@ -1,49 +1,52 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import LayoutWithSidebar from "../../layouts/LayoutWithSidebar.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
-import GuideCard from "../../components/GuideCard.astro";
+import PostCard from "../../components/PostCard.astro";
 import { buildBreadcrumbJsonLd } from "../../lib/schema";
-import { getAllGuideEntries, buildTaxonomyIndex, getEntryUrl, slugify } from "../../lib/content";
+import { getAllPosts, buildTaxonomyIndex, getEntryUrl, slugify } from "../../lib/content";
 
 export async function getStaticPaths() {
-  const entries = await getAllGuideEntries();
+  const entries = await getAllPosts();
   const { tags } = buildTaxonomyIndex(entries);
   return Array.from(tags.keys()).map((slug) => ({ params: { slug } }));
 }
 
-const entries = await getAllGuideEntries();
+const entries = await getAllPosts();
 const { tags } = buildTaxonomyIndex(entries);
 const { slug } = Astro.params;
 let tag = tags.get(slug);
 if (!tag) {
-  // Fallback: try matching by slugifying the stored label to handle
-  // Unicode normalization/composition differences between sources.
-  const normalizedParam = String(slug).normalize && String(slug).normalize("NFKD");
+  const normalizedParam = String(slug).normalize("NFKD");
   tag = Array.from(tags.values()).find((t) => {
     const s = slugify(t.label);
-    return s === slug || (normalizedParam && s === normalizedParam);
+    return s === slug || s === normalizedParam;
   });
 }
 if (!tag) throw new Error(`Tag ${slug} not found`);
+
 const siteUrl = `https://shohojbd.pages.dev/tag/${slug}/`;
 const breadcrumbItems = [
   { title: "হোম", href: "/" },
-  { title: "Tags", href: "/tag/" },
+  { title: "ট্যাগ", href: "/tag/" },
   { title: tag.label, href: siteUrl },
 ];
 const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
 ---
-<Layout title={`Tag: ${tag.label}`} description={`Tag archive for ${tag.label}.`} url={siteUrl} jsonLd={jsonLd}>
+
+<LayoutWithSidebar
+  title={`ট্যাগ: ${tag.label}`}
+  description={`${tag.label} ট্যাগের সব পোস্ট। মোট ${tag.entries.length}টি পোস্ট।`}
+  url={siteUrl}
+  jsonLd={jsonLd}
+>
   <Breadcrumb items={breadcrumbItems} />
-  <section class="section-surface rounded-[2rem] border border-slate-200 p-6 shadow-sm sm:p-10">
-    <div class="max-w-3xl">
-      <h1 class="text-4xl font-bold text-slate-900">Tag: {tag.label}</h1>
-      <p class="mt-4 text-lg leading-8 text-slate-600">এই ট্যাগের সব পোস্ট এখানে দেখুন।</p>
-    </div>
+  <section class="mb-8">
+    <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">ট্যাগ: {tag.label}</h1>
+    <p class="mt-3 text-lg text-slate-600">এই ট্যাগের {tag.entries.length}টি পোস্ট।</p>
   </section>
-  <section class="mt-8 grid gap-6 md:grid-cols-2">
+  <section class="grid gap-6 sm:grid-cols-2">
     {tag.entries.map((entry) => (
-      <GuideCard title={entry.data.title} description={entry.data.description} href={getEntryUrl(entry)} />
+      <PostCard post={entry} variant="vertical" />
     ))}
   </section>
-</Layout>
+</LayoutWithSidebar>

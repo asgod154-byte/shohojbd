@@ -1,0 +1,59 @@
+---
+import LayoutWithSidebar from "../../layouts/LayoutWithSidebar.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getAllPosts, buildTaxonomyIndex, slugify } from "../../lib/content";
+import { buildBreadcrumbJsonLd } from "../../lib/schema";
+
+export async function getStaticPaths() {
+  const entries = await getAllPosts();
+  const { authors } = buildTaxonomyIndex(entries);
+  return Array.from(authors.keys()).map((slug) => ({ params: { slug } }));
+}
+
+const entries = await getAllPosts();
+const { authors } = buildTaxonomyIndex(entries);
+const { slug } = Astro.params;
+let author = authors.get(slug);
+if (!author) {
+  const normalizedParam = String(slug).normalize("NFKD");
+  author = Array.from(authors.values()).find((a) => {
+    const s = slugify(a.label);
+    return s === slug || s === normalizedParam;
+  });
+}
+if (!author) throw new Error(`Author ${slug} not found`);
+
+const siteUrl = `https://shohojbd.pages.dev/author/${slug}/`;
+const breadcrumbItems = [
+  { title: "হোম", href: "/" },
+  { title: "লেখক", href: "/author/" },
+  { title: author.label, href: siteUrl },
+];
+const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
+---
+
+<LayoutWithSidebar
+  title={`লেখক: ${author.label}`}
+  description={`${author.label}-এর সব পোস্ট। মোট ${author.entries.length}টি পোস্ট।`}
+  url={siteUrl}
+  jsonLd={jsonLd}
+>
+  <Breadcrumb items={breadcrumbItems} />
+  <section class="mb-8">
+    <div class="flex items-center gap-4">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-2xl font-bold">
+        {author.label.charAt(0)}
+      </div>
+      <div>
+        <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">{author.label}</h1>
+        <p class="mt-1 text-lg text-slate-600">{author.entries.length}টি পোস্ট</p>
+      </div>
+    </div>
+  </section>
+  <section class="grid gap-6 sm:grid-cols-2">
+    {author.entries.map((entry) => (
+      <PostCard post={entry} variant="vertical" />
+    ))}
+  </section>
+</LayoutWithSidebar>

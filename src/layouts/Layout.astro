@@ -4,23 +4,63 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
----
-const { title = "Shohoj BD", description = "সরকারি সেবা, পরীক্ষা ও লোকাল গাইডের তথ্য এক জায়গায়। সহজ এবং দ্রুত খোঁজার জন্য তৈরি।", url = "https://shohojbd.pages.dev/", image = "/social-share-default.svg", jsonLd } = Astro.props;
-const pageTitle = title;
+interface Props {
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  jsonLd?: any;
+  alternateTag?: boolean;
+}
+
+const {
+  title = "Shohoj BD",
+  description = "বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ। সহজ এবং দ্রুত খোঁজার জন্য তৈরি।",
+  url = "https://shohojbd.pages.dev/",
+  image = "/social-share-default.svg",
+  jsonLd,
+  alternateTag = false,
+} = Astro.props;
+
+const pageTitle = title === "Shohoj BD" ? title : `${title} | Shohoj BD`;
 ---
 
-<html lang="bn">
+<!doctype html>
+<html lang="bn" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <Meta title={pageTitle} description={description} url={url} image={image} jsonLd={jsonLd} alternateTag />
+    <meta name="theme-color" content="#006a4e" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <Meta
+      title={pageTitle}
+      description={description}
+      url={url}
+      image={image}
+      alternateTag={alternateTag}
+      jsonLd={jsonLd}
+    />
   </head>
   <body class="min-h-screen font-[var(--font-bangla)] text-slate-900 bg-slate-50">
-    <a href="#main-content" class="sr-only focus:not-sr-only absolute left-4 top-4 rounded-full bg-emerald-900 px-4 py-2 text-sm font-medium text-white shadow-lg focus:z-50">Skip to content</a>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-emerald-900 focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white focus:shadow-lg"
+    >
+      মূল কন্টেন্টে যান
+    </a>
     <Navbar />
-    <main id="main-content" class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main id="main-content" class="min-h-[60vh]">
       <slot />
     </main>
     <Footer />
+    <slot name="scripts" />
   </body>
 </html>

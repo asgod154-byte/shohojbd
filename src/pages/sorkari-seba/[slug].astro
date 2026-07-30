@@ -1,0 +1,218 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import TableOfContents from "../../components/TableOfContents.astro";
+import ShareButtons from "../../components/ShareButtons.astro";
+import AuthorBox from "../../components/AuthorBox.astro";
+import RelatedPosts from "../../components/RelatedPosts.astro";
+import ReadingProgress from "../../components/ReadingProgress.astro";
+import { getCollection, render } from "astro:content";
+import { getEntrySlug, getEntryUrl, getCollectionLabel, getAllPosts, formatDate, estimateReadingTime } from "../../lib/content";
+import { buildBreadcrumbJsonLd, buildArticleJsonLd, buildFaqJsonLd } from "../../lib/schema";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("sorkari-seba");
+  return posts
+    .filter((p) => !p.data.draft)
+    .map((post) => ({
+      params: { slug: getEntrySlug(post) },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const url = getEntryUrl(post);
+const readingTime = estimateReadingTime(post.body || "");
+const categoryLabel = getCollectionLabel("sorkari-seba");
+const allPosts = await getAllPosts();
+
+const breadcrumbItems = [
+  { title: "হোম", href: "/" },
+  { title: categoryLabel, href: "/sorkari-seba/" },
+  { title: post.data.title, href: url },
+];
+
+const articleJsonLd = buildArticleJsonLd({
+  title: post.data.title,
+  description: post.data.description,
+  url,
+  pubDate: post.data.pubDate,
+  updatedDate: post.data.updatedDate,
+  author: post.data.author,
+  image: post.data.coverImage,
+});
+
+const faqJsonLd = buildFaqJsonLd(post.data.faq);
+const breadcrumbJsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
+const jsonLd = [articleJsonLd, breadcrumbJsonLd, faqJsonLd].filter(Boolean);
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  url={url}
+  image={post.data.coverImage || "/social-share-default.svg"}
+  jsonLd={jsonLd.length === 1 ? jsonLd[0] : jsonLd}
+>
+  <ReadingProgress />
+  <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-[1fr_360px]">
+      <article class="min-w-0">
+        <Breadcrumb items={breadcrumbItems} />
+
+        {/* Hero Image */}
+        {post.data.coverImage && (
+          <div class="mb-6 aspect-video rounded-2xl overflow-hidden bg-emerald-50">
+            <img
+              src={post.data.coverImage}
+              alt={post.data.coverImageAlt || post.data.title}
+              class="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        {/* Post Header */}
+        <header class="mb-8">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <a href="/sorkari-seba/" class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition">
+              {categoryLabel}
+            </a>
+            <span class="text-xs text-slate-400">{formatDate(post.data.pubDate)}</span>
+            {post.data.updatedDate && (
+              <span class="text-xs text-slate-400">(হালনাগাদ: {formatDate(post.data.updatedDate)})</span>
+            )}
+          </div>
+          <h1 class="text-2xl font-extrabold text-slate-900 sm:text-3xl lg:text-4xl leading-tight">{post.data.title}</h1>
+          <div class="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-500">
+            <span class="flex items-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {post.data.author}
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {readingTime} মিনিট পড়ুন
+            </span>
+          </div>
+        </header>
+
+        {/* Table of Contents */}
+        <TableOfContents headings={headings} />
+
+        {/* Content */}
+        <div class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-emerald-700 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-emerald-500 prose-blockquote:bg-emerald-50/50 prose-blockquote:rounded-r-lg prose-img:rounded-xl prose-table:border-collapse prose-th:bg-emerald-50 prose-th:font-semibold prose-td:border prose-td:border-slate-200 prose-th:border prose-th:border-slate-200">
+          <Content />
+        </div>
+
+        {/* Tags */}
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="mt-8 flex flex-wrap items-center gap-2">
+            <span class="text-sm font-medium text-slate-500 mr-1">ট্যাগ:</span>
+            {post.data.tags.map((tag) => (
+              <a
+                href={`/tag/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
+                class="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        )}
+
+        {/* Official Links */}
+        {post.data.officialLinks && post.data.officialLinks.length > 0 && (
+          <div class="mt-8 rounded-xl border border-slate-200 bg-white p-5">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              অফিসিয়াল লিংক
+            </h3>
+            <ul class="space-y-2">
+              {post.data.officialLinks.map((link) => (
+                <li>
+                  <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-sm text-emerald-700 hover:underline inline-flex items-center gap-1">
+                    {link.label}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* FAQ Accordion */}
+        {post.data.faq && post.data.faq.length > 0 && (
+          <div class="mt-8 rounded-xl border border-slate-200 bg-white p-5">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+              সচরাচর জিজ্ঞাসা
+            </h3>
+            <div class="space-y-2">
+              {post.data.faq.map((item, idx) => (
+                <details class="group rounded-lg border border-slate-100 bg-slate-50/50 open:bg-white open:shadow-sm">
+                  <summary class="flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-medium text-slate-700 list-none">
+                    {item.question}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-400 group-open:rotate-180 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                  </summary>
+                  <div class="px-4 pb-3 text-sm text-slate-600 leading-relaxed">
+                    {item.answer}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Share Buttons */}
+        <div class="mt-8 pt-6 border-t border-slate-200">
+          <ShareButtons url={url} title={post.data.title} />
+        </div>
+
+        {/* Author Box */}
+        <AuthorBox author={post.data.author} />
+
+        {/* Related Posts */}
+        <RelatedPosts currentPost={post} posts={allPosts} />
+      </article>
+
+      {/* Right Sidebar */}
+      <aside class="hidden lg:block">
+        <div class="sticky top-24 space-y-6">
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">এই পোস্টে</h3>
+            {headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0 ? (
+              <ul class="space-y-1.5">
+                {headings.filter((h) => h.depth >= 2 && h.depth <= 3).map((h) => (
+                  <li class={h.depth === 3 ? "ml-3" : ""}>
+                    <a href={`#${h.slug}`} class="block text-sm text-slate-600 hover:text-emerald-700 transition py-0.5">
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-sm text-slate-400">কোনো শিরোনাম নেই</p>
+            )}
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">সম্পর্কিত</h3>
+            <ul class="space-y-3">
+              {allPosts
+                .filter((p) => p.id !== post.id && (p.data.category === post.data.category || (p.data.tags || []).some((t) => (post.data.tags || []).includes(t))))
+                .slice(0, 5)
+                .map((p) => (
+                  <li>
+                    <a href={getEntryUrl(p)} class="group block">
+                      <h4 class="text-sm font-medium text-slate-700 group-hover:text-emerald-700 transition line-clamp-2">
+                        {p.data.title}
+                      </h4>
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>

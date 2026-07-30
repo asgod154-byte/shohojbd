@@ -1,0 +1,37 @@
+---
+import Layout from "./Layout.astro";
+import Sidebar from "../components/Sidebar.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  jsonLd?: any;
+  alternateTag?: boolean;
+}
+
+const {
+  title,
+  description,
+  url,
+  image,
+  jsonLd,
+  alternateTag = false,
+} = Astro.props;
+---
+
+<Layout title={title} description={description} url={url} image={image} jsonLd={jsonLd} alternateTag={alternateTag}>
+  <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-[1fr_360px]">
+      <div class="min-w-0">
+        <slot />
+      </div>
+      <aside class="hidden lg:block">
+        <div class="sticky top-24 space-y-6">
+          <Sidebar />
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>

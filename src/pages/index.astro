@@ -1,0 +1,131 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PostCard from "../components/PostCard.astro";
+import SearchBox from "../components/SearchBox.astro";
+import { getFeaturedPosts, getRecentPosts, getAllPosts, buildTaxonomyIndex, getCollectionRoute, slugify, formatDate } from "../lib/content";
+import { buildOrganizationJsonLd } from "../lib/schema";
+
+const featured = await getFeaturedPosts(6);
+const recent = await getRecentPosts(6);
+const allPosts = await getAllPosts();
+const { tags } = buildTaxonomyIndex(allPosts);
+const popularTags = Array.from(tags.entries())
+  .sort((a, b) => b[1].entries.length - a[1].entries.length)
+  .slice(0, 12);
+
+const jsonLd = buildOrganizationJsonLd();
+---
+
+<Layout
+  title="Shohoj BD"
+  description="বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ। সহজ এবং দ্রুত খোঁজার জন্য তৈরি।"
+  jsonLd={jsonLd}
+>
+  {/* Hero Section */}
+  <section class="relative overflow-hidden bg-emerald-900 text-white">
+    <div class="absolute inset-0 opacity-10">
+      <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+          <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="100" height="100" fill="url(#grid)"/>
+      </svg>
+    </div>
+    <div class="container relative mx-auto px-4 py-16 sm:px-6 lg:px-8 sm:py-24 lg:py-32">
+      <div class="mx-auto max-w-3xl text-center">
+        <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl leading-tight">
+          বাংলাদেশের সব তথ্য<br class="hidden sm:block" />
+          <span class="text-emerald-300">সহজ ও দ্রুত</span>
+        </h1>
+        <p class="mt-6 text-lg leading-8 text-emerald-100/80">
+          সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য আপনার বিশ্বস্ত বাংলা ব্লগ।
+          সঠিক ও যাচাই করা তথ্য পান এক জায়গায়।
+        </p>
+        <div class="mt-8 mx-auto max-w-md">
+          <SearchBox />
+        </div>
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
+          {popularTags.map(([slug, data]) => (
+            <a
+              href={`/tag/${slug}/`}
+              class="rounded-full border border-emerald-700/50 bg-emerald-800/50 px-3 py-1 text-sm text-emerald-100 hover:bg-emerald-700/50 transition"
+            >
+              {data.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Featured Posts */}
+  {featured.length > 0 && (
+    <section class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          ফিচার্ড পোস্ট
+        </h2>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {featured.map((post) => (
+          <PostCard post={post} variant="vertical" />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {/* Latest Posts */}
+  <section class="bg-slate-100/50">
+    <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          সাম্প্রতিক পোস্ট
+        </h2>
+        <a href="/sorkari-seba/" class="text-sm font-medium text-emerald-700 hover:text-emerald-800 transition inline-flex items-center gap-1">
+          সব দেখুন
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {recent.map((post) => (
+          <PostCard post={post} variant="vertical" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Category Cards */}
+  <section class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-2">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+      বিভাগ অনুযায়ী ব্রাউজ করুন
+    </h2>
+    <div class="grid gap-6 sm:grid-cols-3">
+      <a href="/sorkari-seba/" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:shadow-lg hover:-translate-y-0.5">
+        <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-4 group-hover:bg-emerald-200 transition">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-700"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition">সরকারি সেবা</h3>
+        <p class="mt-2 text-sm text-slate-600">NID, জন্ম নিবন্ধন, চাকরি ও অন্যান্য সরকারি সেবার তথ্য।</p>
+      </a>
+      <a href="/exam-o-vorti/" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:shadow-lg hover:-translate-y-0.5">
+        <div class="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center mb-4 group-hover:bg-sky-200 transition">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-sky-700"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.657 2.239 3 5 3s5-1.343 5-3v-5"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 group-hover:text-sky-700 transition">পরীক্ষা ও ভর্তি</h3>
+        <p class="mt-2 text-sm text-slate-600">বিসিএস, বিশ্ববিদ্যালয় ভর্তি ও শিক্ষা সংক্রান্ত সব তথ্য।</p>
+      </a>
+      <a href="/local-guide/" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:shadow-lg hover:-translate-y-0.5">
+        <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center mb-4 group-hover:bg-amber-200 transition">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-amber-700"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 1.892.402 3.13 1.5 4.5L12 22l6.5-7.5c1.098-1.37 1.5-2.608 1.5-4.5a8 8 0 0 0-8-8z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition">স্থানীয় গাইড</h3>
+        <p class="mt-2 text-sm text-slate-600">পরিবহন, ভ্রমণ ও স্থানীয় সেবার তথ্য ও নির্দেশনা।</p>
+      </a>
+    </div>
+  </section>
+</Layout>

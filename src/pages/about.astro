@@ -1,0 +1,62 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import { buildOrganizationJsonLd, buildBreadcrumbJsonLd } from "../lib/schema";
+
+const breadcrumbItems = [
+  { title: "হোম", href: "/" },
+  { title: "আমাদের সম্পর্কে", href: "/about/" },
+];
+const jsonLd = [
+  buildOrganizationJsonLd(),
+  buildBreadcrumbJsonLd(breadcrumbItems),
+];
+---
+
+<Layout
+  title="আমাদের সম্পর্কে"
+  description="Shohoj BD-র লক্ষ্য, মিশন ও টিম সম্পর্কে বিস্তারিত তথ্য।"
+  url="https://shohojbd.pages.dev/about/"
+  jsonLd={jsonLd}
+>
+  <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <Breadcrumb items={breadcrumbItems} />
+    <div class="mx-auto max-w-3xl">
+      <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mb-6">আমাদের সম্পর্কে</h1>
+      
+      <div class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-emerald-700">
+        <p class="text-lg text-slate-600 leading-relaxed">
+          <strong>Shohoj BD</strong> বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্য নিয়ে কাজ করে একটি পেশাদার বাংলা ব্লগ। 
+          আমাদের লক্ষ্য হলো দেশের প্রতিটি নাগরিকের কাছে সঠিক, যাচাই করা ও সহজ বাংলায় তথ্য পৌঁছে দেওয়া।
+        </p>
+
+        <h2>আমাদের লক্ষ্য</h2>
+        <ul>
+          <li>সরকারি প্রক্রিয়াগুলোকে সাধারণ মানুষের জন্য সহজ ও বোধগম্য করে তোলা</li>
+          <li>শিক্ষার্থীদের পরীক্ষা ও ভর্তি সংক্রান্ত সঠিক তথ্য প্রদান</li>
+          <li>স্থানীয় সেবা ও ভ্রমণ সংক্রান্ত তথ্য এক জায়গায় সংগ্রহ করা</li>
+          <li>বাংলা ভাষায় মানসম্মত কন্টেন্ট তৈরি করা</li>
+        </ul>
+
+        <h2>আমাদের মিশন</h2>
+        <p>
+          সরকারি প্রক্রিয়া ও লোকাল তথ্যকে বাংলাদেশের জন্য সহজ, পরিষ্কার ও কাজে লাগার মতো করে তোলা।
+          আমরা বিশ্বাস করি, সঠিক তথ্য প্রতিটি নাগরিকের অধিকার।
+        </p>
+
+        <h2>কেন Shohoj BD?</h2>
+        <ul>
+          <li><strong>তথ্যভিত্তিক:</strong> প্রতিটি পোস্ট গবেষণা ও যাচাই করে তৈরি করা হয়</li>
+          <li><strong>সহজ বাংলা:</strong> কঠিন তথ্যগুলো সহজ ভাষায় উপস্থাপন করা হয়</li>
+          <li><strong>নিয়মিত আপডেট:</strong> নিয়মিত নতুন পোস্ট ও হালনাগাদ তথ্য প্রকাশ</li>
+          <li><strong>বিনামূল্যে:</strong> সব কন্টেন্ট সম্পূর্ণ বিনামূল্যে পড়া যায়</li>
+        </ul>
+
+        <h2>যোগাযোগ</h2>
+        <p>
+          যেকোনো প্রশ্ন, পরামর্শ বা ফিডব্যাকের জন্য আমাদের <a href="/contact/">যোগাযোগ পেজ</a> ব্যবহার করুন।
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

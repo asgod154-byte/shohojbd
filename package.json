@@ -1,7 +1,7 @@
 {
   "name": "shohojbd",
   "version": "1.0.0",
-  "description": "Bangla guide website for government, exam, and local guides.",
+  "description": "বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ।",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -13,17 +13,18 @@
     "type": "git",
     "url": "git+https://github.com/asgod154-byte/shohojbd.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["bangla", "blog", "sarkari", "chakri", "shikkha", "bangladesh"],
+  "author": "Shohoj BD Team",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/asgod154-byte/shohojbd/issues"
   },
-  "homepage": "https://github.com/asgod154-byte/shohojbd#readme",
+  "homepage": "https://shohojbd.pages.dev",
   "engines": {
     "node": ">=22.12.0"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.1.5",
