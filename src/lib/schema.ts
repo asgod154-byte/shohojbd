@@ -33,7 +33,7 @@ export function buildArticleJsonLd({ title, description, url, pubDate, updatedDa
       name: "Shohoj BD",
       logo: {
         "@type": "ImageObject",
-        url: "https://shohojbd.pages.dev/favicon.svg",
+        url: "https://shohojbd.pages.dev/favicon_io/favicon-32x32.png",
       },
     },
     url,
@@ -79,7 +79,7 @@ export function buildOrganizationJsonLd() {
     "@type": "Organization",
     name: "Shohoj BD",
     url: "https://shohojbd.pages.dev",
-    logo: "https://shohojbd.pages.dev/favicon.svg",
+    logo: "https://shohojbd.pages.dev/favicon_io/favicon-32x32.png",
     sameAs: [],
     description: "বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ।",
   };
