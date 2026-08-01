@@ -3,6 +3,7 @@ import Meta from "../components/Meta.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import Analytics from "../components/Analytics.astro";
+import ScrollToTop from "../components/ScrollToTop.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -90,6 +91,7 @@ const pageTitle = title === "Shohoj BD" ? title : `${title} | Shohoj BD`;
     </main>
     <Footer />
     <Analytics />
+    <ScrollToTop />
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {

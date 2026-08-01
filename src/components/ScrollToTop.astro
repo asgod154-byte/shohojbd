@@ -1,0 +1,31 @@
+---
+---
+
+<button
+  id="scroll-to-top"
+  class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-[var(--primary)] text-white shadow-lg opacity-0 translate-y-4 transition-all duration-300 hover:opacity-90 focus:opacity-90"
+  aria-label="উপরে যান"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<script>
+  const button = document.getElementById('scroll-to-top');
+  if (button) {
+    function toggleButton() {
+      if (window.scrollY > 400) {
+        button.classList.remove('opacity-0', 'translate-y-4');
+        button.classList.add('opacity-100', 'translate-y-0');
+      } else {
+        button.classList.add('opacity-0', 'translate-y-4');
+        button.classList.remove('opacity-100', 'translate-y-0');
+      }
+    }
+
+    window.addEventListener('scroll', toggleButton, { passive: true });
+
+    button.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
