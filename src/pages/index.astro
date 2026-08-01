@@ -2,10 +2,10 @@
 import Layout from "../layouts/Layout.astro";
 import PostCard from "../components/PostCard.astro";
 import SearchBox from "../components/SearchBox.astro";
-import { getFeaturedPosts, getRecentPosts, getAllPosts, buildTaxonomyIndex, getCollectionRoute, slugify, formatDate } from "../lib/content";
+import { getTopPostsLastDay, getRecentPosts, getAllPosts, buildTaxonomyIndex, getCollectionRoute, slugify, formatDate } from "../lib/content";
 import { buildOrganizationJsonLd } from "../lib/schema";
 
-const featured = await getFeaturedPosts(6);
+const featured = await getTopPostsLastDay(3);
 const recent = await getRecentPosts(6);
 const allPosts = await getAllPosts();
 const { tags } = buildTaxonomyIndex(allPosts);
