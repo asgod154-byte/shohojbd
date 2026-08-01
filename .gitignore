@@ -1,5 +1,34 @@
-node_modules
-.astro
-dist
-.vscode
-.kilo
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary
+*.tmp
+*.temp
+
+# CloudCannon
+.cloudcannon/
+
+# Generated
+slug_refs.txt

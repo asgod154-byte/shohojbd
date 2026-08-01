@@ -15,6 +15,23 @@ const popularTags = Array.from(tags.entries())
   .slice(0, 12);
 
 const jsonLd = buildOrganizationJsonLd();
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Shohoj BD",
+  url: "https://shohojbd.pages.dev",
+  description: "বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ।",
+  inLanguage: "bn",
+  publisher: {
+    "@type": "Organization",
+    name: "Shohoj BD",
+    url: "https://shohojbd.pages.dev",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://shohojbd.pages.dev/favicon_io/favicon-32x32.png",
+    },
+  },
+};
 ---
 
 <Layout
@@ -22,6 +39,7 @@ const jsonLd = buildOrganizationJsonLd();
   description="বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ। সহজ এবং দ্রুত খোঁজার জন্য তৈরি।"
   jsonLd={jsonLd}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
   {/* Hero Section */}
   <section class="relative overflow-hidden bg-emerald-900 text-white">
     <div class="absolute inset-0 opacity-10">

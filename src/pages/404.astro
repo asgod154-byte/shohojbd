@@ -1,41 +1,35 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import PostCard from "../components/PostCard.astro";
+import SearchBox from "../components/SearchBox.astro";
 import { getAllPosts } from "../lib/content";
 
-// Get recent posts for suggestions
 const allPosts = await getAllPosts();
 const suggested = allPosts
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
   .slice(0, 3);
 ---
 
-<Layout
-  title="পেজটি পাওয়া যায়নি"
-  description="আপনি যে পেজটি খুঁজছেন তা পাওয়া যায়নি।"
->
+<Layout title="পেজটি পাওয়া যায়নি" description="আপনি যে পেজটি খুঁজছেন তা পাওয়া যায়নি।">
   <div class="container mx-auto px-4 py-24 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl text-center mb-16">
-      <div class="text-8xl font-extrabold text-emerald-100 mb-4">৪০৪</div>
-      <h1 class="text-3xl font-bold text-slate-900 mb-3">পেজটি পাওয়া যায়নি</h1>
-      <p class="text-lg text-slate-600 mb-8">
+    <div class="mx-auto max-w-2xl rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center shadow-sm sm:p-10">
+      <div class="mb-4 text-7xl font-black text-[var(--primary)]">৪০৪</div>
+      <h1 class="mb-3 text-3xl font-bold text-[var(--text)]">পেজটি পাওয়া যায়নি</h1>
+      <p class="mb-8 text-lg text-[var(--text-muted)]">
         দুঃখিত, আপনি যে পেজটি খুঁজছেন তা বিদ্যমান নেই বা সরানো হয়েছে।
       </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <a href="/" class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-500 transition">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          হোমপেজে যান
-        </a>
-        <a href="/search/" class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          অনুসন্ধান করুন
-        </a>
+      <div class="mb-8 w-full max-w-md mx-auto">
+        <SearchBox />
       </div>
+      <a href="/" class="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        হোমপেজে যান
+      </a>
     </div>
 
     {suggested.length > 0 && (
-      <div class="mx-auto max-w-4xl mt-16 pt-16 border-t border-slate-200">
-        <h2 class="text-2xl font-bold text-slate-900 mb-8">আপনি যা খুঁজতে পারেন</h2>
+      <div class="mx-auto mt-16 max-w-4xl border-t border-[var(--border)] pt-10">
+        <h2 class="mb-6 text-2xl font-bold text-[var(--text)]">আপনি যা খুঁজতে পারেন</h2>
         <div class="grid grid-cols-1 gap-4">
           {suggested.map((post) => (
             <PostCard post={post} variant="horizontal" />

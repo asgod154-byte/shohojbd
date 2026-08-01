@@ -83,6 +83,15 @@ const pageTitle = title === "Shohoj BD" ? title : `${title} | Shohoj BD`;
     </main>
     <Footer />
     <Analytics />
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/sw.js").catch(() => {
+            console.warn("Service worker registration failed");
+          });
+        });
+      }
+    </script>
     <slot name="scripts" />
   </body>
 </html>
