@@ -8,7 +8,7 @@ pubDate: 2026-08-01
 updatedDate: 2026-08-01
 draft: false
 featured: true
-coverImage: "/favicon_io/apple-touch-icon.png"
+coverImage: "https://picsum.photos/seed/bcs/800/450"
 coverImageAlt: "বিসিএস পরীক্ষার প্রস্তুতি"
 officialLinks:
   - label: "বিপিএসসি"

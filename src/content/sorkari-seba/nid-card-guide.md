@@ -8,7 +8,7 @@ pubDate: 2026-08-01
 updatedDate: 2026-08-01
 draft: false
 featured: true
-coverImage: "/favicon_io/android-chrome-512x512.png"
+coverImage: "https://picsum.photos/seed/nid/800/450"
 coverImageAlt: "বাংলাদেশের জাতীয় পরিচয়পত্র"
 officialLinks:
   - label: "NID অনলাইন আবেদন"

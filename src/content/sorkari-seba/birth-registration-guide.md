@@ -8,7 +8,7 @@ pubDate: 2026-08-01
 updatedDate: 2026-08-01
 draft: false
 featured: true
-coverImage: "/favicon_io/favicon-16x16.png"
+coverImage: "/social-share-default.svg"
 coverImageAlt: "জন্ম নিবন্ধন সেবা"
 officialLinks:
   - label: "অনলাইন জন্ম নিবন্ধন"
