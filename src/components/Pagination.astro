@@ -30,7 +30,8 @@ const visiblePages = getVisiblePages(currentPage, totalPages);
     {currentPage > 1 && (
       <a
         href={prevUrl}
-        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 transition"
+        class="inline-flex items-center gap-1 rounded-lg border px-3 py-2 text-sm font-medium transition hover:text-emerald-700"
+        style="border-color: var(--border); background: var(--surface); color: var(--text);"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>
         আগে
@@ -39,20 +40,21 @@ const visiblePages = getVisiblePages(currentPage, totalPages);
 
     {visiblePages[0] > 1 && (
       <>
-        <a href={getPageUrl(1)} class="inline-flex w-9 h-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition">1</a>
-        {visiblePages[0] > 2 && <span class="text-slate-400">...</span>}
+        <a href={getPageUrl(1)} class="inline-flex w-9 h-9 items-center justify-center rounded-lg border text-sm font-medium transition" style="border-color: var(--border); background: var(--surface); color: var(--text);">1</a>
+        {visiblePages[0] > 2 && <span style="color: var(--text-muted);">...</span>}
       </>
     )}
 
     {visiblePages.map((page) => (
       page === currentPage ? (
-        <span class="inline-flex w-9 h-9 items-center justify-center rounded-lg bg-emerald-600 text-sm font-bold text-white">
+        <span class="inline-flex w-9 h-9 items-center justify-center rounded-lg text-sm font-bold text-white" style="background: var(--primary);">
           {page}
         </span>
       ) : (
         <a
           href={getPageUrl(page)}
-          class="inline-flex w-9 h-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"
+          class="inline-flex w-9 h-9 items-center justify-center rounded-lg border text-sm font-medium transition"
+          style="border-color: var(--border); background: var(--surface); color: var(--text);"
         >
           {page}
         </a>
@@ -61,15 +63,16 @@ const visiblePages = getVisiblePages(currentPage, totalPages);
 
     {visiblePages[visiblePages.length - 1] < totalPages && (
       <>
-        {visiblePages[visiblePages.length - 1] < totalPages - 1 && <span class="text-slate-400">...</span>}
-        <a href={getPageUrl(totalPages)} class="inline-flex w-9 h-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition">{totalPages}</a>
+        {visiblePages[visiblePages.length - 1] < totalPages - 1 && <span style="color: var(--text-muted);">...</span>}
+        <a href={getPageUrl(totalPages)} class="inline-flex w-9 h-9 items-center justify-center rounded-lg border text-sm font-medium transition" style="border-color: var(--border); background: var(--surface); color: var(--text);">{totalPages}</a>
       </>
     )}
 
     {currentPage < totalPages && (
       <a
         href={nextUrl}
-        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 transition"
+        class="inline-flex items-center gap-1 rounded-lg border px-3 py-2 text-sm font-medium transition hover:text-emerald-700"
+        style="border-color: var(--border); background: var(--surface); color: var(--text);"
       >
         পরে
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>

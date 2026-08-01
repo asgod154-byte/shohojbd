@@ -1,7 +1,7 @@
 {
   "site": {
-    "name": "shohojbd",
-    "preview_url": "https://your-cloudcannon-preview-url/"
+    "name": "Shohoj BD",
+    "preview_url": "https://shohojbd.pages.dev"
   },
 
   "media": {
@@ -28,8 +28,8 @@
 
   "collections": [
     {
-      "name": "govt-guides",
-      "label": "Government Guides",
+      "name": "sorkari-seba",
+      "label": "সরকারি সেবা (Government Services)",
       "folder": "src/content/sorkari-seba",
       "create": true,
       "format": "frontmatter",
@@ -39,23 +39,22 @@
         { "name": "title", "label": "Title", "widget": "string" },
         { "name": "description", "label": "Description", "widget": "string" },
         { "name": "excerpt", "label": "Excerpt", "widget": "text", "required": false },
-        { "name": "author", "label": "Author", "widget": "string" },
+        { "name": "author", "label": "Author", "widget": "string", "default": "Shohoj BD" },
         { "name": "category", "label": "Category", "widget": "string" },
         { "name": "tags", "label": "Tags", "widget": "list", "field": { "widget": "string" } },
         { "name": "pubDate", "label": "Published Date", "widget": "datetime" },
         { "name": "updatedDate", "label": "Updated Date", "widget": "datetime", "required": false },
-        { "name": "draft", "label": "Draft", "widget": "boolean" },
-        { "name": "featured", "label": "Featured", "widget": "boolean", "required": false },
+        { "name": "draft", "label": "Draft", "widget": "boolean", "default": false },
+        { "name": "featured", "label": "Featured", "widget": "boolean", "required": false, "default": false },
         { "name": "coverImage", "label": "Cover Image", "widget": "image", "required": false },
         { "name": "coverImageAlt", "label": "Cover Image Alt Text", "widget": "string", "required": false },
         { "name": "officialLinks", "label": "Official Links", "widget": "list", "field": { "widget": "object", "fields": [ { "name": "label", "label": "Label", "widget": "string" }, { "name": "url", "label": "URL", "widget": "string" } ] } },
         { "name": "faq", "label": "FAQ", "widget": "list", "field": { "widget": "object", "fields": [ { "name": "question", "label": "Question", "widget": "string" }, { "name": "answer", "label": "Answer", "widget": "markdown" } ] } }
       ]
     },
-
     {
-      "name": "exam-guides",
-      "label": "Exam Guides",
+      "name": "exam-o-vorti",
+      "label": "পরীক্ষা ও ভর্তি (Exam & Admission)",
       "folder": "src/content/exam-o-vorti",
       "create": true,
       "format": "frontmatter",
@@ -64,18 +63,23 @@
       "fields": [
         { "name": "title", "label": "Title", "widget": "string" },
         { "name": "description", "label": "Description", "widget": "string" },
-        { "name": "author", "label": "Author", "widget": "string" },
+        { "name": "excerpt", "label": "Excerpt", "widget": "text", "required": false },
+        { "name": "author", "label": "Author", "widget": "string", "default": "Shohoj BD" },
         { "name": "category", "label": "Category", "widget": "string" },
         { "name": "tags", "label": "Tags", "widget": "list", "field": { "widget": "string" } },
         { "name": "pubDate", "label": "Published Date", "widget": "datetime" },
-        { "name": "draft", "label": "Draft", "widget": "boolean" },
-        { "name": "coverImage", "label": "Cover Image", "widget": "image", "required": false }
+        { "name": "updatedDate", "label": "Updated Date", "widget": "datetime", "required": false },
+        { "name": "draft", "label": "Draft", "widget": "boolean", "default": false },
+        { "name": "featured", "label": "Featured", "widget": "boolean", "required": false, "default": false },
+        { "name": "coverImage", "label": "Cover Image", "widget": "image", "required": false },
+        { "name": "coverImageAlt", "label": "Cover Image Alt Text", "widget": "string", "required": false },
+        { "name": "officialLinks", "label": "Official Links", "widget": "list", "field": { "widget": "object", "fields": [ { "name": "label", "label": "Label", "widget": "string" }, { "name": "url", "label": "URL", "widget": "string" } ] } },
+        { "name": "faq", "label": "FAQ", "widget": "list", "field": { "widget": "object", "fields": [ { "name": "question", "label": "Question", "widget": "string" }, { "name": "answer", "label": "Answer", "widget": "markdown" } ] } }
       ]
     },
-
     {
-      "name": "local-guides",
-      "label": "Local Guides",
+      "name": "local-guide",
+      "label": "স্থানীয় গাইড (Local Guide)",
       "folder": "src/content/local-guide",
       "create": true,
       "format": "frontmatter",
@@ -84,18 +88,39 @@
       "fields": [
         { "name": "title", "label": "Title", "widget": "string" },
         { "name": "description", "label": "Description", "widget": "string" },
-        { "name": "author", "label": "Author", "widget": "string" },
+        { "name": "excerpt", "label": "Excerpt", "widget": "text", "required": false },
+        { "name": "author", "label": "Author", "widget": "string", "default": "Shohoj BD" },
         { "name": "placeType", "label": "Place Type", "widget": "select", "options": ["tourist-spot", "business", "service"] },
         { "name": "division", "label": "Division", "widget": "string" },
         { "name": "district", "label": "District", "widget": "string" },
         { "name": "address", "label": "Address", "widget": "text", "required": false },
         { "name": "lat", "label": "Latitude", "widget": "number", "required": false },
         { "name": "lng", "label": "Longitude", "widget": "number", "required": false },
+        { "name": "category", "label": "Category", "widget": "string" },
         { "name": "tags", "label": "Tags", "widget": "list", "field": { "widget": "string" } },
         { "name": "pubDate", "label": "Published Date", "widget": "datetime" },
-        { "name": "draft", "label": "Draft", "widget": "boolean" },
-        { "name": "coverImage", "label": "Cover Image", "widget": "image", "required": false }
+        { "name": "updatedDate", "label": "Updated Date", "widget": "datetime", "required": false },
+        { "name": "draft", "label": "Draft", "widget": "boolean", "default": false },
+        { "name": "featured", "label": "Featured", "widget": "boolean", "required": false, "default": false },
+        { "name": "coverImage", "label": "Cover Image", "widget": "image", "required": false },
+        { "name": "coverImageAlt", "label": "Cover Image Alt Text", "widget": "string", "required": false },
+        { "name": "officialLinks", "label": "Official Links", "widget": "list", "field": { "widget": "object", "fields": [ { "name": "label", "label": "Label", "widget": "string" }, { "name": "url", "label": "URL", "widget": "string" } ] } },
+        { "name": "faq", "label": "FAQ", "widget": "list", "field": { "widget": "object", "fields": [ { "name": "question", "label": "Question", "widget": "string" }, { "name": "answer", "label": "Answer", "widget": "markdown" } ] } }
       ]
     }
-  ]
+  ],
+
+  "paths": {
+    "uploads": "src/assets/images"
+  },
+
+  "editor": {
+    "default_path": "/sorkari-seba/"
+  },
+
+  "build": {
+    "command": "npm ci && npm run build",
+    "output": "dist",
+    "preview_command": "npm run preview"
+  }
 }

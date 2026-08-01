@@ -6,18 +6,18 @@ interface Props {
 const { author } = Astro.props;
 ---
 
-<div class="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
+<div class="mt-10 rounded-2xl border p-6" style="border-color: var(--border); background: var(--surface);">
   <div class="flex items-start gap-4">
     <img src="/favicon.svg" alt={author} width="56" height="56" class="shrink-0 w-14 h-14 rounded-full object-cover" />
     <div>
       <div class="flex items-center gap-1.5">
-        <h3 class="font-bold text-slate-900">{author}</h3>
+        <h3 class="font-bold" style="color: var(--text);">{author}</h3>
         <span class="ml-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#1877f2] text-white" title="Verified author" aria-hidden="true">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
         </span>
       </div>
-      <p class="text-sm text-slate-500 mt-1">Shohoj BD-র লেখক</p>
-      <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+      <p class="text-sm mt-1" style="color: var(--text-muted);">Shohoj BD-র লেখক</p>
+      <p class="text-sm mt-2 leading-relaxed" style="color: var(--text-muted);">
         বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্য নিয়ে কাজ করছি। সঠিক ও যাচাই করা তথ্য আপনাদের সামনে তুলে ধরার চেষ্টা করি।
       </p>
     </div>

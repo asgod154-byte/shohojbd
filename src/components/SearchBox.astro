@@ -6,7 +6,8 @@
     id="site-search"
     name="q"
     placeholder="অনুসন্ধান করুন..."
-    class="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+    class="w-full rounded-xl border py-3 pl-11 pr-4 text-sm transition-colors focus:outline-none focus:ring-2 focus:border-transparent"
+    style="border-color: var(--border); background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 10%, transparent);"
     autocomplete="off"
     aria-label="Search Shohoj BD"
   />
@@ -19,8 +20,19 @@
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+    class="absolute left-3.5 top-1/2 -translate-y-1/2"
+    style="color: var(--text-muted);"
   >
     <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
   </svg>
 </form>
+
+<style>
+  input::placeholder {
+    color: var(--text-muted);
+  }
+  
+  input:focus {
+    --tw-ring-color: var(--primary);
+  }
+</style>
