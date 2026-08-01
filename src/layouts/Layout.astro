@@ -2,6 +2,7 @@
 import Meta from "../components/Meta.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import Analytics from "../components/Analytics.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -26,12 +27,13 @@ const pageTitle = title === "Shohoj BD" ? title : `${title} | Shohoj BD`;
 ---
 
 <!doctype html>
-<html lang="bn" dir="ltr">
+<html lang="bn" dir="ltr" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#006a4e" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="author" content="Shohoj BD" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -70,6 +72,7 @@ const pageTitle = title === "Shohoj BD" ? title : `${title} | Shohoj BD`;
       <slot />
     </main>
     <Footer />
+    <Analytics />
     <slot name="scripts" />
   </body>
 </html>

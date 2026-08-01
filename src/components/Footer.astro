@@ -66,10 +66,8 @@ const categories = [
         <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-4 border-b border-emerald-200/20 pb-2">নিউজলেটার</h3>
         <p class="text-sm text-emerald-200/70 mb-4">নতুন পোস্ট ও গুরুত্বপূর্ণ আপডেট সরাসরি ইনবক্সে পেতে সাবস্ক্রাইব করুন।</p>
         <form
-          action="https://formspree.io/f/YOUR_FORM_ID"
-          method="POST"
           class="flex gap-2"
-          onsubmit="event.preventDefault(); alert('নিউজলেটার সেবা শীঘ্রই আসছে!');"
+          id="newsletter-form"
         >
           <input
             type="email"
@@ -120,6 +118,54 @@ const categories = [
 
   <script is:inline>
     (function() {
+      const newsletterForm = document.getElementById('newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Get form data
+          const email = this.querySelector('input[type="email"]').value;
+          
+          // IMPORTANT: Replace 'YOUR_FORM_ID' with your actual Formspree form ID
+          // To set up Formspree:
+          // 1. Go to formspree.io
+          // 2. Create a new form
+          // 3. Get your form ID (e.g., f/abc123def)
+          // 4. Replace 'YOUR_FORM_ID' below with your actual ID
+          
+          const formspreeId = 'YOUR_FORM_ID'; // Replace with your Formspree ID
+          
+          if (formspreeId === 'YOUR_FORM_ID') {
+            alert('নিউজলেটার ফিচার এখনো সেটআপ করা হয়নি। অ্যাডমিনদের সাথে যোগাযোগ করুন।');
+            return;
+          }
+          
+          // Submit to Formspree
+          fetch(`https://formspree.io/f/${formspreeId}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: email,
+            })
+          })
+          .then(response => {
+            if (response.ok) {
+              this.reset();
+              alert('ধন্যবাদ! আপনার সাবস্ক্রিপশন সফল হয়েছে।');
+            } else {
+              alert('কিছু ত্রুটি হয়েছে। আবার চেষ্টা করুন।');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('সাবস্ক্রিপশনে সমস্যা হয়েছে। পরে চেষ্টা করুন।');
+          });
+        });
+      }
+
       const btn = document.getElementById('back-to-top');
       if (!btn) return;
       window.addEventListener('scroll', function() {

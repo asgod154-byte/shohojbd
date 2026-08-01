@@ -16,7 +16,9 @@ export async function GET(context) {
       pubDate: post.data.pubDate,
       description: post.data.description,
       link: getEntryUrl(post).replace("https://shohojbd.pages.dev", ""),
+      author: post.data.author || "Shohoj BD",
+      categories: [post.data.category, ...post.data.tags],
     })),
-    customData: `<language>bn</language>`,
+    customData: `<language>bn</language><copyright>Copyright (c) 2026 Shohoj BD. All rights reserved.</copyright><managingEditor>admin@shohojbd.pages.dev</managingEditor>`,
   });
 }

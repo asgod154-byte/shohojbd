@@ -11,6 +11,23 @@
   --border: #e2eceb;
   --muted: #64748b;
   --ring: #d1fae5;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --primary: #006a4e;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  background-color: #0f172a;
+  color: #f1f5f9;
+  --surface: #1e293b;
+  --surface-muted: #0f172a;
+  --border: #334155;
+  --muted: #94a3b8;
+  --ring: #064e3b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --primary: #10b981;
 }
 
 * {
@@ -25,16 +42,20 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at top, rgba(0, 106, 78, 0.08), transparent 38%), #f8fafc;
-  color: #0f172a;
+  background: radial-gradient(circle at top, rgba(0, 106, 78, 0.08), transparent 38%), var(--surface);
+  color: var(--text);
   line-height: 1.75;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
+[data-theme="dark"] body {
+  background: radial-gradient(circle at top, rgba(16, 185, 129, 0.08), transparent 38%), var(--surface);
+}
+
 ::selection {
-  background-color: #d1fae5;
-  color: #064e3b;
+  background-color: var(--ring);
+  color: var(--primary);
 }
 
 h1, h2, h3, h4, h5, h6 {

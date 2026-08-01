@@ -1,0 +1,64 @@
+---
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<section class="my-8 border-t border-slate-200 pt-8">
+  <h2 class="text-2xl font-bold mb-4">মন্তব্য</h2>
+  
+  <div id="giscus-container">
+    <p class="text-sm text-slate-500">মন্তব্য লোড হচ্ছে...</p>
+  </div>
+
+  <script src="https://giscus.app/client.js"
+    data-repo="asgod154-byte/shohojbd"
+    data-repo-id="GISCUS_REPO_ID"
+    data-category="Comments"
+    data-category-id="GISCUS_CATEGORY_ID"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="bn"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async
+    is:inline
+  >
+  </script>
+</section>
+
+<style>
+  /* Dark mode support for Giscus */
+  :global([data-theme="dark"]) #giscus-container {
+    --color-prettylights-syntax-comment: #8b949e;
+    --color-prettylights-syntax-constant: #79c0ff;
+    --color-prettylights-syntax-entity: #d2a8ff;
+    --color-prettylights-syntax-storage-modifier-import: #79c0ff;
+    --color-prettylights-syntax-entity-tag: #7ee787;
+    --color-prettylights-syntax-keyword: #ff7b72;
+    --color-prettylights-syntax-string: #a5d6ff;
+    --color-prettylights-syntax-variable: #ffa657;
+    --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
+    --color-prettylights-syntax-invalid-illegal-bg: #f85149;
+    --color-prettylights-syntax-invalid-illegal-text: #f0883e;
+    --color-prettylights-syntax-carriage-return-bg: #b1222c;
+    --color-prettylights-syntax-carriage-return-text: #f0883e;
+    --color-prettylights-syntax-string-regexp: #7ee787;
+    --color-prettylights-syntax-markup-list: #f2cc60;
+    --color-prettylights-syntax-markup-heading: #1f6feb;
+    --color-prettylights-syntax-markup-italic: #c9d1d9;
+    --color-prettylights-syntax-markup-bold: #c9d1d9;
+    --color-prettylights-syntax-markup-deleted-text: #f85149;
+    --color-prettylights-syntax-markup-deleted-bg: #3d2417;
+    --color-prettylights-syntax-markup-inserted-text: #7ee787;
+    --color-prettylights-syntax-markup-inserted-bg: #033a16;
+    --color-prettylights-syntax-markup-changed-text: #d2a8ff;
+    --color-prettylights-syntax-markup-changed-bg: #2d333b;
+  }
+</style>

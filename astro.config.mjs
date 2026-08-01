@@ -5,6 +5,15 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://shohojbd.pages.dev',
   output: 'static',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
+  },
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+    },
+  },
   integrations: [
     sitemap({
       changefreq: 'weekly',

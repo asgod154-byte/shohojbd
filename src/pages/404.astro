@@ -1,13 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PostCard from "../components/PostCard.astro";
+import { getAllPosts } from "../lib/content";
+
+// Get recent posts for suggestions
+const allPosts = await getAllPosts();
+const suggested = allPosts
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3);
 ---
 
 <Layout
   title="পেজটি পাওয়া যায়নি"
   description="আপনি যে পেজটি খুঁজছেন তা পাওয়া যায়নি।"
 >
-  <div class="container mx-auto px-4 py-24 sm:px-6 lg:px-8 text-center">
-    <div class="mx-auto max-w-lg">
+  <div class="container mx-auto px-4 py-24 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center mb-16">
       <div class="text-8xl font-extrabold text-emerald-100 mb-4">৪০৪</div>
       <h1 class="text-3xl font-bold text-slate-900 mb-3">পেজটি পাওয়া যায়নি</h1>
       <p class="text-lg text-slate-600 mb-8">
@@ -24,5 +32,16 @@ import Layout from "../layouts/Layout.astro";
         </a>
       </div>
     </div>
+
+    {suggested.length > 0 && (
+      <div class="mx-auto max-w-4xl mt-16 pt-16 border-t border-slate-200">
+        <h2 class="text-2xl font-bold text-slate-900 mb-8">আপনি যা খুঁজতে পারেন</h2>
+        <div class="grid grid-cols-1 gap-4">
+          {suggested.map((post) => (
+            <PostCard post={post} variant="horizontal" />
+          ))}
+        </div>
+      </div>
+    )}
   </div>
 </Layout>

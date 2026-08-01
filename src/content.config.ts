@@ -1,6 +1,17 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+const divisions = z.enum([
+  "ঢাকা",
+  "চট্টগ্রাম",
+  "রাজশাহী",
+  "খুলনা",
+  "বরিশাল",
+  "সিলেট",
+  "রংপুর",
+  "ময়মনসিংহ",
+]);
+
 const postSchema = z.object({
   title: z.string(),
   description: z.string().max(160),
@@ -36,7 +47,7 @@ const localGuide = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/local-guide" }),
   schema: postSchema.extend({
     placeType: z.enum(["tourist-spot", "business", "service"]),
-    division: z.string(),
+    division: divisions,
     district: z.string(),
     address: z.string().optional(),
     lat: z.number().optional(),

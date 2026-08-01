@@ -30,11 +30,11 @@
     {
       "name": "govt-guides",
       "label": "Government Guides",
-      "folder": "src/content/govt-guides",
+      "folder": "src/content/sorkari-seba",
       "create": true,
       "format": "frontmatter",
       "extension": "md",
-      "preview_path": "/local-guide/{{slug}}/",
+      "preview_path": "/sorkari-seba/{{slug}}/",
       "fields": [
         { "name": "title", "label": "Title", "widget": "string" },
         { "name": "description", "label": "Description", "widget": "string" },
@@ -56,7 +56,7 @@
     {
       "name": "exam-guides",
       "label": "Exam Guides",
-      "folder": "src/content/exam-guides",
+      "folder": "src/content/exam-o-vorti",
       "create": true,
       "format": "frontmatter",
       "extension": "md",
@@ -76,7 +76,7 @@
     {
       "name": "local-guides",
       "label": "Local Guides",
-      "folder": "src/content/local-guides",
+      "folder": "src/content/local-guide",
       "create": true,
       "format": "frontmatter",
       "extension": "md",
