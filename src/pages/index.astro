@@ -5,7 +5,8 @@ import SearchBox from "../components/SearchBox.astro";
 import { getTopPostsLastDay, getRecentPosts, getAllPosts, buildTaxonomyIndex, getCollectionRoute, slugify, formatDate } from "../lib/content";
 import { buildOrganizationJsonLd } from "../lib/schema";
 
-const featured = await getTopPostsLastDay(3);
+const topPostsLastDay = await getTopPostsLastDay(3);
+const featured = topPostsLastDay.length > 0 ? topPostsLastDay : await getRecentPosts(3);
 const recent = await getRecentPosts(6);
 const allPosts = await getAllPosts();
 const { tags } = buildTaxonomyIndex(allPosts);
