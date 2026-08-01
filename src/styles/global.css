@@ -99,6 +99,24 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+[data-editable] {
+  color: inherit;
+  background-color: inherit;
+}
+
+[data-editable="source"],
+[data-editable="text"] {
+  color: var(--text);
+}
+
+[data-editable="image"] {
+  border-radius: inherit;
+}
+
+[data-editable="array-item"] {
+  border-color: var(--border);
+}
+
 [data-theme="dark"] body {
   background: radial-gradient(circle at top, rgba(16, 185, 129, 0.08), transparent 38%), var(--surface);
 }

@@ -19,17 +19,17 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
   <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
     <Breadcrumb items={breadcrumbItems} />
     <div class="mx-auto max-w-2xl">
-      <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mb-2">যোগাযোগ করুন</h1>
-      <p class="text-lg text-slate-600 mb-8">যেকোনো প্রশ্ন, পরামর্শ বা ফিডব্যাকের জন্য নিচের ফর্মটি পূরণ করুন।</p>
+      <h1 data-editable="source" data-path="/src/pages/contact.astro" data-key="contact_title" class="text-3xl font-extrabold text-[var(--text)] sm:text-4xl mb-2">যোগাযোগ করুন</h1>
+      <p data-editable="source" data-path="/src/pages/contact.astro" data-key="contact_desc" class="text-lg text-[var(--text-muted)] mb-8">যেকোনো প্রশ্ন, পরামর্শ বা ফিডব্যাকের জন্য নিচের ফর্মটি পূরণ করুন।</p>
 
       <form
         action="https://formspree.io/f/YOUR_FORM_ID"
         method="POST"
-        class="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+        class="space-y-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm sm:p-8"
         onsubmit="event.preventDefault(); alert('ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে। শীঘ্রই উত্তর দেওয়া হবে।'); this.reset();"
       >
         <div>
-          <label for="name" class="block text-sm font-medium text-slate-700 mb-1">নাম</label>
+          <label for="name" class="block text-sm font-medium text-[var(--text)] mb-1">নাম</label>
           <input
             type="text"
             id="name"
@@ -39,7 +39,7 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
           />
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-slate-700 mb-1">ইমেইল</label>
+          <label for="email" class="block text-sm font-medium text-[var(--text)] mb-1">ইমেইল</label>
           <input
             type="email"
             id="email"
@@ -49,7 +49,7 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
           />
         </div>
         <div>
-          <label for="subject" class="block text-sm font-medium text-slate-700 mb-1">বিষয়</label>
+          <label for="subject" class="block text-sm font-medium text-[var(--text)] mb-1">বিষয়</label>
           <input
             type="text"
             id="subject"
@@ -59,29 +59,29 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
           />
         </div>
         <div>
-          <label for="message" class="block text-sm font-medium text-slate-700 mb-1">বার্তা</label>
+          <label for="message" class="block text-sm font-medium text-[var(--text)] mb-1">বার্তা</label>
           <textarea
             id="message"
             name="message"
             rows="5"
             required
-            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-y"
+            class="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] resize-y"
           ></textarea>
         </div>
         <button
           type="submit"
-          class="w-full rounded-lg bg-emerald-600 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-500 transition"
+          class="w-full rounded-lg bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition"
         >
           বার্তা পাঠান
         </button>
       </form>
 
-      <div class="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-lg font-bold text-slate-900 mb-4">অন্যান্য যোগাযোগের মাধ্যম</h2>
-        <ul class="space-y-3 text-sm text-slate-600">
+      <div class="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+        <h2 class="text-lg font-bold text-[var(--text)] mb-4">অন্যান্য যোগাযোগের মাধ্যম</h2>
+        <ul class="space-y-3 text-sm text-[var(--text-muted)]">
           <li class="flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            <a href="mailto:info@shohojbd.pages.dev" class="text-emerald-700 hover:underline">info@shohojbd.pages.dev</a>
+            <a href="mailto:info@shohojbd.pages.dev" class="text-[var(--primary)] hover:underline">info@shohojbd.pages.dev</a>
           </li>
         </ul>
       </div>

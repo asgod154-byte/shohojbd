@@ -8,7 +8,7 @@ pubDate: 2026-08-01
 updatedDate: 2026-08-01
 draft: false
 featured: true
-coverImage: "/assets/images/coxs-bazar.webp"
+coverImage: "/favicon_io/favicon-32x32.png"
 coverImageAlt: "কক্সবাজার সমুদ্র সৈকত"
 placeType: "tourist-spot"
 division: "চট্টগ্রাম"

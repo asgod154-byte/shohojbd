@@ -115,7 +115,15 @@
   },
 
   "editor": {
-    "default_path": "/sorkari-seba/"
+    "default_path": "/sorkari-seba/",
+    "source_editor": {
+      "tab_size": 2,
+      "theme": "default"
+    },
+    "visual_editor": {
+      "enabled": true,
+      "default_edit_mode": "visual"
+    }
   },
 
   "build": {

@@ -37,17 +37,19 @@ const formattedDate = new Intl.DateTimeFormat("bn-BD", {
 }).format(pubDate);
 const previewTags = tags.slice(0, 3);
 ---
-<article class="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+<article data-editable="component" data-component="guide_card" class="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
   <a href={href} class="block">
     <div class="aspect-video overflow-hidden bg-[var(--surface-muted)]">
       {coverImage ? (
-        <Image
+        <img
+          data-editable="image"
+          data-prop-src="coverImage"
+          data-prop-alt="coverImageAlt"
+          data-prop-title="title"
           src={coverImage}
           alt={coverImageAlt || title}
-          width={1200}
-          height={630}
-          format="webp"
-          quality={80}
+          width="1200"
+          height="630"
           loading="lazy"
           decoding="async"
           class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
@@ -62,7 +64,7 @@ const previewTags = tags.slice(0, 3);
   </a>
   <div class="flex h-full flex-col p-5">
     <div class="mb-3 flex flex-wrap items-center gap-2">
-      <span class="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-2.5 py-1 text-xs font-semibold text-[var(--primary)]">
+      <span data-editable="text" data-prop="category" class="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-2.5 py-1 text-xs font-semibold text-[var(--primary)]">
         {category || "সাধারণ"}
       </span>
       {featured ? (
@@ -73,15 +75,15 @@ const previewTags = tags.slice(0, 3);
     </div>
 
     <a href={href} class="block">
-      <h3 class="line-clamp-2 text-lg font-bold text-[var(--text)]">{title}</h3>
+      <h3 data-editable="text" data-prop="title" class="line-clamp-2 text-lg font-bold text-[var(--text)]">{title}</h3>
     </a>
 
-    <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-[var(--text-muted)]">{description}</p>
+    <p data-editable="text" data-prop="description" class="mt-2 line-clamp-3 text-sm leading-relaxed text-[var(--text-muted)]">{description}</p>
 
     <div class="mt-4 flex flex-wrap items-center gap-2 text-xs text-[var(--text-muted)]">
       <span>{formattedDate}</span>
       <span>•</span>
-      <span>{author}</span>
+      <span data-editable="text" data-prop="author">{author}</span>
     </div>
 
     {previewTags.length > 0 ? (

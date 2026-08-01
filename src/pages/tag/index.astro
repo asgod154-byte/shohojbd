@@ -23,17 +23,17 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
 >
   <Breadcrumb items={breadcrumbItems} />
   <section class="mb-8">
-    <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">ট্যাগ</h1>
-    <p class="mt-3 text-lg text-slate-600">সব ট্যাগ অনুযায়ী পোস্ট ব্রাউজ করুন।</p>
+    <h1 class="text-3xl font-extrabold text-[var(--text)] sm:text-4xl">ট্যাগ</h1>
+    <p class="mt-3 text-lg text-[var(--text-muted)]">সব ট্যাগ অনুযায়ী পোস্ট ব্রাউজ করুন।</p>
   </section>
   <div class="flex flex-wrap gap-3">
     {sortedTags.map(([slug, data]) => (
       <a
         href={`/tag/${slug}/`}
-        class="group rounded-xl border border-slate-200 bg-white px-5 py-3 transition hover:shadow-md hover:-translate-y-0.5"
+        class="group rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 transition hover:shadow-md hover:-translate-y-0.5"
       >
-        <span class="text-base font-semibold text-slate-800 group-hover:text-emerald-700 transition">{data.label}</span>
-        <span class="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-600 transition">
+        <span class="text-base font-semibold text-[var(--text)] group-hover:text-[var(--primary)] transition">{data.label}</span>
+        <span class="ml-2 rounded-full bg-[var(--surface-muted)] px-2 py-0.5 text-xs text-[var(--text-muted)] group-hover:bg-[var(--primary)]/10 group-hover:text-[var(--primary)] transition">
           {data.entries.length}
         </span>
       </a>
