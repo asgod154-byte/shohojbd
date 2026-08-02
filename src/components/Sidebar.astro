@@ -39,13 +39,13 @@ const sortedTags = Array.from(tags.entries()).sort((a, b) => b[1].entries.length
 
   {/* Recent Posts */}
   <div class="rounded-2xl border p-5 shadow-sm" style="border-color: var(--border); background: var(--surface);">
-    <h3 data-editable="source" data-path="/src/components/Sidebar.astro" data-key="recent_widget_title" class="font-bold mb-4 flex items-center gap-2" style="color: var(--text);">
+    <h3 class="font-bold mb-4 flex items-center gap-2" style="color: var(--text);">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
       সাম্প্রতিক পোস্ট
     </h3>
-    <ul data-editable="array" data-prop="recentPosts" class="space-y-3">
+    <ul class="space-y-3">
       {recentPosts.map((post) => (
-        <li data-editable="array-item">
+        <li>
           <a href={`/${getCollectionRoute(post.collection)}/${slugify(post.id)}/`} class="group block">
             <h4 class="text-sm font-medium transition line-clamp-2 group-hover:text-emerald-700" style="color: var(--text-muted);">
               {post.data.title}
@@ -61,13 +61,13 @@ const sortedTags = Array.from(tags.entries()).sort((a, b) => b[1].entries.length
 
   {/* Categories */}
   <div class="rounded-2xl border p-5 shadow-sm" style="border-color: var(--border); background: var(--surface);">
-    <h3 data-editable="source" data-path="/src/components/Sidebar.astro" data-key="categories_widget_title" class="font-bold mb-4 flex items-center gap-2" style="color: var(--text);">
+    <h3 class="font-bold mb-4 flex items-center gap-2" style="color: var(--text);">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
       ক্যাটাগরি
     </h3>
-    <ul data-editable="array" data-prop="categories" class="space-y-2">
+    <ul class="space-y-2">
       {sortedCategories.slice(0, 10).map(([slug, data]) => (
-        <li data-editable="array-item">
+        <li>
           <a href={`/category/${slug}/`} class="flex items-center justify-between text-sm transition group" style="color: var(--text-muted);">
             <span>{data.label}</span>
             <span class="rounded-full px-2 py-0.5 text-xs transition group-hover:text-emerald-600" style="background: var(--surface-muted); color: var(--text-muted);">
@@ -88,7 +88,7 @@ const sortedTags = Array.from(tags.entries()).sort((a, b) => b[1].entries.length
       </h3>
       <div class="flex flex-wrap gap-2">
         {sortedTags.slice(0, 10).map(([slug, data]) => (
-          <a data-editable="array-item"
+          <a
             href={`/tag/${slug}/`}
             class="rounded-full px-3 py-1 text-xs font-medium border transition"
             style="background: var(--surface-muted); color: var(--text-muted); border-color: var(--border);"
@@ -103,11 +103,11 @@ const sortedTags = Array.from(tags.entries()).sort((a, b) => b[1].entries.length
 
   {/* Newsletter */}
   <div class="rounded-2xl border p-5 shadow-sm" style="border-color: var(--border); background: var(--surface-muted);">
-    <h3 data-editable="source" data-path="/src/components/Sidebar.astro" data-key="newsletter_widget_title" class="font-bold mb-2 flex items-center gap-2" style="color: var(--text);">
+    <h3 class="font-bold mb-2 flex items-center gap-2" style="color: var(--text);">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
       নিউজলেটার
     </h3>
-    <p data-editable="source" data-path="/src/components/Sidebar.astro" data-key="newsletter_desc" class="text-sm mb-3" style="color: var(--text-muted);">নতুন পোস্টের আপডেট পেতে সাবস্ক্রাইব করুন।</p>
+    <p class="text-sm mb-3" style="color: var(--text-muted);">নতুন পোস্টের আপডেট পেতে সাবস্ক্রাইব করুন।</p>
     <form
       onsubmit="event.preventDefault(); alert('নিউজলেটার সেবা শীঘ্রই আসছে!');"
       class="flex gap-2"

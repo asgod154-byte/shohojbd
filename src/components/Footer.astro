@@ -34,17 +34,17 @@ const categories = [
           />
           <span class="text-lg font-bold text-white">Shohoj BD</span>
         </a>
-        <p data-editable="source" data-path="/src/components/Footer.astro" data-key="footer_about_desc" class="text-sm leading-relaxed text-emerald-200/80">
+        <p class="text-sm leading-relaxed text-emerald-200/80">
           বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ। তথ্যভিত্তিক, সহজ বাংলা অভিজ্ঞতা।
         </p>
       </div>
 
       {/* Column 2: Quick Links */}
       <div class="hidden sm:block">
-        <h3 data-editable="source" data-path="/src/components/Footer.astro" data-key="footer_links_title" class="text-sm font-semibold uppercase tracking-wider text-white mb-4 border-b border-emerald-200/20 pb-2">দ্রুত লিংক</h3>
-        <ul data-editable="array" data-prop="quickLinks" class="space-y-2.5">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-4 border-b border-emerald-200/20 pb-2">দ্রুত লিংক</h3>
+        <ul class="space-y-2.5">
           {quickLinks.map((link) => (
-            <li data-editable="array-item">
+            <li>
               <a href={link.href} class="text-sm text-emerald-200/70 hover:text-white transition">{link.label}</a>
             </li>
           ))}
@@ -53,10 +53,10 @@ const categories = [
 
       {/* Column 3: Categories */}
       <div class="hidden sm:block">
-        <h3 data-editable="source" data-path="/src/components/Footer.astro" data-key="footer_categories_title" class="text-sm font-semibold uppercase tracking-wider text-white mb-4 border-b border-emerald-200/20 pb-2">ক্যাটাগরি</h3>
-        <ul data-editable="array" data-prop="footerCategories" class="space-y-2.5">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-4 border-b border-emerald-200/20 pb-2">ক্যাটাগরি</h3>
+        <ul class="space-y-2.5">
           {categories.map((cat) => (
-            <li data-editable="array-item">
+            <li>
               <a href={cat.href} class="text-sm text-emerald-200/70 hover:text-white transition">{cat.label}</a>
             </li>
           ))}
@@ -65,8 +65,8 @@ const categories = [
 
       {/* Column 4: Newsletter */}
       <div class="hidden sm:block">
-        <h3 data-editable="source" data-path="/src/components/Footer.astro" data-key="footer_newsletter_title" class="text-sm font-semibold uppercase tracking-wider text-white mb-4 border-b border-emerald-200/20 pb-2">নিউজলেটার</h3>
-        <p data-editable="source" data-path="/src/components/Footer.astro" data-key="footer_newsletter_desc" class="text-sm text-emerald-200/70 mb-4">নতুন পোস্ট ও গুরুত্বপূর্ণ আপডেট সরাসরি ইনবক্সে পেতে সাবস্ক্রাইব করুন।</p>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-4 border-b border-emerald-200/20 pb-2">নিউজলেটার</h3>
+        <p class="text-sm text-emerald-200/70 mb-4">নতুন পোস্ট ও গুরুত্বপূর্ণ আপডেট সরাসরি ইনবক্সে পেতে সাবস্ক্রাইব করুন।</p>
         {(() => {
           const formspreeConfigured = false; // set to true after creating Formspree form
           const formId = "YOUR_FORM_ID"; // replace with real Formspree ID when available
