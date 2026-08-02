@@ -211,6 +211,9 @@ const jsonLd = [articleJsonLd, breadcrumbJsonLd, faqJsonLd, howToJsonLd].filter(
 
         <AuthorBox author={post.data.author} />
 
+        {/* Related Posts */}
+        <RelatedPosts currentPost={post} posts={allPosts} />
+
         {/* Prev / Next Post Navigation */}
         <nav class="flex justify-between mt-12 pt-8 border-t border-gray-200 dark:border-gray-700" aria-label="Post navigation">
           {prevPost && (
@@ -229,11 +232,10 @@ const jsonLd = [articleJsonLd, breadcrumbJsonLd, faqJsonLd, howToJsonLd].filter(
         </nav>
       </article>
 
-      <aside class="hidden lg:block">
+        <aside class="hidden lg:block">
         <div class="sticky top-24 space-y-6">
           <TableOfContents headings={headings} />
           <Sidebar />
-          <RelatedPosts currentPost={post} posts={allPosts} />
         </div>
       </aside>
      </div>
