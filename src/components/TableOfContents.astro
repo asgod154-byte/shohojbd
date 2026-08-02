@@ -8,7 +8,11 @@ const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 ---
 
 {toc.length > 2 && (
-  <nav aria-label="সূচিপত্র" class="mb-8 rounded-2xl border p-5 shadow-sm" style="border-color: var(--border); background: var(--surface);">
+  <nav
+    aria-label="সূচিপত্র"
+    class="mb-8 rounded-2xl border p-5 shadow-sm lg:sticky lg:top-24"
+    style="border-color: var(--border); background: var(--surface);"
+  >
     <h2 class="text-sm font-bold uppercase tracking-wider mb-3" style="color: var(--text-muted);">এই পোস্টের সূচিপত্র</h2>
     <ul class="space-y-1.5">
       {toc.map((heading) => (

@@ -83,8 +83,10 @@ const jsonLd = [articleJsonLd, breadcrumbJsonLd, faqJsonLd].filter(Boolean);
               {categoryLabel}
             </a>
             <span class="text-xs text-slate-400">{formatDate(post.data.pubDate)}</span>
-            {post.data.updatedDate && (
-              <span class="text-xs text-slate-400">(হালনাগাদ: {formatDate(post.data.updatedDate)})</span>
+            {post.data.updatedDate && post.data.updatedDate.toISOString() !== post.data.pubDate.toISOString() && (
+              <span class="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-700">
+                🔄 সর্বশেষ হালনাগাদ: {formatDate(post.data.updatedDate)}
+              </span>
             )}
           </div>
           <h1 class="text-2xl font-extrabold text-slate-900 sm:text-3xl lg:text-4xl leading-tight">{post.data.title}</h1>

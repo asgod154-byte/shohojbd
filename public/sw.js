@@ -1,6 +1,7 @@
 const CACHE_NAME = 'shohojbd-v3';
 const STATIC_ASSETS = [
   '/',
+  '/offline/',
   '/sorkari-seba/',
   '/exam-o-vorti/',
   '/local-guide/',
@@ -13,7 +14,6 @@ const STATIC_ASSETS = [
   '/social-share-default.svg'
 ];
 
-// Install: Cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -22,7 +22,6 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate: Clean old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -35,18 +34,13 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: Cache-first for static, network-first for HTML
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET requests
   if (request.method !== 'GET') return;
-
-  // Skip external requests
   if (url.origin !== self.location.origin) return;
 
-  // HTML pages: Network first, fallback to cache
   if (request.mode === 'navigate' || request.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
       fetch(request)
@@ -55,13 +49,15 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
           return response;
         })
-        .catch(() => caches.match(request))
-        .catch(() => caches.match('/'))
+        .catch(async () => {
+          const cached = await caches.match(request);
+          if (cached) return cached;
+          return caches.match('/offline/');
+        })
     );
     return;
   }
 
-  // Static assets: Cache first, fallback to network
   event.respondWith(
     caches.match(request).then((response) => {
       if (response) return response;
@@ -69,7 +65,7 @@ self.addEventListener('fetch', (event) => {
         const clone = fetchResponse.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
         return fetchResponse;
-      });
+      }).catch(() => caches.match('/offline/'));
     })
   );
 });

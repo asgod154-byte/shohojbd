@@ -35,8 +35,9 @@
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.1.5",
+    "astro-compress": "^2.4.1",
     "pagefind": "^1.1.0",
-    "sharp": "^0.33.0",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.3.3"
   }
 }

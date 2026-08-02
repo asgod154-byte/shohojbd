@@ -1,0 +1,14 @@
+/* TEAM */
+Shohoj BD Team
+Site: https://shohojbd.pages.dev
+
+/* THANKS */
+Astro — https://astro.build
+Tailwind CSS — https://tailwindcss.com
+Pages CMS — https://pagescms.org
+
+/* SITE */
+Last update: 2026/08/02
+Standards: HTML5, CSS3, ES2022
+Components: Astro, Tailwind CSS
+Software: Node.js, Sharp, Pagefind

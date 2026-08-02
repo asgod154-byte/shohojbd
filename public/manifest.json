@@ -6,6 +6,34 @@
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#006a4e",
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "সরকারি সেবা",
+      "short_name": "সেবা",
+      "description": "সরকারি সেবা গাইড",
+      "url": "/sorkari-seba/",
+      "icons": [
+        {
+          "src": "/favicon_io/favicon-32x32.png",
+          "sizes": "32x32"
+        }
+      ]
+    }
+  ],
   "icons": [
     {
       "src": "/favicon_io/android-chrome-192x192.png",

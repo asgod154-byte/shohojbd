@@ -4,6 +4,9 @@ media:
 
 options:
   base_url: https://shohojbd.pages.dev
+  branch: main
+  preview:
+    deploy_hook: ""
 
 content:
   - name: sorkari-seba

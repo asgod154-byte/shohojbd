@@ -1,0 +1,173 @@
+Please perform a COMPLETE professional upgrade on my shohojbd Astro blog. Make it fully WordPress-blog-style professional. Do ALL of the following:
+
+---
+
+## TIER 1: CRITICAL FIXES
+
+1. **Upgrade sharp**: Run `npm install sharp@latest` to get v0.35.3+ with security patches and better AVIF/HEIC support.
+
+2. **Add astro-compress**: Run `npm install astro-compress`. Then update `astro.config.mjs` to include the compress integration:
+   ```js
+   import compress from 'astro-compress';
+
+   integrations: [
+     sitemap({...}),
+     compress({
+       CSS: true,
+       HTML: { removeAttributeQuotes: false },
+       Image: false,
+       JavaScript: true,
+       SVG: true,
+       Logger: 1,
+     }),
+   ],
+   ```
+   Also add to vite.build: `cssMinify: 'lightningcss'`.
+
+3. **Fix sitemap lastmod**: The sitemap currently uses `lastmod: new Date()` which always shows today's date. Change it to use actual file modification dates or git commit dates. If that's complex, at least remove `lastmod` from the sitemap config to avoid misleading dates.
+
+4. **Enhance public/_headers** with these security and cache policies:
+   ```
+   /*
+     X-Frame-Options: DENY
+     X-Content-Type-Options: nosniff
+     Referrer-Policy: strict-origin-when-cross-origin
+     Permissions-Policy: geolocation=(), microphone=(), camera=()
+     Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagefind.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagefind.app; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
+     Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+   /assets/*
+     Cache-Control: public, max-age=31536000, immutable
+
+   /*.css
+     Cache-Control: public, max-age=31536000, immutable
+
+   /*.js
+     Cache-Control: public, max-age=31536000, immutable
+
+   /pagefind/*
+     Cache-Control: public, max-age=86400
+
+   /sitemap-*.xml
+     Cache-Control: public, max-age=3600
+   ```
+
+5. **Create public/humans.txt**:
+   ```
+   /* TEAM */
+   Shohoj BD Team
+   Site: https://shohojbd.pages.dev
+
+   /* THANKS */
+   Astro — https://astro.build
+   Tailwind CSS — https://tailwindcss.com
+   Pages CMS — https://pagescms.org
+
+   /* SITE */
+   Last update: 2026/08/02
+   Standards: HTML5, CSS3, ES2022
+   Components: Astro, Tailwind CSS
+   Software: Node.js, Sharp, Pagefind
+   ```
+
+---
+
+## TIER 2: SEO & STRUCTURED DATA
+
+6. **Enhance Meta.astro** — Add Twitter Card meta tags and canonical URL:
+   - `<meta name="twitter:card" content="summary_large_image">`
+   - `<meta name="twitter:title" content={title}>`
+   - `<meta name="twitter:description" content={description}>`
+   - `<meta name="twitter:image" content={pageImage}>`
+   - `<link rel="canonical" href={pageUrl}>`
+   - Ensure Open Graph tags are complete: `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `og:locale` (bn_BD)
+
+7. **Add Article JSON-LD to all post pages** — Use the existing `buildArticleJsonLd()` function from `lib/schema.ts` in the `[slug].astro` pages for all three collections. Also add `buildBreadcrumbJsonLd()` to every page.
+
+8. **Add FAQ schema rendering** — The content schema already has a `faq` field. On post pages, if `faq` exists, render it as an accordion/FAQ section AND inject `buildFaqJsonLd()` into the page head.
+
+9. **Font preloading** — In `Layout.astro` `<head>`, add:
+   ```html
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   ```
+   (If using Google Fonts for Noto Sans Bengali)
+
+---
+
+## TIER 3: ANALYTICS & NEWSLETTER
+
+10. **Enable Analytics** — The `Analytics.astro` component is completely empty (all comments). Replace it with Cloudflare Web Analytics (free, no cookie, privacy-friendly):
+    ```html
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN"}'></script>
+    ```
+    OR use Plausible Analytics. Add the actual script, not placeholder comments.
+
+11. **Activate Newsletter** — The Footer has a newsletter section with `formspreeConfigured = false`. Either:
+    - Set up a real Formspree form and replace `YOUR_FORM_ID`, OR
+    - Replace with Buttondown email embed (free tier available), OR
+    - Use a simple mailto link as fallback instead of "শীঘ্রই চালু হচ্ছে..."
+
+---
+
+## TIER 4: UX ENHANCEMENTS
+
+12. **Add reading time display** — The `estimateReadingTime()` function already exists in `lib/content.ts`. Use it in:
+    - `PostCard.astro` — show "X মিনিট পড়ুন" below the title
+    - Post detail pages (`[slug].astro`) — show near the author/date line
+
+13. **Add "Last Updated" badge** — On post pages, if `updatedDate` exists and is different from `pubDate`, show a badge: "🔄 সর্বশেষ হালনাগাদ: [date]"
+
+14. **Add copy-code button** — Add a small script that finds all `<pre><code>` blocks and adds a "Copy" button. Style it to appear on hover.
+
+15. **Add skip-to-content link** — At the very top of `Layout.astro` `<body>`, add:
+    ```html
+    <a href="#main-content" class="sr-only focus:not-sr-only">মূল কন্টেন্টে যান</a>
+    ```
+    And add `id="main-content"` to the main content wrapper. This is a WCAG accessibility requirement.
+
+16. **Image lightbox** — Add a simple lightbox script so clicking any image in `.prose` opens it in a modal. Use a lightweight approach (no heavy library needed).
+
+17. **Sticky Table of Contents** — `TableOfContents.astro` exists. Make it sticky on desktop (position: sticky; top: 6rem) so it follows the user as they scroll through long posts.
+
+---
+
+## TIER 5: PWA & PERFORMANCE
+
+18. **Enhance manifest.json** — Add `screenshots` array and `shortcuts` array for better PWA install experience:
+    ```json
+    "screenshots": [
+      { "src": "/screenshot-wide.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide" },
+      { "src": "/screenshot-narrow.png", "sizes": "390x844", "type": "image/png", "form_factor": "narrow" }
+    ],
+    "shortcuts": [
+      { "name": "সরকারি সেবা", "short_name": "সেবা", "description": "সরকারি সেবা গাইড", "url": "/sorkari-seba/", "icons": [{"src":"/favicon_io/favicon-32x32.png","sizes":"32x32"}] }
+    ]
+    ```
+
+19. **Add offline fallback page** — Create `src/pages/offline.astro` with a friendly "You are offline" message. Update `public/sw.js` to cache this page and serve it when network fails.
+
+20. **Web Share API** — On post pages, add a native share button that uses `navigator.share()` on mobile. Falls back to copy-link on desktop.
+
+---
+
+## TIER 6: PAGES CMS OPTIMIZATION
+
+21. **Update .pages.yml** — Add `options.preview.deploy_hook` with the Cloudflare Pages deploy hook URL (get it from Cloudflare dashboard). Also add `options.branch: main`.
+
+22. **Add `required: false` to optional fields** — In `.pages.yml`, ensure `updatedDate`, `coverImage`, `coverImageAlt`, `address`, `lat`, `lng` all have `required: false` explicitly set.
+
+---
+
+## BUILD & VERIFY
+
+23. Run `npm install && npm run build` and ensure it succeeds with zero errors.
+24. Run a secret scan to ensure no API tokens were accidentally committed.
+25. Commit with message: `feat: professional upgrade - SEO, PWA, analytics, UX`
+26. Push to origin main.
+
+---
+
+## REPORT BACK
+
+Tell me exactly which files you modified and what changes you made in each. Also report the build result and any warnings.
