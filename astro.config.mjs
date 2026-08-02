@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import editableRegions from '@cloudcannon/editable-regions/astro-integration';
 
 export default defineConfig({
   site: 'https://shohojbd.pages.dev',
@@ -22,7 +21,6 @@ export default defineConfig({
       lastmod: new Date(),
       filter: (page) => !page.includes('/404'),
     }),
-    editableRegions(),
   ],
   vite: {
     plugins: [tailwindcss()],

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shohojbd-v2';
+const CACHE_NAME = 'shohojbd-v3';
 const STATIC_ASSETS = [
   '/',
   '/sorkari-seba/',
