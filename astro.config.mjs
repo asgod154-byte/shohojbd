@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import compress from 'astro-compress';
 
 export default defineConfig({
   site: 'https://shohojbd.pages.dev',
@@ -20,14 +19,6 @@ export default defineConfig({
       changefreq: 'weekly',
       priority: 0.7,
       filter: (page) => !page.includes('/404'),
-    }),
-    compress({
-      CSS: true,
-      HTML: { removeAttributeQuotes: false },
-      Image: false,
-      JavaScript: true,
-      SVG: true,
-      Logger: 1,
     }),
   ],
   vite: {
