@@ -27,9 +27,6 @@ Thumbs.db
 *.tmp
 *.temp
 
-# CloudCannon
-.cloudcannon/
-
 # Generated
 slug_refs.txt
 

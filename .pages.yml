@@ -1,0 +1,179 @@
+media:
+  input: public/assets/images
+  output: /assets/images
+
+options:
+  base_url: https://shohojbd.pages.dev
+
+content:
+  - name: sorkari-seba
+    label: সরকারি সেবা
+    type: collection
+    path: src/content/sorkari-seba
+    view:
+      fields: [title, pubDate, draft, featured]
+      sort: [pubDate, desc]
+      primary_field: title
+    fields:
+      - name: title
+        label: শিরোনাম
+        type: string
+      - name: description
+        label: বর্ণনা
+        type: text
+      - name: author
+        label: লেখক
+        type: string
+      - name: category
+        label: ক্যাটাগরি
+        type: string
+      - name: tags
+        label: ট্যাগ
+        type: list
+      - name: pubDate
+        label: প্রকাশের তারিখ
+        type: date
+      - name: updatedDate
+        label: আপডেটের তারিখ
+        type: date
+        required: false
+      - name: draft
+        label: ড্রাফট
+        type: boolean
+      - name: featured
+        label: ফিচার্ড
+        type: boolean
+      - name: coverImage
+        label: কভার ইমেজ
+        type: image
+        required: false
+      - name: coverImageAlt
+        label: কভার ইমেজ বর্ণনা
+        type: string
+        required: false
+      - name: body
+        label: কন্টেন্ট
+        type: rich-text
+
+  - name: exam-o-vorti
+    label: পরীক্ষা গাইড
+    type: collection
+    path: src/content/exam-o-vorti
+    view:
+      fields: [title, pubDate, draft, featured]
+      sort: [pubDate, desc]
+      primary_field: title
+    fields:
+      - name: title
+        label: শিরোনাম
+        type: string
+      - name: description
+        label: বর্ণনা
+        type: text
+      - name: author
+        label: লেখক
+        type: string
+      - name: category
+        label: ক্যাটাগরি
+        type: string
+      - name: tags
+        label: ট্যাগ
+        type: list
+      - name: pubDate
+        label: প্রকাশের তারিখ
+        type: date
+      - name: updatedDate
+        label: আপডেটের তারিখ
+        type: date
+        required: false
+      - name: draft
+        label: ড্রাফট
+        type: boolean
+      - name: featured
+        label: ফিচার্ড
+        type: boolean
+      - name: coverImage
+        label: কভার ইমেজ
+        type: image
+        required: false
+      - name: coverImageAlt
+        label: কভার ইমেজ বর্ণনা
+        type: string
+        required: false
+      - name: body
+        label: কন্টেন্ট
+        type: rich-text
+
+  - name: local-guide
+    label: স্থানীয় গাইড
+    type: collection
+    path: src/content/local-guide
+    view:
+      fields: [title, pubDate, draft, featured]
+      sort: [pubDate, desc]
+      primary_field: title
+    fields:
+      - name: title
+        label: শিরোনাম
+        type: string
+      - name: description
+        label: বর্ণনা
+        type: text
+      - name: author
+        label: লেখক
+        type: string
+      - name: category
+        label: ক্যাটাগরি
+        type: string
+      - name: tags
+        label: ট্যাগ
+        type: list
+      - name: pubDate
+        label: প্রকাশের তারিখ
+        type: date
+      - name: updatedDate
+        label: আপডেটের তারিখ
+        type: date
+        required: false
+      - name: draft
+        label: ড্রাফট
+        type: boolean
+      - name: featured
+        label: ফিচার্ড
+        type: boolean
+      - name: coverImage
+        label: কভার ইমেজ
+        type: image
+        required: false
+      - name: coverImageAlt
+        label: কভার ইমেজ বর্ণনা
+        type: string
+        required: false
+      - name: placeType
+        label: স্থানের ধরন
+        type: select
+        options:
+          values: [tourist-spot, business, service]
+      - name: division
+        label: বিভাগ
+        type: select
+        options:
+          values: [ঢাকা, চট্টগ্রাম, রাজশাহী, খুলনা, বরিশাল, সিলেট, রংপুর, ময়মনসিংহ]
+      - name: district
+        label: জেলা
+        type: string
+      - name: address
+        label: ঠিকানা
+        type: string
+        required: false
+      - name: lat
+        label: অক্ষাংশ
+        type: number
+        required: false
+      - name: lng
+        label: দ্রাঘিমাংশ
+        type: number
+        required: false
+      - name: body
+        label: কন্টেন্ট
+        type: rich-text
