@@ -191,10 +191,6 @@ const jsonLd = [articleJsonLd, breadcrumbJsonLd, faqJsonLd, howToJsonLd].filter(
         })()}
 
         <div class="mt-8 pt-6 border-t border-slate-200 print-hidden">
-          <button id="share-btn-exam-o-vorti" class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-700" type="button">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            শেয়ার করুন
-          </button>
           <ShareButtons url={url} title={post.data.title} />
         </div>
 
@@ -240,26 +236,4 @@ const jsonLd = [articleJsonLd, breadcrumbJsonLd, faqJsonLd, howToJsonLd].filter(
       </aside>
      </div>
    </div>
- </Layout>
- <script slot="scripts">
-   (function() {
-     var btn = document.getElementById('share-btn-exam-o-vorti');
-     if (!btn) return;
-     if (!navigator.share && !navigator.clipboard) {
-       btn.style.display = 'none';
-       return;
-     }
-     btn.addEventListener('click', function() {
-       var shareData = { title: document.title, url: window.location.href };
-       if (navigator.share) {
-         navigator.share(shareData).catch(function() {});
-       } else if (navigator.clipboard) {
-         navigator.clipboard.writeText(window.location.href).then(function() {
-           var original = btn.innerHTML;
-           btn.innerHTML = '✅ লিংক কপি হয়েছে!';
-           setTimeout(function() { btn.innerHTML = original; }, 2000);
-         }).catch(function() {});
-       }
-     });
-   })();
- </script>
+  </Layout>
