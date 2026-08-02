@@ -21,8 +21,11 @@ content:
       - name: title
         label: শিরোনাম
         type: string
+      - name: slug
+        label: URL Slug (ফাইলনেমেও একই রাখুন)
+        type: string
       - name: description
-        label: বর্ণনা
+        label: বর্ণনা (SEO Meta Description)
         type: text
       - name: author
         label: লেখক
@@ -54,6 +57,26 @@ content:
         label: কভার ইমেজ বর্ণনা
         type: string
         required: false
+      - name: officialLinks
+        label: অফিসিয়াল লিংকসমূহ
+        type: list
+        fields:
+          - name: label
+            label: লিংকের নাম
+            type: string
+          - name: url
+            label: লিংক URL
+            type: string
+      - name: faq
+        label: সচরাচর জিজ্ঞাসা (FAQ)
+        type: list
+        fields:
+          - name: question
+            label: প্রশ্ন
+            type: string
+          - name: answer
+            label: উত্তর
+            type: text
       - name: body
         label: কন্টেন্ট
         type: rich-text
@@ -70,8 +93,11 @@ content:
       - name: title
         label: শিরোনাম
         type: string
+      - name: slug
+        label: URL Slug (ফাইলনেমেও একই রাখুন)
+        type: string
       - name: description
-        label: বর্ণনা
+        label: বর্ণনা (SEO Meta Description)
         type: text
       - name: author
         label: লেখক
@@ -103,6 +129,26 @@ content:
         label: কভার ইমেজ বর্ণনা
         type: string
         required: false
+      - name: officialLinks
+        label: অফিসিয়াল লিংকসমূহ
+        type: list
+        fields:
+          - name: label
+            label: লিংকের নাম
+            type: string
+          - name: url
+            label: লিংক URL
+            type: string
+      - name: faq
+        label: সচরাচর জিজ্ঞাসা (FAQ)
+        type: list
+        fields:
+          - name: question
+            label: প্রশ্ন
+            type: string
+          - name: answer
+            label: উত্তর
+            type: text
       - name: body
         label: কন্টেন্ট
         type: rich-text
@@ -119,8 +165,11 @@ content:
       - name: title
         label: শিরোনাম
         type: string
+      - name: slug
+        label: URL Slug (ফাইলনেমেও একই রাখুন)
+        type: string
       - name: description
-        label: বর্ণনা
+        label: বর্ণনা (SEO Meta Description)
         type: text
       - name: author
         label: লেখক
@@ -177,6 +226,26 @@ content:
         label: দ্রাঘিমাংশ
         type: number
         required: false
+      - name: officialLinks
+        label: অফিসিয়াল লিংকসমূহ
+        type: list
+        fields:
+          - name: label
+            label: লিংকের নাম
+            type: string
+          - name: url
+            label: লিংক URL
+            type: string
+      - name: faq
+        label: সচরাচর জিজ্ঞাসা (FAQ)
+        type: list
+        fields:
+          - name: question
+            label: প্রশ্ন
+            type: string
+          - name: answer
+            label: উত্তর
+            type: text
       - name: body
         label: কন্টেন্ট
         type: rich-text
