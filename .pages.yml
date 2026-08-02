@@ -260,4 +260,4 @@ content:
             placeholder: "উত্তর লিখুন..."
       - name: body
         label: কন্টেন্ট
-        type: rich-tex
+        type: rich-text
