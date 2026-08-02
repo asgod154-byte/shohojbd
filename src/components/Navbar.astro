@@ -45,7 +45,7 @@ const navItems = [
       </a>
 
       {/* Desktop Nav */}
-      <nav class="hidden lg:flex items-center gap-1" aria-label="প্রধান নেভিগেশন">
+      <nav class="desktop-nav hidden lg:flex items-center gap-1" aria-label="প্রধান নেভিগেশন">
         {navItems.map((item) => (
           <div class="relative group">
             <a
@@ -109,7 +109,7 @@ const navItems = [
         </button>
 
         {/* Mobile Menu Toggle */}
-        <details class="lg:hidden group relative">
+        <details class="mobile-menu-toggle lg:hidden group relative">
           <summary
             class="inline-flex items-center justify-center w-9 h-9 rounded-lg transition cursor-pointer list-none hover:text-emerald-700"
             style="color: var(--text-muted);"
