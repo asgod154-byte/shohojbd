@@ -68,19 +68,18 @@ content:
             label: লিংক URL
             type: string
       - name: faq
-        label: সচরাচর জিজ্ঞাসা (FAQ)
+        label: ❓ সচরাচর জিজ্ঞাসা (FAQ Schema)
         type: list
-        maxItems: 5
-        addButtonLabel: + FAQ যোগ করুন
+        description: প্রতিটি FAQ Google Rich Snippets-এ দেখাবে। সর্বোচ্চ ৫টি যোগ করুন।
         fields:
           - name: question
-            label: প্রশ্ন
+            label: প্রশ্ন (Question)
             type: string
-            placeholder: "প্রশ্ন লিখুন..."
+            description: যেমনঃ পাসপোর্ট করতে কত টাকা লাগে?
           - name: answer
-            label: উত্তর
+            label: উত্তর (Answer)
             type: text
-            placeholder: "উত্তর লিখুন..."
+            description: সংক্ষিপ্ত এবং স্পষ্ট উত্তর লিখুন (সর্বোচ্চ ৩০০ অক্ষর)
       - name: body
         label: কন্টেন্ট
         type: rich-text
@@ -144,19 +143,18 @@ content:
             label: লিংক URL
             type: string
       - name: faq
-        label: সচরাচর জিজ্ঞাসা (FAQ)
+        label: ❓ সচরাচর জিজ্ঞাসা (FAQ Schema)
         type: list
-        maxItems: 5
-        addButtonLabel: + FAQ যোগ করুন
+        description: প্রতিটি FAQ Google Rich Snippets-এ দেখাবে। সর্বোচ্চ ৫টি যোগ করুন।
         fields:
           - name: question
-            label: প্রশ্ন
+            label: প্রশ্ন (Question)
             type: string
-            placeholder: "প্রশ্ন লিখুন..."
+            description: যেমনঃ পাসপোর্ট করতে কত টাকা লাগে?
           - name: answer
-            label: উত্তর
+            label: উত্তর (Answer)
             type: text
-            placeholder: "উত্তর লিখুন..."
+            description: সংক্ষিপ্ত এবং স্পষ্ট উত্তর লিখুন (সর্বোচ্চ ৩০০ অক্ষর)
       - name: body
         label: কন্টেন্ট
         type: rich-text
@@ -245,19 +243,18 @@ content:
             label: লিংক URL
             type: string
       - name: faq
-        label: সচরাচর জিজ্ঞাসা (FAQ)
+        label: ❓ সচরাচর জিজ্ঞাসা (FAQ Schema)
         type: list
-        maxItems: 5
-        addButtonLabel: + FAQ যোগ করুন
+        description: প্রতিটি FAQ Google Rich Snippets-এ দেখাবে। সর্বোচ্চ ৫টি যোগ করুন।
         fields:
           - name: question
-            label: প্রশ্ন
+            label: প্রশ্ন (Question)
             type: string
-            placeholder: "প্রশ্ন লিখুন..."
+            description: যেমনঃ পাসপোর্ট করতে কত টাকা লাগে?
           - name: answer
-            label: উত্তর
+            label: উত্তর (Answer)
             type: text
-            placeholder: "উত্তর লিখুন..."
+            description: সংক্ষিপ্ত এবং স্পষ্ট উত্তর লিখুন (সর্বোচ্চ ৩০০ অক্ষর)
       - name: body
         label: কন্টেন্ট
         type: rich-text
