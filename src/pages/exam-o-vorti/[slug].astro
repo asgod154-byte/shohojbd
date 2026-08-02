@@ -231,8 +231,8 @@ const jsonLd = [articleJsonLd, breadcrumbJsonLd, faqJsonLd, howToJsonLd].filter(
 
       <aside class="hidden lg:block">
         <div class="sticky top-24 space-y-6">
-          <Sidebar />
           <TableOfContents headings={headings} />
+          <Sidebar />
           <RelatedPosts currentPost={post} posts={allPosts} />
         </div>
       </aside>
