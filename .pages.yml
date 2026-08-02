@@ -70,13 +70,17 @@ content:
       - name: faq
         label: সচরাচর জিজ্ঞাসা (FAQ)
         type: list
+        maxItems: 5
+        addButtonLabel: + FAQ যোগ করুন
         fields:
           - name: question
             label: প্রশ্ন
             type: string
+            placeholder: "প্রশ্ন লিখুন..."
           - name: answer
             label: উত্তর
             type: text
+            placeholder: "উত্তর লিখুন..."
       - name: body
         label: কন্টেন্ট
         type: rich-text
@@ -142,13 +146,17 @@ content:
       - name: faq
         label: সচরাচর জিজ্ঞাসা (FAQ)
         type: list
+        maxItems: 5
+        addButtonLabel: + FAQ যোগ করুন
         fields:
           - name: question
             label: প্রশ্ন
             type: string
+            placeholder: "প্রশ্ন লিখুন..."
           - name: answer
             label: উত্তর
             type: text
+            placeholder: "উত্তর লিখুন..."
       - name: body
         label: কন্টেন্ট
         type: rich-text
@@ -239,13 +247,17 @@ content:
       - name: faq
         label: সচরাচর জিজ্ঞাসা (FAQ)
         type: list
+        maxItems: 5
+        addButtonLabel: + FAQ যোগ করুন
         fields:
           - name: question
             label: প্রশ্ন
             type: string
+            placeholder: "প্রশ্ন লিখুন..."
           - name: answer
             label: উত্তর
             type: text
+            placeholder: "উত্তর লিখুন..."
       - name: body
         label: কন্টেন্ট
         type: rich-text
