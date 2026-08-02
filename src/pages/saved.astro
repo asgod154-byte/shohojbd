@@ -1,0 +1,94 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="সংরক্ষিত পোস্ট"
+  description="আপনার সংরক্ষিত পোস্টের তালিকা।"
+  url="https://shohojbd.pages.dev/saved/"
+  image="/social-share-default.svg"
+>
+  <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl mb-2">📚 সংরক্ষিত পোস্ট</h1>
+    <p class="mb-8 text-lg text-slate-600 dark:text-gray-400" id="saved-count">লোড হচ্ছে...</p>
+
+    <div id="saved-posts" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="col-span-full rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
+        <p class="text-slate-600 dark:text-gray-400">লোড হচ্ছে...</p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script slot="scripts">
+  function getSavedPosts() {
+    try {
+      return JSON.parse(localStorage.getItem("shohojbd_saved") || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  async function loadSavedPosts() {
+    const countEl = document.getElementById("saved-count");
+    const container = document.getElementById("saved-posts");
+    if (!countEl || !container) return;
+
+    const saved = getSavedPosts();
+    countEl.textContent = saved.length > 0 ? `আপনার সংরক্ষিত পোস্ট ${saved.length}টি।` : "আপনার সংরক্ষিত পোস্ট এখনো নেই।";
+
+    if (saved.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
+          <p class="text-slate-600 dark:text-gray-400">কোনো সংরক্ষিত পোস্ট নেই। পোস্ট দেখুন এবং বুকমার্ক করুন।</p>
+          <a href="/" class="mt-4 inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
+            হোমপেজে যান
+          </a>
+        </div>
+      `;
+      return;
+    }
+
+    try {
+      const response = await fetch("/sitemap.xml");
+      const text = await response.text();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, "application/xml");
+      const urls = xml.querySelectorAll("url > loc");
+      const sitemapUrls = Array.from(urls).map((u) => u.textContent || "");
+
+      const postUrls = saved.map((s) => s.url);
+      const matchedUrls = sitemapUrls.filter((url) => postUrls.some((pu) => url.includes(pu.replace("https://shohojbd.pages.dev", ""))));
+
+      if (matchedUrls.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
+            <p class="text-slate-600 dark:text-gray-400">সংরক্ষিত পোস্ট লোড করা যায়নি।</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = matchedUrls.map((url) => {
+        const savedPost = saved.find((s) => url.includes(s.url.replace("https://shohojbd.pages.dev", "")));
+        const path = url.replace("https://shohojbd.pages.dev", "");
+        return `
+          <div class="rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 hover:shadow-lg transition">
+            <a href="${url}" class="block">
+              <p class="text-sm font-medium text-slate-900 dark:text-white">${savedPost ? savedPost.title : path}</p>
+              <p class="mt-1 text-xs text-slate-500 dark:text-gray-400">${new Date(savedPost ? savedPost.savedAt : Date.now()).toLocaleDateString("bn-BD")}</p>
+            </a>
+          </div>
+        `;
+      }).join("");
+    } catch (e) {
+      container.innerHTML = `
+        <div class="col-span-full rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
+          <p class="text-slate-600 dark:text-gray-400">পোস্ট লোড করতে সমস্যা হয়েছে।</p>
+        </div>
+      `;
+    }
+  }
+
+  loadSavedPosts();
+</script>

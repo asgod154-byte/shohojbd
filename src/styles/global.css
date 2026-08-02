@@ -306,11 +306,75 @@ a {
   overflow: hidden;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+/* Hide default details marker */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary {
+  list-style: none;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  nav,
+  footer,
+  .share-buttons,
+  aside,
+  .newsletter-widget,
+  #theme-toggle,
+  .mobile-menu,
+  .print-hidden {
+    display: none !important;
+  }
+
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    word-break: break-all;
+  }
+
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  .prose pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  @page {
+    margin: 2cm;
+    @top-center {
+      content: "Shohoj BD";
+      font-size: 10pt;
+      color: #666;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+    @bottom-center {
+      content: "Published: " string(publish-date);
+      font-size: 9pt;
+      color: #666;
+      border-top: 1px solid #ccc;
+      padding-top: 4px;
+    }
   }
 }

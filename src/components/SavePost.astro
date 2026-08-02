@@ -1,0 +1,95 @@
+---
+interface Props {
+  postId: string;
+  title: string;
+  url: string;
+}
+
+const { postId, title, url } = Astro.props;
+---
+
+<button
+  id={`save-btn-${postId}`}
+  type="button"
+  class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-gray-700 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-gray-800 transition"
+  data-post-id={postId}
+  data-post-title={title}
+  data-post-url={url}
+  aria-label="Save this post"
+>
+  <svg id={`save-icon-${postId}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="save-icon-outline">
+    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+  </svg>
+  <svg id={`save-icon-filled-${postId}`} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="save-icon-filled hidden">
+    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+  </svg>
+  <span class="save-label">সংরক্ষণ করুন</span>
+</button>
+
+<script>
+  function getSavedPosts() {
+    try {
+      return JSON.parse(localStorage.getItem('shohojbd_saved') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  function savePosts(posts) {
+    localStorage.setItem('shohojbd_saved', JSON.stringify(posts));
+  }
+
+  function updateButton(button) {
+    const postId = button.dataset.postId;
+    const saved = getSavedPosts();
+    const isSaved = saved.some((p) => p.id === postId);
+    const outlineIcon = button.querySelector('.save-icon-outline');
+    const filledIcon = button.querySelector('.save-icon-filled');
+    const label = button.querySelector('.save-label');
+
+    if (isSaved) {
+      outlineIcon?.classList.add('hidden');
+      filledIcon?.classList.remove('hidden');
+      if (label) label.textContent = 'সংরক্ষিত';
+      button.classList.add('text-emerald-600', 'dark:text-emerald-400');
+      button.classList.remove('text-slate-600', 'dark:text-gray-400');
+    } else {
+      outlineIcon?.classList.remove('hidden');
+      filledIcon?.classList.add('hidden');
+      if (label) label.textContent = 'সংরক্ষণ করুন';
+      button.classList.remove('text-emerald-600', 'dark:text-emerald-400');
+      button.classList.add('text-slate-600', 'dark:text-gray-400');
+    }
+  }
+
+  function toggleSave(button) {
+    const postId = button.dataset.postId;
+    const title = button.dataset.postTitle;
+    const url = button.dataset.postUrl;
+    let saved = getSavedPosts();
+    const index = saved.findIndex((p) => p.id === postId);
+
+    if (index >= 0) {
+      saved.splice(index, 1);
+    } else {
+      saved.push({ id: postId, title, url, savedAt: new Date().toISOString() });
+    }
+
+    savePosts(saved);
+    updateButton(button);
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll('[data-post-id]').forEach((btn) => {
+      updateButton(btn);
+      btn.addEventListener('click', () => toggleSave(btn));
+    });
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    document.querySelectorAll('[data-post-id]').forEach((btn) => {
+      updateButton(btn);
+      btn.addEventListener('click', () => toggleSave(btn));
+    });
+  });
+</script>
