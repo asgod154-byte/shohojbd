@@ -14,7 +14,6 @@
 ✅ ডার্ক মোড টগল  
 ✅ মোবাইল রেসপন্সিভ ডিজাইন  
 ✅ SEO অপটিমাইজড  
-✅ CloudCannon CMS ইন্টিগ্রেশন  
 ✅ ইমেজ অপটিমাইজেশন (WebP, Sharp)  
 ✅ PWA সাপোর্ট  
 ✅ RSS ফিড  
@@ -27,7 +26,6 @@
 - **Framework:** [Astro 7.1.5](https://astro.build)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com)
 - **Image Optimization:** [Sharp](https://sharp.pixelplumbing.com/)
-- **CMS:** [CloudCannon](https://cloudcannon.com)
 - **Deployment:** [Cloudflare Pages](https://pages.cloudflare.com)
 - **Analytics:** Plausible (Privacy-focused)
 
@@ -50,7 +48,6 @@ shohojbd/
 │   └── styles/           # গ্লোবাল CSS
 ├── public/               # স্ট্যাটিক ফাইল
 ├── astro.config.mjs      # Astro কনফিগারেশন
-├── cloudcannon.json      # CloudCannon CMS কনফিগারেশন
 ├── package.json          # নোড প্যাকেজ ম্যানেজার
 └── README.md            # এই ফাইল
 ```
@@ -176,12 +173,6 @@ coverImageAlt: "কভার ইমেজের বর্ণনা"
 - Performance: > 90
 - SEO: > 95
 - Accessibility: > 95
-
----
-
-## 📚 CMS (CloudCannon)
-
-এই প্রকল্প CloudCannon দ্বারা পরিচালিত হয়। সম্পাদকরা ওয়েব ইন্টারফেসের মাধ্যমে কন্টেন্ট যোগ, সম্পাদন এবং প্রকাশ করতে পারেন।
 
 ---
 

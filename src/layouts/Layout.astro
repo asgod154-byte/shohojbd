@@ -72,13 +72,6 @@ const pageTitle = title === "Shohoj BD" ? title : `${title} | Shohoj BD`;
     </style>
   </head>
   <body class="min-h-screen font-[var(--font-bangla)]" style="background: var(--surface-muted); color: var(--text);">
-    <script>
-      if (window.inEditorMode) {
-        import("../scripts/register-components.js").catch((error) => {
-          console.warn("Failed to load CloudCannon component registration:", error);
-        });
-      }
-    </script>
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-emerald-900 focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white focus:shadow-lg"
