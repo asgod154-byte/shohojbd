@@ -58,8 +58,9 @@ content:
         type: string
         required: false
       - name: officialLinks
-        label: অফিসিয়াল লিংকসমূহ
-        type: list
+        label: 🔗 অফিসিয়াল লিংকসমূহ
+        type: object
+        list: true
         fields:
           - name: label
             label: লিংকের নাম
@@ -69,7 +70,8 @@ content:
             type: string
       - name: faq
         label: ❓ সচরাচর জিজ্ঞাসা (FAQ Schema)
-        type: list
+        type: object
+        list: true
         description: প্রতিটি FAQ Google Rich Snippets-এ দেখাবে। সর্বোচ্চ ৫টি যোগ করুন।
         fields:
           - name: question
@@ -79,7 +81,7 @@ content:
           - name: answer
             label: উত্তর (Answer)
             type: text
-            description: সংক্ষিপ্ত এবং স্পষ্ট উত্তর লিখুন (সর্বোচ্চ ৩০০ অক্ষর)
+            description: ????????? ??? ?????? ????? ?????
       - name: body
         label: কন্টেন্ট
         type: rich-text
@@ -133,8 +135,9 @@ content:
         type: string
         required: false
       - name: officialLinks
-        label: অফিসিয়াল লিংকসমূহ
-        type: list
+        label: 🔗 অফিসিয়াল লিংকসমূহ
+        type: object
+        list: true
         fields:
           - name: label
             label: লিংকের নাম
@@ -144,7 +147,8 @@ content:
             type: string
       - name: faq
         label: ❓ সচরাচর জিজ্ঞাসা (FAQ Schema)
-        type: list
+        type: object
+        list: true
         description: প্রতিটি FAQ Google Rich Snippets-এ দেখাবে। সর্বোচ্চ ৫টি যোগ করুন।
         fields:
           - name: question
@@ -154,7 +158,7 @@ content:
           - name: answer
             label: উত্তর (Answer)
             type: text
-            description: সংক্ষিপ্ত এবং স্পষ্ট উত্তর লিখুন (সর্বোচ্চ ৩০০ অক্ষর)
+            description: ????????? ??? ?????? ????? ?????
       - name: body
         label: কন্টেন্ট
         type: rich-text
@@ -233,8 +237,9 @@ content:
         type: number
         required: false
       - name: officialLinks
-        label: অফিসিয়াল লিংকসমূহ
-        type: list
+        label: 🔗 অফিসিয়াল লিংকসমূহ
+        type: object
+        list: true
         fields:
           - name: label
             label: লিংকের নাম
@@ -244,7 +249,8 @@ content:
             type: string
       - name: faq
         label: ❓ সচরাচর জিজ্ঞাসা (FAQ Schema)
-        type: list
+        type: object
+        list: true
         description: প্রতিটি FAQ Google Rich Snippets-এ দেখাবে। সর্বোচ্চ ৫টি যোগ করুন।
         fields:
           - name: question
@@ -254,7 +260,7 @@ content:
           - name: answer
             label: উত্তর (Answer)
             type: text
-            description: সংক্ষিপ্ত এবং স্পষ্ট উত্তর লিখুন (সর্বোচ্চ ৩০০ অক্ষর)
+            description: ????????? ??? ?????? ????? ?????
       - name: body
         label: কন্টেন্ট
         type: rich-text
