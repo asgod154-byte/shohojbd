@@ -25,6 +25,7 @@ const results = query
   title={query ? `"${query}"-এর অনুসন্ধান ফলাফল` : "অনুসন্ধান"}
   description="Shohoj BD-তে অনুসন্ধান করুন। সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্য খুঁজুন।"
   url={`https://shohojbd.pages.dev/search/${query ? `?q=${encodeURIComponent(query)}` : ""}`}
+  image="/social-share-default.svg"
 >
   <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-3xl">

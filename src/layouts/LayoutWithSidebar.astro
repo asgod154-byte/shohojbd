@@ -9,6 +9,13 @@ interface Props {
   image?: string;
   jsonLd?: any;
   alternateTag?: boolean;
+  noindex?: boolean;
+  article?: boolean;
+  pubDate?: string;
+  updatedDate?: string;
+  author?: string;
+  category?: string;
+  tags?: string[];
 }
 
 const {
@@ -18,10 +25,31 @@ const {
   image,
   jsonLd,
   alternateTag = false,
+  noindex = false,
+  article = false,
+  pubDate,
+  updatedDate,
+  author,
+  category,
+  tags,
 } = Astro.props;
 ---
 
-<Layout title={title} description={description} url={url} image={image} jsonLd={jsonLd} alternateTag={alternateTag}>
+<Layout
+  title={title}
+  description={description}
+  url={url}
+  image={image}
+  jsonLd={jsonLd}
+  alternateTag={alternateTag}
+  noindex={noindex}
+  article={article}
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  author={author}
+  category={category}
+  tags={tags}
+>
   <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <div class="grid gap-8 lg:grid-cols-[1fr_360px]">
       <div class="min-w-0">

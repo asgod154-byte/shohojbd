@@ -37,6 +37,7 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
   title={`লেখক: ${author.label}`}
   description={`${author.label}-এর সব পোস্ট। মোট ${author.entries.length}টি পোস্ট।`}
   url={siteUrl}
+  image="/social-share-default.svg"
   jsonLd={jsonLd}
 >
   <Breadcrumb items={breadcrumbItems} />

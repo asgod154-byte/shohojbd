@@ -3,14 +3,24 @@ import Layout from "../layouts/Layout.astro";
 import PostCard from "../components/PostCard.astro";
 import SearchBox from "../components/SearchBox.astro";
 import { getAllPosts } from "../lib/content";
+import { buildBreadcrumbJsonLd } from "../lib/schema";
 
 const allPosts = await getAllPosts();
 const suggested = allPosts
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
   .slice(0, 3);
+
+const jsonLd = buildBreadcrumbJsonLd([{ title: "হোম", href: "/" }]);
 ---
 
-<Layout title="পেজটি পাওয়া যায়নি" description="আপনি যে পেজটি খুঁজছেন তা পাওয়া যায়নি।">
+<Layout
+  title="পেজটি পাওয়া যায়নি"
+  description="আপনি যে পেজটি খুঁজছেন তা পাওয়া যায়নি।"
+  url="https://shohojbd.pages.dev/404/"
+  image="/social-share-default.svg"
+  jsonLd={jsonLd}
+  noindex={true}
+>
   <div class="container mx-auto px-4 py-24 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center shadow-sm sm:p-10">
       <div class="mb-4 text-7xl font-black text-[var(--primary)]">৪০৪</div>

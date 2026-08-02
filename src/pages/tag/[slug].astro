@@ -37,6 +37,7 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
   title={`ট্যাগ: ${tag.label}`}
   description={`${tag.label} ট্যাগের সব পোস্ট। মোট ${tag.entries.length}টি পোস্ট।`}
   url={siteUrl}
+  image="/social-share-default.svg"
   jsonLd={jsonLd}
 >
   <Breadcrumb items={breadcrumbItems} />

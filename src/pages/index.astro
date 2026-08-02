@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import PostCard from "../components/PostCard.astro";
 import SearchBox from "../components/SearchBox.astro";
 import { getTopPostsLastDay, getRecentPosts, getAllPosts, buildTaxonomyIndex, getCollectionRoute, slugify, formatDate } from "../lib/content";
-import { buildOrganizationJsonLd } from "../lib/schema";
+import { buildOrganizationJsonLd, buildBreadcrumbJsonLd } from "../lib/schema";
 
 const topPostsLastDay = await getTopPostsLastDay(3);
 const featured = topPostsLastDay.length > 0 ? topPostsLastDay : await getRecentPosts(3);
@@ -14,7 +14,10 @@ const popularTags = Array.from(tags.entries())
   .sort((a, b) => b[1].entries.length - a[1].entries.length)
   .slice(0, 12);
 
-const jsonLd = buildOrganizationJsonLd();
+const jsonLd = [
+  buildOrganizationJsonLd(),
+  buildBreadcrumbJsonLd([{ title: "হোম", href: "/" }]),
+];
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -37,7 +40,9 @@ const websiteJsonLd = {
 <Layout
   title="Shohoj BD"
   description="বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ। সহজ এবং দ্রুত খোঁজার জন্য তৈরি।"
-  jsonLd={jsonLd}
+  url="https://shohojbd.pages.dev/"
+  image="/social-share-default.svg"
+  jsonLd={jsonLd.length === 1 ? jsonLd[0] : jsonLd}
 >
   <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
   {/* Hero Section */}

@@ -13,6 +13,13 @@ interface Props {
   image?: string;
   jsonLd?: any;
   alternateTag?: boolean;
+  noindex?: boolean;
+  article?: boolean;
+  pubDate?: string;
+  updatedDate?: string;
+  author?: string;
+  category?: string;
+  tags?: string[];
 }
 
 const {
@@ -22,9 +29,14 @@ const {
   image = "/social-share-default.svg",
   jsonLd,
   alternateTag = false,
+  noindex = false,
+  article = false,
+  pubDate,
+  updatedDate,
+  author,
+  category,
+  tags,
 } = Astro.props;
-
-const pageTitle = title === "Shohoj BD" ? title : `${title} | Shohoj BD`;
 ---
 
 <!doctype html>
@@ -57,12 +69,19 @@ const pageTitle = title === "Shohoj BD" ? title : `${title} | Shohoj BD`;
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
       </noscript>
     <Meta
-      title={pageTitle}
+      title={title}
       description={description}
       url={url}
       image={image}
       alternateTag={alternateTag}
       jsonLd={jsonLd}
+      noindex={noindex}
+      article={article}
+      pubDate={pubDate}
+      updatedDate={updatedDate}
+      author={author}
+      category={category}
+      tags={tags}
     />
     <style>
       /* Minimal critical CSS to reduce render-blocking and CLS */
