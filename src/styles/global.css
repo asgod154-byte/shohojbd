@@ -9,7 +9,7 @@
 
   --container-sm: 40rem;
   --container-md: 48rem;
-  --container-lg: 64rem;
+  --container-lg: 72rem;
   --container-xl: 80rem;
   --container-2xl: 96rem;
 }
@@ -42,8 +42,8 @@
 @media (width >= 64rem) {
   .container {
     max-width: var(--container-lg);
-    padding-right: 2rem;
-    padding-left: 2rem;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
   }
 }
 
@@ -429,3 +429,4 @@ details summary {
     }
   }
 }
+
