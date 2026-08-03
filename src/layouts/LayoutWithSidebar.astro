@@ -53,7 +53,7 @@ const allPosts = await getAllPosts();
   category={category}
   tags={tags}
 >
-  <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+  <div class="container mx-auto py-8">
     <div class="grid gap-8 lg:grid-cols-[1fr_360px]">
       <div class="min-w-0">
         <slot />
@@ -67,3 +67,5 @@ const allPosts = await getAllPosts();
     </div>
   </div>
 </Layout>
+
+
