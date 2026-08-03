@@ -13,16 +13,17 @@ export async function getStaticPaths() {
 
 const entries = await getAllPosts();
 const { categories } = buildTaxonomyIndex(entries);
-const { slug } = Astro.params;
-let category = categories.get(slug);
-if (!category) {
-  const normalizedParam = String(slug).normalize("NFKD");
-  category = Array.from(categories.values()).find((c) => {
-    const s = slugify(c.label);
-    return s === slug || s === normalizedParam;
-  });
-}
-if (!category) throw new Error(`Category ${slug} not found`);
+  const { slug } = Astro.params;
+  let category = categories.get(slug);
+  if (!category) {
+    category = Array.from(categories.values()).find((c) => {
+      const s = slugify(c.label);
+      return s === slug;
+    });
+  }
+  if (!category) {
+    return Astro.redirect('/404/');
+  }
 
 const siteUrl = `https://shohojbd.pages.dev/category/${slug}/`;
 const breadcrumbItems = [
@@ -42,11 +43,11 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
 >
   <Breadcrumb items={breadcrumbItems} />
   <section class="mb-8">
-    <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">ক্যাটাগরি: {category.label}</h1>
-    <p class="mt-3 text-lg text-slate-600">এই ক্যাটাগরির {category.entries.length}টি পোস্ট।</p>
+    <h1 class="text-3xl font-extrabold text-[var(--text)] sm:text-4xl">ক্যাটাগরি: {category.label}</h1>
+    <p class="mt-3 text-lg text-[var(--text-muted)]">এই ক্যাটাগরির {category.entries.length}টি পোস্ট।</p>
   </section>
   <section class="grid gap-6 sm:grid-cols-2">
-    {category.entries.map((entry) => (
+    {category.entries.map((entry: any) => (
       <PostCard post={entry} variant="vertical" />
     ))}
   </section>

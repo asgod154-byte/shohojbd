@@ -11,7 +11,7 @@ const { postId, title, url } = Astro.props;
 <button
   id={`save-btn-${postId}`}
   type="button"
-  class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-gray-700 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-gray-800 transition"
+  class="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm font-medium text-[var(--text-muted)] hover:bg-[var(--surface-muted)] transition"
   data-post-id={postId}
   data-post-title={title}
   data-post-url={url}
@@ -35,14 +35,14 @@ const { postId, title, url } = Astro.props;
     }
   }
 
-  function savePosts(posts) {
+  function savePosts(posts: { id: string; title: string; url: string; savedAt: string }[]) {
     localStorage.setItem('shohojbd_saved', JSON.stringify(posts));
   }
 
-  function updateButton(button) {
+  function updateButton(button: HTMLButtonElement) {
     const postId = button.dataset.postId;
     const saved = getSavedPosts();
-    const isSaved = saved.some((p) => p.id === postId);
+    const isSaved = saved.some((p: { id: string }) => p.id === postId);
     const outlineIcon = button.querySelector('.save-icon-outline');
     const filledIcon = button.querySelector('.save-icon-filled');
     const label = button.querySelector('.save-label');
@@ -52,22 +52,22 @@ const { postId, title, url } = Astro.props;
       filledIcon?.classList.remove('hidden');
       if (label) label.textContent = 'সংরক্ষিত';
       button.classList.add('text-emerald-600', 'dark:text-emerald-400');
-      button.classList.remove('text-slate-600', 'dark:text-gray-400');
+      button.classList.remove('text-[var(--text-muted)]', 'dark:text-gray-400');
     } else {
       outlineIcon?.classList.remove('hidden');
       filledIcon?.classList.add('hidden');
       if (label) label.textContent = 'সংরক্ষণ করুন';
       button.classList.remove('text-emerald-600', 'dark:text-emerald-400');
-      button.classList.add('text-slate-600', 'dark:text-gray-400');
+      button.classList.add('text-[var(--text-muted)]', 'dark:text-gray-400');
     }
   }
 
-  function toggleSave(button) {
+  function toggleSave(button: HTMLButtonElement) {
     const postId = button.dataset.postId;
     const title = button.dataset.postTitle;
     const url = button.dataset.postUrl;
     let saved = getSavedPosts();
-    const index = saved.findIndex((p) => p.id === postId);
+    const index = saved.findIndex((p: { id: string }) => p.id === postId);
 
     if (index >= 0) {
       saved.splice(index, 1);
@@ -79,17 +79,18 @@ const { postId, title, url } = Astro.props;
     updateButton(button);
   }
 
-  document.addEventListener('astro:page-load', () => {
+  function initSaveButtons() {
     document.querySelectorAll('[data-post-id]').forEach((btn) => {
-      updateButton(btn);
-      btn.addEventListener('click', () => toggleSave(btn));
+      updateButton(btn as HTMLButtonElement);
+      btn.addEventListener('click', () => toggleSave(btn as HTMLButtonElement));
     });
-  });
+  }
 
-  document.addEventListener('astro:after-swap', () => {
-    document.querySelectorAll('[data-post-id]').forEach((btn) => {
-      updateButton(btn);
-      btn.addEventListener('click', () => toggleSave(btn));
-    });
+  initSaveButtons();
+  document.addEventListener('astro:page-load', initSaveButtons);
+
+  const observer = new MutationObserver(() => {
+    initSaveButtons();
   });
+  observer.observe(document.body, { childList: true, subtree: true });
 </script>

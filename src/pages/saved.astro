@@ -1,5 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getAllPosts } from "../lib/content";
+
+const allPosts = await getAllPosts();
+const postsData = allPosts.map((p) => ({
+  slug: p.slug || p.id.replace(/\.md$/, ''),
+  title: p.data.title,
+  description: p.data.description,
+  pubDate: p.data.pubDate,
+  image: p.data.coverImage,
+  category: p.data.category,
+  url: `/${p.collection}/${p.slug || p.id.replace(/\.md$/, '')}/`,
+}));
 ---
 
 <Layout
@@ -9,86 +21,61 @@ import Layout from "../layouts/Layout.astro";
   image="/social-share-default.svg"
 >
   <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl mb-2">📚 সংরক্ষিত পোস্ট</h1>
-    <p class="mb-8 text-lg text-slate-600 dark:text-gray-400" id="saved-count">লোড হচ্ছে...</p>
+    <h1 class="text-3xl font-extrabold text-[var(--text)] sm:text-4xl mb-2">📚 সংরক্ষিত পোস্ট</h1>
+    <p class="mb-8 text-lg text-[var(--text-muted)]" id="saved-count">লোড হচ্ছে...</p>
 
     <div id="saved-posts" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <div class="col-span-full rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
-        <p class="text-slate-600 dark:text-gray-400">লোড হচ্ছে...</p>
+      <div class="col-span-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center">
+        <p class="text-[var(--text-muted)]">লোড হচ্ছে...</p>
       </div>
+    </div>
+
+    <div id="no-saved" class="hidden text-center py-12">
+      <p class="text-lg text-[var(--text-muted)]">কোনো পোস্ট সেভ করা হয়নি।</p>
+      <a href="/" class="text-[var(--primary)] hover:underline mt-2 inline-block">পোস্ট দেখতে যান</a>
     </div>
   </div>
 </Layout>
 
-<script slot="scripts">
-  function getSavedPosts() {
-    try {
-      return JSON.parse(localStorage.getItem("shohojbd_saved") || "[]");
-    } catch {
-      return [];
+<script define:vars={{ postsData }}>
+  (function() {
+    function getSavedPosts() {
+      try {
+        return JSON.parse(localStorage.getItem('shohojbd_saved') || '[]');
+      } catch {
+        return [];
+      }
     }
-  }
 
-  async function loadSavedPosts() {
-    const countEl = document.getElementById("saved-count");
-    const container = document.getElementById("saved-posts");
-    if (!countEl || !container) return;
-
+    const container = document.getElementById('saved-posts');
+    const noSaved = document.getElementById('no-saved');
+    const countEl = document.getElementById('saved-count');
     const saved = getSavedPosts();
-    countEl.textContent = saved.length > 0 ? `আপনার সংরক্ষিত পোস্ট ${saved.length}টি।` : "আপনার সংরক্ষিত পোস্ট এখনো নেই।";
+
+    countEl.textContent = saved.length > 0 ? `আপনার সংরক্ষিত পোস্ট ${saved.length}টি।` : 'আপনার সংরক্ষিত পোস্ট এখনো নেই।';
 
     if (saved.length === 0) {
-      container.innerHTML = `
-        <div class="col-span-full rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
-          <p class="text-slate-600 dark:text-gray-400">কোনো সংরক্ষিত পোস্ট নেই। পোস্ট দেখুন এবং বুকমার্ক করুন।</p>
-          <a href="/" class="mt-4 inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
-            হোমপেজে যান
-          </a>
-        </div>
-      `;
+      container.innerHTML = '';
+      noSaved.classList.remove('hidden');
       return;
     }
 
-    try {
-      const response = await fetch("/sitemap.xml");
-      const text = await response.text();
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(text, "application/xml");
-      const urls = xml.querySelectorAll("url > loc");
-      const sitemapUrls = Array.from(urls).map((u) => u.textContent || "");
+    const savedUrls = saved.map(s => s.url);
+    const savedPosts = postsData.filter((p) => savedUrls.includes(p.url));
 
-      const postUrls = saved.map((s) => s.url);
-      const matchedUrls = sitemapUrls.filter((url) => postUrls.some((pu) => url.includes(pu.replace("https://shohojbd.pages.dev", ""))));
-
-      if (matchedUrls.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
-            <p class="text-slate-600 dark:text-gray-400">সংরক্ষিত পোস্ট লোড করা যায়নি।</p>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = matchedUrls.map((url) => {
-        const savedPost = saved.find((s) => url.includes(s.url.replace("https://shohojbd.pages.dev", "")));
-        const path = url.replace("https://shohojbd.pages.dev", "");
-        return `
-          <div class="rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 hover:shadow-lg transition">
-            <a href="${url}" class="block">
-              <p class="text-sm font-medium text-slate-900 dark:text-white">${savedPost ? savedPost.title : path}</p>
-              <p class="mt-1 text-xs text-slate-500 dark:text-gray-400">${new Date(savedPost ? savedPost.savedAt : Date.now()).toLocaleDateString("bn-BD")}</p>
-            </a>
-          </div>
-        `;
-      }).join("");
-    } catch (e) {
-      container.innerHTML = `
-        <div class="col-span-full rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
-          <p class="text-slate-600 dark:text-gray-400">পোস্ট লোড করতে সমস্যা হয়েছে।</p>
-        </div>
-      `;
+    if (savedPosts.length === 0) {
+      container.innerHTML = '';
+      noSaved.classList.remove('hidden');
+      return;
     }
-  }
 
-  loadSavedPosts();
+    container.innerHTML = savedPosts.map((post) => `
+      <article class="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 hover:shadow-lg transition">
+        <a href="${post.url}" class="block">
+          <p class="text-sm font-medium text-[var(--text)]">${post.title}</p>
+          <p class="mt-1 text-xs text-[var(--text-muted)]">${new Date(post.pubDate).toLocaleDateString('bn-BD')}</p>
+        </a>
+      </article>
+    `).join('');
+  })();
 </script>

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && npx pagefind --site dist",
+    "build": "astro build && npx pagefind --site dist && node scripts/generate-sw.js",
     "preview": "astro preview"
   },
   "repository": {
@@ -28,16 +28,21 @@
   },
   "homepage": "https://shohojbd.pages.dev",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.7.3",
+    "astro-compress": "^2.4.1",
+    "pagefind": "^1.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.1.5",
-    "astro-compress": "^2.4.1",
-    "pagefind": "^1.1.0",
     "sharp": "^0.35.3",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "workbox-build": "^7.4.1"
   }
 }

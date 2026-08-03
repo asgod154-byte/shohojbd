@@ -2,17 +2,14 @@ import { getCollection } from "astro:content";
 
 export const siteBase = "https://shohojbd.pages.dev";
 
-export function slugify(value: any): string {
-  return String(value)
+export function slugify(text: string): string {
+  return text
+    .toString()
     .trim()
     .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u0000-\u001F\u007F-\u009F]/g, "")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/[^\p{L}\p{M}\p{N}-]+/gu, "")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\u0980-\u09FF-]+/g, '')
+    .replace(/--+/g, '-');
 }
 
 export function getCollectionRoute(collectionName: string): string {
@@ -69,18 +66,16 @@ export async function getRecentPosts(limit = 5): Promise<any[]> {
     .slice(0, limit);
 }
 
-export async function getTopPostsLastDay(limit = 3): Promise<any[]> {
-  const all = await getAllPosts();
-  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
-  return all
-    .filter((p) => new Date(p.data.pubDate).getTime() >= oneDayAgo)
-    .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
-    .slice(0, limit);
+export async function getTopPostsLastDay(limit = 5): Promise<any[]> {
+  const posts = await getAllPosts();
+  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const recent = posts.filter((p) => new Date(p.data.pubDate).getTime() >= oneDayAgo.getTime());
+  return recent.length > 0 ? recent.slice(0, limit) : getRecentPosts(limit);
 }
 
 export async function getPostsByCollection(collectionName: string): Promise<any[]> {
   const posts = await getCollection(collectionName as any);
-  return posts.filter((e) => !e.data.draft);
+  return posts.filter((e) => !(e as { data: { draft: boolean } }).data.draft);
 }
 
 export function formatDate(date: Date | string): string {
@@ -92,20 +87,12 @@ export function formatDate(date: Date | string): string {
   });
 }
 
-export function estimateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
-  const text = content.replace(/<[^>]*>/g, "");
-  const wordCount = text.split(/\s+/).length;
-  return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
-}
-
 export function truncate(text: string, length = 120): string {
   if (text.length <= length) return text;
   return text.slice(0, length).trim() + "...";
 }
 
 function addTaxonomy(map: Map<string, any>, label: string, entry: any): void {
-  if (!label) return;
   const slug = slugify(label);
   const normalizedLabel = String(label).trim();
   const existing = map.get(slug);

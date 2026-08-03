@@ -87,6 +87,24 @@
         ]
       }
     },
+    "steps": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "description"
+        ]
+      }
+    },
     "draft": {
       "default": false,
       "type": "boolean"

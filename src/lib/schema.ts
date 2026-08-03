@@ -2,6 +2,7 @@ export function buildBreadcrumbJsonLd(items: Array<{ title: string; href: string
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    inLanguage: "bn-BD",
     itemListElement: items.map((it, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -11,10 +12,11 @@ export function buildBreadcrumbJsonLd(items: Array<{ title: string; href: string
   };
 }
 
-export function buildArticleJsonLd({ title, description, url, pubDate, updatedDate, author, image }) {
+export function buildArticleJsonLd({ title, description, url, pubDate, updatedDate, author, image }: { title: string; description: string; url: string; pubDate: string; updatedDate: string | undefined; author: string; image: string | undefined }) {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    inLanguage: "bn-BD",
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": url,
@@ -23,8 +25,9 @@ export function buildArticleJsonLd({ title, description, url, pubDate, updatedDa
     description,
     image: image || "https://shohojbd.pages.dev/social-share-default.svg",
     author: {
-      "@type": "Organization",
+      "@type": "Person",
       name: author,
+      url: "https://shohojbd.pages.dev",
     },
     datePublished: new Date(pubDate).toISOString(),
     dateModified: updatedDate ? new Date(updatedDate).toISOString() : new Date(pubDate).toISOString(),
@@ -45,6 +48,7 @@ export function buildFaqJsonLd(faq: Array<{ question: string; answer: string }> 
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    inLanguage: "bn-BD",
     mainEntity: faq.map((item) => ({
       "@type": "Question",
       name: item.question,
@@ -61,6 +65,7 @@ export function buildHowToJsonLd({ title, description, url, steps }: { title: st
   return {
     "@context": "https://schema.org",
     "@type": "HowTo",
+    inLanguage: "bn-BD",
     name: title,
     description,
     url,
@@ -77,6 +82,7 @@ export function buildOrganizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    inLanguage: "bn-BD",
     name: "Shohoj BD",
     url: "https://shohojbd.pages.dev",
     logo: "https://shohojbd.pages.dev/favicon_io/favicon-32x32.png",

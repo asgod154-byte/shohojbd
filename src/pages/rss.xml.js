@@ -15,7 +15,7 @@ export async function GET(context) {
       title: post.data.title,
       pubDate: post.data.pubDate,
       description: post.data.description,
-      link: getEntryUrl(post).replace("https://shohojbd.pages.dev", ""),
+      link: getEntryUrl(post),
       author: post.data.author || "Shohoj BD",
       categories: [post.data.category, ...post.data.tags],
     })),

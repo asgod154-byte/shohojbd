@@ -13,15 +13,14 @@ export async function getStaticPaths() {
 
 const entries = await getAllPosts();
 const { tags } = buildTaxonomyIndex(entries);
-const { slug } = Astro.params;
-let tag = tags.get(slug);
-if (!tag) {
-  const normalizedParam = String(slug).normalize("NFKD");
-  tag = Array.from(tags.values()).find((t) => {
-    const s = slugify(t.label);
-    return s === slug || s === normalizedParam;
-  });
-}
+  const { slug } = Astro.params;
+  let tag = tags.get(slug);
+  if (!tag) {
+    tag = Array.from(tags.values()).find((t) => {
+      const s = slugify(t.label);
+      return s === slug;
+    });
+  }
 if (!tag) throw new Error(`Tag ${slug} not found`);
 
 const siteUrl = `https://shohojbd.pages.dev/tag/${slug}/`;
@@ -42,11 +41,11 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
 >
   <Breadcrumb items={breadcrumbItems} />
   <section class="mb-8">
-    <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">ট্যাগ: {tag.label}</h1>
-    <p class="mt-3 text-lg text-slate-600">এই ট্যাগের {tag.entries.length}টি পোস্ট।</p>
+    <h1 class="text-3xl font-extrabold text-[var(--text)] sm:text-4xl">ট্যাগ: {tag.label}</h1>
+    <p class="mt-3 text-lg text-[var(--text-muted)]">এই ট্যাগের {tag.entries.length}টি পোস্ট।</p>
   </section>
   <section class="grid gap-6 sm:grid-cols-2">
-    {tag.entries.map((entry) => (
+    {tag.entries.map((entry: any) => (
       <PostCard post={entry} variant="vertical" />
     ))}
   </section>

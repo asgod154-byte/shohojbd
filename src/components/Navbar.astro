@@ -49,21 +49,30 @@ const navItems = [
       <nav class="hidden lg:flex items-center gap-1" aria-label="প্রধান নেভিগেশন">
         {navItems.map((item) => (
           <div class="relative group">
-            <a
-              href={item.href}
-              class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition hover:text-emerald-800"
-              style="color: var(--text-muted);"
-              aria-haspopup={item.children ? "true" : undefined}
-            >
-              {item.label}
-              {item.children && (
+            {item.children ? (
+              <button
+                type="button"
+                class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition hover:text-emerald-800"
+                style="color: var(--text-muted);"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {item.label}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-60 group-hover:rotate-180 transition-transform duration-200">
                   <path d="M6 9l6 6 6-6"/>
                 </svg>
-              )}
-            </a>
+              </button>
+            ) : (
+              <a
+                href={item.href}
+                class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition hover:text-emerald-800"
+                style="color: var(--text-muted);"
+              >
+                {item.label}
+              </a>
+            )}
             {item.children && (
-              <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
                 <div class="rounded-xl border shadow-lg py-2 min-w-[200px]" style="border-color: var(--border); background: var(--surface);">
                   {item.children.map((child) => (
                     <a
@@ -110,46 +119,48 @@ const navItems = [
         </button>
 
         {/* Mobile Menu Toggle */}
-        <details class="lg:hidden group relative">
-          <summary
-            class="inline-flex items-center justify-center w-9 h-9 rounded-lg transition cursor-pointer list-none hover:text-emerald-700"
-            style="color: var(--text-muted);"
-            aria-label="মেনু খুলুন"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-open:hidden">
-              <path d="M3 12h18M3 6h18M3 18h18"/>
-            </svg>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-open:block">
-              <path d="M18 6 6 18M6 6l12 12"/>
-            </svg>
-          </summary>
-          <div class="absolute right-0 top-full mt-2 w-64 rounded-xl border shadow-xl p-2 z-50" style="border-color: var(--border); background: var(--surface);">
-            {navItems.map((item) => (
-              <div>
-                <a
-                  href={item.href}
-                  class="block rounded-lg px-4 py-2.5 text-sm font-medium transition hover:text-emerald-800"
-                  style="color: var(--text-muted);"
-                >
-                  {item.label}
-                </a>
-                {item.children && (
-                  <div class="ml-4 border-l-2 pl-2 mt-1 mb-1" style="border-left-color: var(--border);">
-                    {item.children.map((child) => (
-                      <a
-                        href={child.href}
-                        class="block rounded-lg px-4 py-2 text-sm transition hover:text-emerald-700"
-                        style="color: var(--text-muted);"
-                      >
-                        {child.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </details>
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg transition cursor-pointer hover:text-emerald-700"
+          style="color: var(--text-muted);"
+          aria-label="মেনু খুলুন"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg id="menu-open-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+          </svg>
+          <svg id="menu-close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <div id="mobile-menu" class="lg:hidden hidden absolute right-0 top-full mt-2 w-64 rounded-xl border shadow-xl p-2 z-50" style="border-color: var(--border); background: var(--surface);">
+          {navItems.map((item) => (
+            <div>
+              <a
+                href={item.href}
+                class="block rounded-lg px-4 py-2.5 text-sm font-medium transition hover:text-emerald-800"
+                style="color: var(--text-muted);"
+              >
+                {item.label}
+              </a>
+              {item.children && (
+                <div class="ml-4 border-l-2 pl-2 mt-1 mb-1" style="border-left-color: var(--border);">
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      class="block rounded-lg px-4 py-2 text-sm transition hover:text-emerald-700"
+                      style="color: var(--text-muted);"
+                    >
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
@@ -193,6 +204,63 @@ const navItems = [
     }
   }
 
+  function initDesktopDropdowns() {
+    document.querySelectorAll('.group > button[aria-haspopup="true"]').forEach((btn) => {
+      if (btn.getAttribute('data-bound') === 'true') return;
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+      });
+
+      btn.setAttribute('data-bound', 'true');
+    });
+  }
+
+  function initMobileMenu() {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const openIcon = document.getElementById('menu-open-icon');
+    const closeIcon = document.getElementById('menu-close-icon');
+
+    if (!menuBtn || !mobileMenu) return;
+
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      if (isOpen) {
+        mobileMenu.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        openIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.setAttribute('aria-expanded', 'true');
+        openIcon?.classList.add('hidden');
+        closeIcon?.classList.remove('hidden');
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.classList.contains('hidden') &&
+          !mobileMenu.contains(e.target as Node) &&
+          e.target !== menuBtn &&
+          !menuBtn?.contains(e.target as Node)) {
+        mobileMenu.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        openIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      }
+    });
+  }
+
   initThemeToggle();
-  document.addEventListener('astro:after-swap', initThemeToggle);
+  initDesktopDropdowns();
+  initMobileMenu();
+  document.addEventListener('astro:after-swap', () => {
+    initThemeToggle();
+    initDesktopDropdowns();
+    initMobileMenu();
+  });
 </script>

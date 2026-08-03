@@ -30,6 +30,9 @@ const postSchema = z.object({
   faq: z
     .array(z.object({ question: z.string(), answer: z.string() }))
     .default([]),
+  steps: z
+    .array(z.object({ title: z.string().optional(), description: z.string() }))
+    .default([]),
   draft: z.boolean().default(false),
 });
 

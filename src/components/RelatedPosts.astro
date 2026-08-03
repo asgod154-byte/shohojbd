@@ -12,7 +12,7 @@ const related = posts
   .filter((p) => p.id !== currentPost.id)
   .filter((p) => {
     const sameCategory = p.data.category === currentPost.data.category;
-    const sameTags = (p.data.tags || []).some((t) => (currentPost.data.tags || []).includes(t));
+    const sameTags = (p.data.tags || []).some((t: any) => (currentPost.data.tags || []).includes(t));
     return sameCategory || sameTags;
   })
   .slice(0, 3);

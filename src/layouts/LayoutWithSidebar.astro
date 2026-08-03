@@ -1,6 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import Sidebar from "../components/Sidebar.astro";
+import { getAllPosts } from "../lib/content";
 
 interface Props {
   title?: string;
@@ -20,9 +21,9 @@ interface Props {
 
 const {
   title,
-  description,
-  url,
-  image,
+  description = "বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের জন্য একটি পেশাদার বাংলা ব্লগ। সহজ এবং দ্রুত খোঁজার জন্য তৈরি।",
+  url = "https://shohojbd.pages.dev/",
+  image = "/social-share-default.svg",
   jsonLd,
   alternateTag = false,
   noindex = false,
@@ -33,6 +34,8 @@ const {
   category,
   tags,
 } = Astro.props;
+
+const allPosts = await getAllPosts();
 ---
 
 <Layout
@@ -57,7 +60,7 @@ const {
       </div>
       <aside class="hidden lg:block">
         <div class="sticky top-24 space-y-6">
-          <Sidebar />
+          <Sidebar posts={allPosts} />
           <slot name="sidebar" />
         </div>
       </aside>

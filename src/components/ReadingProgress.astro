@@ -7,17 +7,25 @@
   ></div>
 </div>
 
-<script is:inline>
-  (function() {
-    const bar = document.getElementById('reading-progress');
-    if (!bar) return;
+<script>
+  function initReadingProgress() {
+    const progressBar = document.getElementById('reading-progress');
+    if (!progressBar) return;
+
     function updateProgress() {
+      const bar = progressBar;
+      if (!bar) return;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
       bar.style.width = progress + '%';
     }
+
+    window.removeEventListener('scroll', updateProgress);
     window.addEventListener('scroll', updateProgress, { passive: true });
     updateProgress();
-  })();
+  }
+
+  initReadingProgress();
+  document.addEventListener('astro:page-load', initReadingProgress);
 </script>

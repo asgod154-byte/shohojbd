@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import { getCollectionRoute, slugify, formatDate, estimateReadingTime } from "../lib/content";
+import { getCollectionRoute, slugify, formatDate } from "../lib/content";
+import { estimateReadingTime } from "../lib/utils";
 
 interface Props {
   post: any;

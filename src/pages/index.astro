@@ -87,7 +87,7 @@ const websiteJsonLd = {
   {featured.length > 0 && (
     <section class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between mb-8">
-        <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h2 class="text-2xl font-bold text-[var(--text)] flex items-center gap-2">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           ফিচার্ড পোস্ট
         </h2>
@@ -101,10 +101,10 @@ const websiteJsonLd = {
   )}
 
   {/* Latest Posts */}
-  <section class="bg-slate-100/50">
+  <section class="bg-[var(--surface-alt)]">
     <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between mb-8">
-        <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h2 class="text-2xl font-bold text-[var(--text)] flex items-center gap-2">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
           সাম্প্রতিক পোস্ট
         </h2>
@@ -123,31 +123,31 @@ const websiteJsonLd = {
 
   {/* Category Cards */}
   <section class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    <h2 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-2">
+    <h2 class="text-2xl font-bold text-[var(--text)] mb-8 flex items-center gap-2">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
       ক্যাটাগরি অনুযায়ী ব্রাউজ করুন
     </h2>
     <div class="grid gap-6 sm:grid-cols-3">
-      <a href="/sorkari-seba/" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:shadow-lg hover:-translate-y-0.5">
+      <a href="/sorkari-seba/" class="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 transition hover:shadow-lg hover:-translate-y-0.5">
         <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-4 group-hover:bg-emerald-200 transition">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-700"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         </div>
-        <h3 class="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition">সরকারি সেবা</h3>
-        <p class="mt-2 text-sm text-slate-600">NID, জন্ম নিবন্ধন, চাকরি ও অন্যান্য সরকারি সেবার তথ্য।</p>
+        <h3 class="text-lg font-bold text-[var(--text)] group-hover:text-emerald-700 transition">সরকারি সেবা</h3>
+        <p class="mt-2 text-sm text-[var(--text-muted)]">NID, জন্ম নিবন্ধন, চাকরি ও অন্যান্য সরকারি সেবার তথ্য।</p>
       </a>
-      <a href="/exam-o-vorti/" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:shadow-lg hover:-translate-y-0.5">
+      <a href="/exam-o-vorti/" class="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 transition hover:shadow-lg hover:-translate-y-0.5">
         <div class="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center mb-4 group-hover:bg-sky-200 transition">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-sky-700"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.657 2.239 3 5 3s5-1.343 5-3v-5"/></svg>
         </div>
-        <h3 class="text-lg font-bold text-slate-900 group-hover:text-sky-700 transition">পরীক্ষা ও ভর্তি</h3>
-        <p class="mt-2 text-sm text-slate-600">বিসিএস, বিশ্ববিদ্যালয় ভর্তি ও শিক্ষা সংক্রান্ত সব তথ্য।</p>
+        <h3 class="text-lg font-bold text-[var(--text)] group-hover:text-sky-700 transition">পরীক্ষা ও ভর্তি</h3>
+        <p class="mt-2 text-sm text-[var(--text-muted)]">বিসিএস, বিশ্ববিদ্যালয় ভর্তি ও শিক্ষা সংক্রান্ত সব তথ্য।</p>
       </a>
-      <a href="/local-guide/" class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:shadow-lg hover:-translate-y-0.5">
+      <a href="/local-guide/" class="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 transition hover:shadow-lg hover:-translate-y-0.5">
         <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center mb-4 group-hover:bg-amber-200 transition">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-amber-700"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 1.892.402 3.13 1.5 4.5L12 22l6.5-7.5c1.098-1.37 1.5-2.608 1.5-4.5a8 8 0 0 0-8-8z"/></svg>
         </div>
-        <h3 class="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition">স্থানীয় গাইড</h3>
-        <p class="mt-2 text-sm text-slate-600">পরিবহন, ভ্রমণ ও স্থানীয় সেবার তথ্য ও নির্দেশনা।</p>
+        <h3 class="text-lg font-bold text-[var(--text)] group-hover:text-amber-700 transition">স্থানীয় গাইড</h3>
+        <p class="mt-2 text-sm text-[var(--text-muted)]">পরিবহন, ভ্রমণ ও স্থানীয় সেবার তথ্য ও নির্দেশনা।</p>
       </a>
     </div>
   </section>

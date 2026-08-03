@@ -13,16 +13,17 @@ export async function getStaticPaths() {
 
 const entries = await getAllPosts();
 const { authors } = buildTaxonomyIndex(entries);
-const { slug } = Astro.params;
-let author = authors.get(slug);
-if (!author) {
-  const normalizedParam = String(slug).normalize("NFKD");
-  author = Array.from(authors.values()).find((a) => {
-    const s = slugify(a.label);
-    return s === slug || s === normalizedParam;
-  });
-}
-if (!author) throw new Error(`Author ${slug} not found`);
+  const { slug } = Astro.params;
+  let author = authors.get(slug);
+  if (!author) {
+    author = Array.from(authors.values()).find((a) => {
+      const s = slugify(a.label);
+      return s === slug;
+    });
+  }
+  if (!author) {
+    return Astro.redirect('/404/');
+  }
 
 const siteUrl = `https://shohojbd.pages.dev/author/${slug}/`;
 const breadcrumbItems = [
@@ -47,18 +48,18 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
         {author.label.charAt(0)}
       </div>
       <div>
-        <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">
+        <h1 class="text-3xl font-extrabold text-[var(--text)] sm:text-4xl">
           {author.label}
           <span class="inline-flex items-center text-emerald-600 ml-2" title="Verified author" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
           </span>
         </h1>
-        <p class="mt-1 text-lg text-slate-600">{author.entries.length}টি পোস্ট</p>
+        <p class="mt-1 text-lg text-[var(--text-muted)]">{author.entries.length}টি পোস্ট</p>
       </div>
     </div>
   </section>
   <section class="grid gap-6 sm:grid-cols-2">
-    {author.entries.map((entry) => (
+    {author.entries.map((entry: any) => (
       <PostCard post={entry} variant="vertical" />
     ))}
   </section>

@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 /* Enables `dark:` Tailwind variants to work with the site's existing [data-theme="dark"] attribute */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
   --font-bangla: 'Noto Sans Bengali', 'Noto Sans Bengali UI', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color-scheme: light;
   font-family: var(--font-bangla);
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: var(--surface-muted);
+  color: var(--text);
   --surface: #ffffff;
   --surface-muted: #f8fafc;
   --border: #e2eceb;
@@ -22,8 +22,8 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
-  background-color: #0f172a;
-  color: #f1f5f9;
+  background-color: var(--surface);
+  color: var(--text);
   --surface: #111827;
   --surface-muted: #0f172a;
   --border: #334155;
@@ -288,7 +288,7 @@ a {
 }
 
 .prose a:hover {
-  color: #047857;
+  color: var(--accent-strong);
 }
 
 /* Line clamp utilities */

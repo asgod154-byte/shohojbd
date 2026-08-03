@@ -1,71 +1,51 @@
-const CACHE_NAME = 'shohojbd-v3';
-const STATIC_ASSETS = [
-  '/',
-  '/offline/',
-  '/sorkari-seba/',
-  '/exam-o-vorti/',
-  '/local-guide/',
-  '/about/',
-  '/contact/',
-  '/privacy/',
-  '/favicon_io/favicon.ico',
-  '/manifest.json',
-  '/robots.txt',
-  '/social-share-default.svg'
-];
+/// <reference lib="webworker" />
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { NetworkFirst, StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
+
+precacheAndRoute(self.__WB_MANIFEST);
+
+registerRoute(
+  ({ request }) => request.mode === 'navigate',
+  new NetworkFirst({
+    cacheName: 'shohojbd-pages-v1',
+  })
+);
+
+registerRoute(
+  ({ request }) =>
+    request.destination === 'script' ||
+    request.destination === 'style' ||
+    request.destination === 'font',
+  new StaleWhileRevalidate({
+    cacheName: 'shohojbd-static-v1',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 100,
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      }),
+    ],
+  })
+);
+
+registerRoute(
+  ({ request }) => request.destination === 'image',
+  new CacheFirst({
+    cacheName: 'shohojbd-images-v1',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      }),
+    ],
+  })
+);
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(STATIC_ASSETS))
-      .then(() => self.skipWaiting())
-  );
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
-      );
-    }).then(() => self.clients.claim())
-  );
-});
-
-self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  const url = new URL(request.url);
-
-  if (request.method !== 'GET') return;
-  if (url.origin !== self.location.origin) return;
-
-  if (request.mode === 'navigate' || request.headers.get('accept')?.includes('text/html')) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          return response;
-        })
-        .catch(async () => {
-          const cached = await caches.match(request);
-          if (cached) return cached;
-          return caches.match('/offline/');
-        })
-    );
-    return;
-  }
-
-  event.respondWith(
-    caches.match(request).then((response) => {
-      if (response) return response;
-      return fetch(request).then((fetchResponse) => {
-        const clone = fetchResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-        return fetchResponse;
-      }).catch(() => caches.match('/offline/'));
-    })
-  );
+  event.waitUntil(self.clients.claim());
 });

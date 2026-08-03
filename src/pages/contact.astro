@@ -8,6 +8,8 @@ const breadcrumbItems = [
   { title: "যোগাযোগ", href: "/contact/" },
 ];
 const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
+const FORMSPREE_ID = import.meta.env.FORMSPREE_ID || "";
+const isFormReady = FORMSPREE_ID.length > 0;
 ---
 
 <Layout
@@ -24,10 +26,9 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
       <p class="text-lg text-[var(--text-muted)] mb-8">যেকোনো প্রশ্ন, পরামর্শ বা ফিডব্যাকের জন্য নিচের ফর্মটি পূরণ করুন।</p>
 
       <form
-        action="https://formspree.io/f/YOUR_FORM_ID"
+        action={isFormReady ? `https://formspree.io/f/${FORMSPREE_ID}` : undefined}
         method="POST"
         class="space-y-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm sm:p-8"
-        onsubmit="event.preventDefault(); alert('ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে। শীঘ্রই উত্তর দেওয়া হবে।'); this.reset();"
       >
         <div>
           <label for="name" class="block text-sm font-medium text-[var(--text)] mb-1">নাম</label>
@@ -36,7 +37,7 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
             id="name"
             name="name"
             required
-            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            class="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
         <div>
@@ -46,7 +47,7 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
             id="email"
             name="email"
             required
-            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            class="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
         <div>
@@ -56,7 +57,7 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
             id="subject"
             name="subject"
             required
-            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            class="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
         <div>
@@ -69,12 +70,18 @@ const jsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
             class="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] resize-y"
           ></textarea>
         </div>
-        <button
-          type="submit"
-          class="w-full rounded-lg bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition"
-        >
-          বার্তা পাঠান
-        </button>
+        {isFormReady ? (
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition"
+          >
+            বার্তা পাঠান
+          </button>
+        ) : (
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800">
+            <p>📧 যোগাযোগ ফর্ম শীঘ্রই চালু হবে। জরুরি হলে সরাসরি ইমেইল করুন।</p>
+          </div>
+        )}
       </form>
 
       <div class="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">

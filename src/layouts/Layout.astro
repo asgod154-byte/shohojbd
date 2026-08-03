@@ -40,7 +40,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="bn" dir="ltr" data-theme="light">
+<html lang="bn" dir="ltr">
   <head>
     <script is:inline>
       const savedTheme = localStorage.getItem("theme");
@@ -173,17 +173,52 @@ const {
         });
 
         document.querySelectorAll(".prose img").forEach((img) => {
-          img.style.cursor = "zoom-in";
-          img.addEventListener("click", () => {
+          const htmlImg = img as HTMLImageElement;
+          htmlImg.style.cursor = "zoom-in";
+          htmlImg.addEventListener("click", () => {
             const backdrop = document.createElement("div");
             backdrop.className = "lightbox-backdrop";
             backdrop.setAttribute("role", "dialog");
             backdrop.setAttribute("aria-modal", "true");
-            const clone = img.cloneNode(true);
+            backdrop.setAttribute("aria-label", "Close lightbox");
+            const clone = htmlImg.cloneNode(true) as HTMLImageElement;
             clone.style.maxWidth = "100%";
             clone.style.maxHeight = "90vh";
+            const closeBtn = document.createElement("button");
+            closeBtn.type = "button";
+            closeBtn.setAttribute("aria-label", "Close lightbox");
+            closeBtn.textContent = "×";
+            closeBtn.style.cssText = "position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.9);border:none;border-radius:50%;width:2.5rem;height:2.5rem;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;";
+            const close = () => {
+              backdrop.remove();
+              (htmlImg as HTMLElement).focus();
+            };
+            closeBtn.addEventListener("click", close);
+            backdrop.appendChild(closeBtn);
             backdrop.appendChild(clone);
-            backdrop.addEventListener("click", () => backdrop.remove());
+            backdrop.addEventListener("click", (e) => {
+              if (e.target === backdrop) close();
+            });
+            document.addEventListener("keydown", function escHandler(e: KeyboardEvent) {
+              if (e.key === "Escape") {
+                close();
+                document.removeEventListener("keydown", escHandler);
+              }
+            });
+            const focusable = backdrop.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+            if (focusable.length > 0) {
+              (focusable[0] as HTMLElement).focus();
+              backdrop.addEventListener("keydown", (e: KeyboardEvent) => {
+                if (e.key !== "Tab") return;
+                const first = focusable[0] as HTMLElement;
+                const last = focusable[focusable.length - 1] as HTMLElement;
+                if (e.shiftKey) {
+                  if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+                } else {
+                  if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+                }
+              });
+            }
             document.body.appendChild(backdrop);
           });
         });

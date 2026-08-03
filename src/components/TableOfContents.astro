@@ -14,12 +14,13 @@ const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     style="border-color: var(--border); background: var(--surface);"
   >
     <h2 class="text-sm font-bold uppercase tracking-wider mb-3" style="color: var(--text-muted);">এই পোস্টের সূচিপত্র</h2>
-    <ul class="space-y-1.5">
+    <ul class="space-y-1.5" id="toc-list">
       {toc.map((heading) => (
         <li class={heading.depth === 3 ? "ml-4" : ""}>
           <a
             href={`#${heading.slug}`}
-            class="block text-sm transition py-0.5"
+            data-toc-slug={heading.slug}
+            class="block text-sm transition py-0.5 toc-link"
             style="color: var(--text-muted);"
           >
             {heading.text}
@@ -29,3 +30,47 @@ const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     </ul>
   </nav>
 )}
+
+<script>
+  const tocLinks = document.querySelectorAll('[data-toc-slug]');
+  const sections: { link: HTMLAnchorElement; el: HTMLElement }[] = [];
+  tocLinks.forEach((link) => {
+    const slug = link.getAttribute('data-toc-slug');
+    const el = document.getElementById(slug || '');
+    if (el instanceof HTMLElement && link instanceof HTMLAnchorElement) {
+      sections.push({ link, el });
+    }
+  });
+
+  if (sections.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          sections.forEach(({ link }) => { link.style.color = 'var(--text-muted)'; });
+          const active = sections.find(({ el }) => el === entry.target);
+          if (active) active.link.style.color = 'var(--primary)';
+        }
+      });
+    }, { rootMargin: '-80px 0px -70% 0px', threshold: 0.1 });
+
+    sections.forEach(({ el }) => observer.observe(el));
+
+    tocLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const slug = link.getAttribute('data-toc-slug') || '';
+        const target = document.getElementById(slug);
+        if (target instanceof HTMLElement) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', `#${slug}`);
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  .toc-link { text-decoration: none; }
+  .toc-link:hover { color: var(--primary); }
+</style>

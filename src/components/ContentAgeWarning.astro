@@ -1,0 +1,14 @@
+---
+interface Props {
+  pubDate: Date | string;
+}
+
+const { pubDate } = Astro.props;
+const daysSincePublish = (Date.now() - new Date(pubDate).getTime()) / (1000 * 60 * 60 * 24);
+---
+
+{daysSincePublish > 365 ? (
+  <div class="mt-6 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-200">
+    ⚠️ এই তথ্য এক বছরেরও বেশি পুরনো হতে পারে। সর্বশেষ তথ্যের জন্য অফিসিয়াল ওয়েবসাইট চেক করুন।
+  </div>
+) : null}
