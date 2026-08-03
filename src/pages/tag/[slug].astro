@@ -21,7 +21,9 @@ const { tags } = buildTaxonomyIndex(entries);
       return s === slug;
     });
   }
-if (!tag) throw new Error(`Tag ${slug} not found`);
+  if (!tag) {
+    return Astro.redirect('/404/');
+  }
 
 const siteUrl = `https://shohojbd.pages.dev/tag/${slug}/`;
 const breadcrumbItems = [

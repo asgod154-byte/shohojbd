@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+}
+
 /* Enables `dark:` Tailwind variants to work with the site's existing [data-theme="dark"] attribute */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -123,11 +131,6 @@ a {
 button,
 a {
   transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .section-surface {
