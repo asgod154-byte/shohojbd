@@ -11,6 +11,7 @@ const pages = [
   { path: "/sorkari-seba/", priority: "0.7", changefreq: "weekly" },
   { path: "/exam-o-vorti/", priority: "0.7", changefreq: "weekly" },
   { path: "/local-guide/", priority: "0.7", changefreq: "weekly" },
+  { path: "/all/", priority: "0.7", changefreq: "daily" },
   { path: "/category/", priority: "0.6", changefreq: "weekly" },
   { path: "/tag/", priority: "0.6", changefreq: "weekly" },
   { path: "/author/", priority: "0.5", changefreq: "weekly" },

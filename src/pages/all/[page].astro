@@ -1,0 +1,81 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
+import Pagination from "../../components/Pagination.astro";
+import { getAllPosts, getCollectionLabel } from "../../lib/content";
+import { buildBreadcrumbJsonLd } from "../../lib/schema";
+
+export async function getStaticPaths() {
+  const POSTS_PER_PAGE = 12;
+  const allPosts = await getAllPosts();
+  const sortedPosts = allPosts.sort(
+    (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+  );
+  const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+
+  if (totalPages <= 1) return [];
+
+  return Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { page: String(i + 2) },
+    props: { totalPages },
+  }));
+}
+
+const { page } = Astro.params;
+const { totalPages } = Astro.props;
+const currentPage = Number(page);
+const POSTS_PER_PAGE = 12;
+
+const allPosts = await getAllPosts();
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+const start = (currentPage - 1) * POSTS_PER_PAGE;
+const posts = sortedPosts.slice(start, start + POSTS_PER_PAGE);
+
+const jsonLd = [
+  buildBreadcrumbJsonLd([
+    { title: "হোম", href: "/" },
+    { title: "সব পোস্ট", href: "/all/" },
+    { title: `পৃষ্ঠা ${currentPage}`, href: `/all/${currentPage}/` },
+  ]),
+];
+---
+
+<Layout
+  title={`সব পোস্ট - পৃষ্ঠা ${currentPage}`}
+  description={`বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের সব পোস্ট - পৃষ্ঠা ${currentPage}`}
+  url={`https://shohojbd.pages.dev/all/${currentPage}/`}
+  jsonLd={jsonLd}
+  noindex={currentPage > 1}
+>
+  <div class="container py-8 md:py-12">
+    <nav class="text-sm text-[var(--text-muted)] mb-6" aria-label="Breadcrumb">
+      <ol class="flex flex-wrap items-center gap-2">
+        <li><a href="/" class="hover:text-[var(--primary)]">হোম</a></li>
+        <li>/</li>
+        <li><a href="/all/" class="hover:text-[var(--primary)]">সব পোস্ট</a></li>
+        <li>/</li>
+        <li class="text-[var(--text)] font-medium">পৃষ্ঠা {currentPage}</li>
+      </ol>
+    </nav>
+
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-[var(--text)] mb-3">
+        সব পোস্ট <span class="text-[var(--text-muted)] text-2xl">- পৃষ্ঠা {currentPage}</span>
+      </h1>
+    </div>
+
+    <div class="card-grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+
+    <Pagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      baseUrl="/all"
+    />
+  </div>
+</Layout>
