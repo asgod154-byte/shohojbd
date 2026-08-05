@@ -119,7 +119,7 @@ const badgeClass = type === "sorkari-seba" ? "bg-emerald-50 text-emerald-700 hov
 
         <ContentAgeWarning pubDate={post.data.pubDate} />
 
-        <div class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-[var(--text)] prose-a:text-emerald-700 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-emerald-500 prose-blockquote:bg-[var(--surface-muted)] prose-blockquote:rounded-r-lg prose-img:rounded-xl prose-table:border-collapse prose-th:bg-emerald-50 prose-th:font-semibold prose-td:border prose-td:border-[var(--border)] prose-th:border prose-th:border-[var(--border)]">
+        <div class="prose">
           <Content />
         </div>
 
@@ -135,17 +135,13 @@ const badgeClass = type === "sorkari-seba" ? "bg-emerald-50 text-emerald-700 hov
         )}
 
         {post.data.officialLinks && post.data.officialLinks.length > 0 && (
-          <div class="mt-8 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
-            <h3 class="text-sm font-bold text-[var(--text)] mb-3 flex items-center gap-2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-              অফিসিয়াল লিংক
-            </h3>
-            <ul class="space-y-2">
+          <div class="official-links-box">
+            <div class="official-links-title">📎 অফিসিয়াল লিংক</div>
+            <ul class="official-links-list">
               {post.data.officialLinks.map((link: any) => (
                 <li>
-                  <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-sm text-emerald-700 hover:underline inline-flex items-center gap-1">
-                    {link.label}
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  <a href={link.url} target="_blank" rel="noopener noreferrer">
+                    <span>↗</span> {link.label}
                   </a>
                 </li>
               ))}
@@ -159,18 +155,38 @@ const badgeClass = type === "sorkari-seba" ? "bg-emerald-50 text-emerald-700 hov
           const parsed = typeof faq === "string" ? JSON.parse(faq) : faq;
           return (
             <section class="mt-8">
-              <h3 class="text-xl font-bold mb-4 text-[var(--text)] dark:text-white">সচরাচর জিজ্ঞাসা</h3>
-              <div class="space-y-3">
+              <h2 class="text-2xl font-bold mb-4 text-[var(--text)] flex items-center gap-2">❓ প্রায়শই জিজ্ঞাসিত প্রশ্নাবলী</h2>
+              <div class="faq-section">
                 {parsed.map((item: any) => (
-                  <details class="group border border-[var(--border)] dark:border-gray-700 rounded-lg bg-[var(--surface)] dark:bg-gray-800 overflow-hidden">
-                    <summary class="flex items-center justify-between cursor-pointer list-none p-4 hover:bg-[var(--surface-muted)] dark:hover:bg-gray-700 transition">
-                      <span class="font-semibold text-[var(--text)] dark:text-white pr-4">{item.question}</span>
-                      <svg class="shrink-0 w-5 h-5 text-[var(--text-muted)] dark:text-gray-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                  <details class="faq-item group">
+                    <summary class="faq-question">
+                      <span>{item.question}</span>
+                      <span class="transition-transform duration-200 group-open:rotate-180">▼</span>
                     </summary>
-                    <div class="px-4 pb-4 text-[var(--text-muted)] dark:text-gray-400">
+                    <div class="faq-answer">
                       <p>{item.answer}</p>
                     </div>
                   </details>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
+
+        {(() => {
+          const steps = post.data.steps;
+          if (!steps || steps.length === 0) return null;
+          const parsed = typeof steps === "string" ? JSON.parse(steps) : steps;
+          return (
+            <section class="mt-8">
+              <h2 class="text-2xl font-bold mb-4 text-[var(--text)] flex items-center gap-2">📝 ধাপে ধাপে প্রক্রিয়া</h2>
+              <div class="steps-section">
+                {parsed.map((step: any, i: number) => (
+                  <div class="step-card">
+                    <div class="step-number">{i + 1}</div>
+                    {step.title && <div class="step-title">{step.title}</div>}
+                    <div class="text-[var(--text-muted)] leading-relaxed">{step.description}</div>
+                  </div>
                 ))}
               </div>
             </section>
