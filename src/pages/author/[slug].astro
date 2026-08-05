@@ -17,7 +17,7 @@ const { authors } = buildTaxonomyIndex(entries);
   let author = authors.get(slug);
   if (!author) {
     author = Array.from(authors.values()).find((a) => {
-      const s = slugify(a.label);
+      const s = slugify(a.label, "author");
       return s === slug;
     });
   }

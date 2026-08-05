@@ -2,6 +2,89 @@ import { getCollection } from "astro:content";
 
 export const siteBase = "https://shohojbd.pages.dev";
 
+const tagSlugOverrides: Record<string, string> = {
+  "৩৭তম বিসিএস": "37th-bcs",
+  "বিসিএস": "bcs-exam",
+  "বিসিএস প্রস্তুতি": "bcs-preparation",
+  "এনআইডি": "nid-card",
+  "জাতীয় পরিচয়পত্র": "nid-card",
+  "পাসপোর্ট": "passport",
+  "ড্রাইভিং লাইসেন্স": "driving-license",
+  "জন্ম নিবন্ধন": "birth-registration",
+  "জন্ম সনদ": "birth-certificate",
+  "চাকরি": "job-news",
+  "নিয়োগ": "job-news",
+  "পরীক্ষা": "exam",
+  "ভর্তি": "admission",
+  "এইচএসসি": "hsc",
+  "প্রাথমিক শিক্ষক": "primary-teacher",
+  "রাজশাহী বিশ্ববিদ্যালয়": "rajshahi-university",
+  "ঢাকা বিশ্ববিদ্যালয়": "dhaka-university",
+  "কক্সবাজার": "coxs-bazar",
+  "পর্যটন": "tourism",
+  "বিদ্যুৎ বিল": "electricity-bill",
+  "সেনাবাহিনী নিয়োগ": "army-job",
+  "সরকারি সেবা": "government-service",
+  "বিশ্ববিদ্যালয়": "university",
+  "অনলাইন সেবা": "online-service",
+  "অনলাইন ডাউনলোড": "online-download",
+  "গাড়ি লাইসেন্স": "driving-license",
+  "ইউনিট": "unit",
+  "পরীক্ষা প্রস্তুতি": "exam-preparation",
+  "সরকারি চাকরি": "government-job",
+  "ট্যুরিস্ট স্পট": "tourist-spot",
+  "সমুদ্র সৈকত": "sea-beach",
+  "চট্টগ্রাম বিভাগ": "chittagong-division",
+  "বিশ্ববিদ্যালয় ভর্তি": "university-admission",
+  "প্রিলিমিনারি": "preliminary",
+  "HSC ভর্তি": "hsc-admission",
+  "XI Class": "xi-class",
+  "কলেজ বাছাই": "college-admission",
+  "ভর্তি ২০২৬": "admission-2026",
+  "Primary Assistant Teacher": "primary-assistant-teacher",
+  "নিয়োগ পরীক্ষা": "recruitment-exam",
+  "স্মার্টকার্ড": "smart-card",
+  "সংশোধন": "correction",
+  "অনলাইন আবেদন": "online-apply",
+  "সেবা": "service",
+  "ভিসা": "visa",
+  "আবেদন": "application",
+  "হারিয়ে যাওয়া": "lost",
+  "ডুপ্লিকেট": "duplicate",
+  "ভোটার আইডি": "voter-id",
+  "ইসি": "ici",
+  "বাংলাদেশ সেনা": "bangladesh-army",
+  "ছুটি": "holiday",
+  "বাংলাদেশ": "bangladesh",
+  "রাজশাহী": "rajshahi",
+  "ঢাকা": "dhaka",
+  "বিমানবন্দর": "airport",
+  "শিক্ষা": "education",
+  "প্রস্তুতি": "preparation",
+  "অনলাইন": "online",
+  "সনদ": "certificate",
+  "ইউনিয়ন": "union",
+  "পরিবহন": "transport",
+  "ভ্রমণ": "travel",
+};
+
+const categorySlugOverrides: Record<string, string> = {
+  "সরকারি সেবা": "government-service",
+  "পরীক্ষা ও ভর্তি": "exam-admission",
+  "স্থানীয় গাইড": "local-guide",
+  "চাকরি": "job-news",
+  "শিক্ষা": "education",
+  "পর্যটন": "tourism",
+  "নিয়োগ": "recruitment",
+  "ভ্রমণ": "travel",
+  "বিশ্ববিদ্যালয় ভর্তি": "university-admission",
+  "পরিবহন": "transport",
+  "জন্ম নিবন্ধন": "birth-registration",
+  "সরকারি চাকরি": "government-job",
+  "বিসিএস": "bcs",
+  "NID/জন্ম নিবন্ধন": "nid-birth-registration",
+};
+
 const bengaliTransliteration: Record<string, string> = {
   "অ": "a",
   "আ": "a",
@@ -76,10 +159,17 @@ const bengaliTransliteration: Record<string, string> = {
   "৯": "9",
 };
 
-export function slugify(text: string): string {
-  const transliterated = text
-    .toString()
-    .trim()
+export function slugify(text: string, type?: "tag" | "category" | "author"): string {
+  const trimmed = text.toString().trim();
+
+  if (type === "tag" && tagSlugOverrides[trimmed]) {
+    return tagSlugOverrides[trimmed];
+  }
+  if (type === "category" && categorySlugOverrides[trimmed]) {
+    return categorySlugOverrides[trimmed];
+  }
+
+  const transliterated = trimmed
     .split("")
     .map((char) => bengaliTransliteration[char] ?? char)
     .join("");
@@ -172,8 +262,8 @@ export function truncate(text: string, length = 120): string {
   return text.slice(0, length).trim() + "...";
 }
 
-function addTaxonomy(map: Map<string, any>, label: string, entry: any): void {
-  const slug = slugify(label);
+function addTaxonomy(map: Map<string, { label: string; entries: any[] }>, label: string, entry: any, type: "tag" | "category" | "author"): void {
+  const slug = slugify(label, type);
   const normalizedLabel = String(label).trim();
   const existing = map.get(slug);
   if (existing) {
@@ -183,17 +273,17 @@ function addTaxonomy(map: Map<string, any>, label: string, entry: any): void {
   }
 }
 
-export function buildTaxonomyIndex(entries: any[]): { categories: Map<string, any>; tags: Map<string, any>; authors: Map<string, any> } {
+export function buildTaxonomyIndex(entries: any[]): { categories: Map<string, { label: string; entries: any[] }>; tags: Map<string, { label: string; entries: any[] }>; authors: Map<string, { label: string; entries: any[] }> } {
   const categories = new Map();
   const tags = new Map();
   const authors = new Map();
 
   for (const entry of entries) {
-    addTaxonomy(categories, entry.data.category, entry);
-    addTaxonomy(authors, entry.data.author, entry);
+    addTaxonomy(categories, entry.data.category, entry, "category");
+    addTaxonomy(authors, entry.data.author, entry, "author");
     if (Array.isArray(entry.data.tags)) {
       for (const tag of entry.data.tags) {
-        addTaxonomy(tags, tag, entry);
+        addTaxonomy(tags, tag, entry, "tag");
       }
     }
   }

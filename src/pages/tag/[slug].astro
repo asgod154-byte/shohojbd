@@ -17,7 +17,7 @@ const { tags } = buildTaxonomyIndex(entries);
   let tag = tags.get(slug);
   if (!tag) {
     tag = Array.from(tags.values()).find((t) => {
-      const s = slugify(t.label);
+      const s = slugify(t.label, "tag");
       return s === slug;
     });
   }

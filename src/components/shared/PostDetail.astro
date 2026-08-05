@@ -127,7 +127,7 @@ const badgeClass = type === "sorkari-seba" ? "bg-emerald-50 text-emerald-700 hov
           <div class="mt-8 flex flex-wrap items-center gap-2">
             <span class="text-sm font-medium text-[var(--text-muted)] mr-1">ট্যাগ:</span>
             {post.data.tags.map((tag: string) => (
-              <a href={`/tag/${slugify(tag)}/`} class="rounded-full bg-[var(--surface-alt)] px-3 py-1 text-sm text-[var(--text-muted)] hover:bg-[var(--surface-muted)] hover:text-emerald-700 transition">
+               <a href={`/tag/${slugify(tag, "tag")}/`} class="rounded-full bg-[var(--surface-alt)] px-3 py-1 text-sm text-[var(--text-muted)] hover:bg-[var(--surface-muted)] hover:text-emerald-700 transition">
                 {tag}
               </a>
             ))}

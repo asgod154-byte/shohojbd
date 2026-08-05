@@ -1,0 +1,247 @@
+## Task: Create `/all/` page showing ALL posts + fix homepage "সব দেখুন" link
+
+### Step 1: Fix Homepage Link
+
+In `src/pages/index.astro`, find this line:
+```html
+<a href="/sorkari-seba/">সব দেখুন</a>
+Change to:
+HTML
+<a href="/all/">সব দেখুন</a>
+Step 2: Create src/pages/all.astro
+This page shows ALL posts from all 3 collections combined, sorted by date (newest first), with pagination (12 posts per page).
+astro
+---
+import Layout from "../layouts/Layout.astro";
+import PostCard from "../components/PostCard.astro";
+import Pagination from "../components/Pagination.astro";
+import { getAllPosts, getCollectionLabel, formatDate } from "../lib/content";
+import { buildBreadcrumbJsonLd } from "../lib/schema";
+
+const POSTS_PER_PAGE = 12;
+
+// Get all posts from all collections, sorted by date
+const allPosts = await getAllPosts();
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+
+// Pagination
+const currentPage = 1;
+const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+const posts = sortedPosts.slice(0, POSTS_PER_PAGE);
+
+const jsonLd = [
+  buildBreadcrumbJsonLd([
+    { title: "হোম", href: "/" },
+    { title: "সব পোস্ট", href: "/all/" },
+  ]),
+];
+---
+
+<Layout
+  title="সব পোস্ট"
+  description="বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের সব পোস্ট একসাথে।"
+  url="https://shohojbd.pages.dev/all/"
+  jsonLd={jsonLd}
+>
+  <div class="container py-8 md:py-12">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-[var(--text-muted)] mb-6" aria-label="Breadcrumb">
+      <ol class="flex flex-wrap items-center gap-2">
+        <li><a href="/" class="hover:text-[var(--primary)]">হোম</a></li>
+        <li>/</li>
+        <li class="text-[var(--text)] font-medium">সব পোস্ট</li>
+      </ol>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-[var(--text)] mb-3">
+        সব পোস্ট
+      </h1>
+      <p class="text-[var(--text-muted)] text-lg">
+        বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের সব আর্টিকেল একসাথে। মোট {sortedPosts.length}টি পোস্ট।
+      </p>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="card-grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+
+    <!-- Pagination -->
+    {totalPages > 1 && (
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        baseUrl="/all"
+      />
+    )}
+  </div>
+</Layout>
+Step 3: Create src/pages/all/[page].astro (Paginated Pages)
+For page 2, 3, 4, etc.:
+astro
+---
+import Layout from "../../layouts/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
+import Pagination from "../../components/Pagination.astro";
+import { getAllPosts, getCollectionLabel } from "../../lib/content";
+import { buildBreadcrumbJsonLd } from "../../lib/schema";
+
+const POSTS_PER_PAGE = 12;
+
+export async function getStaticPaths() {
+  const allPosts = await getAllPosts();
+  const sortedPosts = allPosts.sort(
+    (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+  );
+  const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+  
+  if (totalPages <= 1) return [];
+  
+  return Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { page: String(i + 2) },
+    props: { totalPages },
+  }));
+}
+
+const { page } = Astro.params;
+const { totalPages } = Astro.props;
+const currentPage = Number(page);
+
+const allPosts = await getAllPosts();
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+const start = (currentPage - 1) * POSTS_PER_PAGE;
+const posts = sortedPosts.slice(start, start + POSTS_PER_PAGE);
+
+const jsonLd = [
+  buildBreadcrumbJsonLd([
+    { title: "হোম", href: "/" },
+    { title: "সব পোস্ট", href: "/all/" },
+    { title: `পৃষ্ঠা ${currentPage}`, href: `/all/${currentPage}/` },
+  ]),
+];
+---
+
+<Layout
+  title={`সব পোস্ট - পৃষ্ঠা ${currentPage}`}
+  description={`বাংলাদেশের সরকারি সেবা, শিক্ষা ও স্থানীয় তথ্যের সব পোস্ট - পৃষ্ঠা ${currentPage}`}
+  url={`https://shohojbd.pages.dev/all/${currentPage}/`}
+  jsonLd={jsonLd}
+  noindex={currentPage > 1}
+>
+  <div class="container py-8 md:py-12">
+    <nav class="text-sm text-[var(--text-muted)] mb-6" aria-label="Breadcrumb">
+      <ol class="flex flex-wrap items-center gap-2">
+        <li><a href="/" class="hover:text-[var(--primary)]">হোম</a></li>
+        <li>/</li>
+        <li><a href="/all/" class="hover:text-[var(--primary)]">সব পোস্ট</a></li>
+        <li>/</li>
+        <li class="text-[var(--text)] font-medium">পৃষ্ঠা {currentPage}</li>
+      </ol>
+    </nav>
+
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-[var(--text)] mb-3">
+        সব পোস্ট <span class="text-[var(--text-muted)] text-2xl">- পৃষ্ঠা {currentPage}</span>
+      </h1>
+    </div>
+
+    <div class="card-grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+
+    <Pagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      baseUrl="/all"
+    />
+  </div>
+</Layout>
+Step 4: Verify Pagination Component
+Ensure src/components/Pagination.astro supports baseUrl prop. If not, update it:
+astro
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+// Generate page numbers to show
+function getPageNumbers(current: number, total: number) {
+  const pages = [];
+  const delta = 2;
+  const left = Math.max(2, current - delta);
+  const right = Math.min(total - 1, current + delta);
+
+  pages.push(1);
+  if (left > 2) pages.push("...");
+  for (let i = left; i <= right; i++) pages.push(i);
+  if (right < total - 1) pages.push("...");
+  if (total > 1) pages.push(total);
+  return pages;
+}
+
+const pageNumbers = getPageNumbers(currentPage, totalPages);
+---
+
+<nav class="flex justify-center items-center gap-2 mt-12" aria-label="Pagination">
+  <!-- Previous -->
+  {currentPage > 1 && (
+    <a
+      href={currentPage === 2 ? `${baseUrl}/` : `${baseUrl}/${currentPage - 1}/`}
+      class="px-4 py-2 rounded-lg border border-[var(--border)] text-[var(--text-muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--text)] transition"
+    >
+      ← আগে
+    </a>
+  )}
+
+  <!-- Page Numbers -->
+  {pageNumbers.map((num) => (
+    num === "..." ? (
+      <span class="px-2 text-[var(--text-muted)]">...</span>
+    ) : num === currentPage ? (
+      <span class="px-4 py-2 rounded-lg bg-[var(--primary)] text-white font-medium">
+        {num}
+      </span>
+    ) : (
+      <a
+        href={num === 1 ? `${baseUrl}/` : `${baseUrl}/${num}/`}
+        class="px-4 py-2 rounded-lg border border-[var(--border)] text-[var(--text-muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--text)] transition"
+      >
+        {num}
+      </a>
+    )
+  ))}
+
+  <!-- Next -->
+  {currentPage < totalPages && (
+    <a
+      href={`${baseUrl}/${currentPage + 1}/`}
+      class="px-4 py-2 rounded-lg border border-[var(--border)] text-[var(--text-muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--text)] transition"
+    >
+      পরে →
+    </a>
+  )}
+</nav>
+Step 5: Update Sitemap
+Add /all/ to src/pages/sitemap-pages.xml.ts:
+TypeScript
+{ path: "/all/", priority: "0.7", changefreq: "daily" },
+Constraints
+Do NOT change collection index pages (/sorkari-seba/, /exam-o-vorti/, /local-guide/)
+/all/ shows posts from ALL 3 collections combined
+Pagination pages (/all/2/, /all/3/) should have noindex to avoid duplicate content issues
+Keep existing PostCard component usage
+Run npm run build with zero errors
