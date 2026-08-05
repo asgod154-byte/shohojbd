@@ -8,7 +8,6 @@ import ShareButtons from "../ShareButtons.astro";
 import AuthorBox from "../AuthorBox.astro";
 import RelatedPosts from "../RelatedPosts.astro";
 import ReadingProgress from "../ReadingProgress.astro";
-import SavePost from "../SavePost.astro";
 import { getEntrySlug, getEntryUrl, getCollectionLabel, getAllPosts, formatDate } from "../../lib/content";
 import ContentAgeWarning from "../ContentAgeWarning.astro";
 import { estimateReadingTime } from "../../lib/utils";
@@ -183,13 +182,9 @@ const badgeClass = type === "sorkari-seba" ? "bg-emerald-50 text-emerald-700 hov
         </div>
 
         <button type="button" class="mt-4 inline-flex items-center gap-2 rounded-lg border border-[var(--border)] dark:border-gray-700 px-4 py-2 text-sm font-medium text-[var(--text-muted)] dark:text-gray-300 hover:bg-[var(--surface-muted)] dark:hover:bg-gray-800 transition print-hidden" onclick="window.print()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1 2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           প্রিন্ট করুন
         </button>
-
-        <div class="mt-3 print-hidden">
-          <SavePost postId={post.data.title} title={post.data.title} url={url} />
-        </div>
 
         <AuthorBox author={post.data.author} />
 

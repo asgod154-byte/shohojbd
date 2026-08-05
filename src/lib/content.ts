@@ -2,14 +2,94 @@ import { getCollection } from "astro:content";
 
 export const siteBase = "https://shohojbd.pages.dev";
 
+const bengaliTransliteration: Record<string, string> = {
+  "অ": "a",
+  "আ": "a",
+  "ই": "i",
+  "ঈ": "i",
+  "উ": "u",
+  "ঊ": "u",
+  "ঋ": "ri",
+  "এ": "e",
+  "ঐ": "oi",
+  "ও": "o",
+  "ঔ": "ou",
+  "ক": "k",
+  "খ": "kh",
+  "গ": "g",
+  "ঘ": "gh",
+  "ঙ": "ng",
+  "চ": "c",
+  "ছ": "ch",
+  "জ": "j",
+  "ঝ": "jh",
+  "ঞ": "n",
+  "ট": "t",
+  "ঠ": "th",
+  "ড": "d",
+  "ঢ": "dh",
+  "ণ": "n",
+  "ত": "t",
+  "থ": "th",
+  "দ": "d",
+  "ধ": "dh",
+  "ন": "n",
+  "প": "p",
+  "ফ": "ph",
+  "ব": "b",
+  "ভ": "bh",
+  "ম": "m",
+  "য": "y",
+  "র": "r",
+  "ল": "l",
+  "শ": "sh",
+  "ষ": "sh",
+  "স": "s",
+  "হ": "h",
+  "য়": "y",
+  "ড়": "r",
+  "ঢ়": "rh",
+  "ং": "ng",
+  "ঃ": "h",
+  "ঁ": "n",
+  "ৎ": "t",
+  "া": "a",
+  "ি": "i",
+  "ী": "i",
+  "ু": "u",
+  "ূ": "u",
+  "ৃ": "ri",
+  "ে": "e",
+  "ৈ": "oi",
+  "ো": "o",
+  "ৌ": "ou",
+  "্": "",
+  "০": "0",
+  "১": "1",
+  "২": "2",
+  "৩": "3",
+  "৪": "4",
+  "৫": "5",
+  "৬": "6",
+  "৭": "7",
+  "৮": "8",
+  "৯": "9",
+};
+
 export function slugify(text: string): string {
-  return text
+  const transliterated = text
     .toString()
     .trim()
+    .split("")
+    .map((char) => bengaliTransliteration[char] ?? char)
+    .join("");
+
+  return transliterated
     .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\u0980-\u09FF-]+/g, '')
-    .replace(/--+/g, '-');
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 export function getCollectionRoute(collectionName: string): string {
