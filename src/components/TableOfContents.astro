@@ -1,13 +1,15 @@
 ---
 interface Props {
   headings: Array<{ depth: number; slug: string; text: string }>;
+  maxItems?: number;
 }
 
-const { headings } = Astro.props;
-const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const { headings, maxItems = 5 } = Astro.props;
+// Only include H2 headings (depth === 2), then limit to `maxItems`
+const toc = (headings || []).filter((h) => h.depth === 2).slice(0, maxItems);
 ---
 
-{toc.length > 2 && (
+{toc.length > 0 && (
   <nav
     aria-label="সূচিপত্র"
     class="mb-8 rounded-2xl border p-5 shadow-sm"
@@ -16,7 +18,7 @@ const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     <h2 class="text-sm font-bold uppercase tracking-wider mb-3" style="color: var(--text-muted);">এই পোস্টের সূচিপত্র</h2>
     <ul class="space-y-1.5" id="toc-list">
       {toc.map((heading) => (
-        <li class={heading.depth === 3 ? "ml-4" : ""}>
+        <li>
           <a
             href={`#${heading.slug}`}
             data-toc-slug={heading.slug}
