@@ -37,22 +37,10 @@
 
 @import "tailwindcss";
 
-@theme {
-  --breakpoint-sm: 40rem;
-  --breakpoint-md: 48rem;
-  --breakpoint-lg: 64rem;
-  --breakpoint-xl: 80rem;
-  --breakpoint-2xl: 96rem;
-
-  --container-sm: 40rem;
-  --container-md: 48rem;
-  --container-lg: 72rem;
-  --container-xl: 80rem;
-  --container-2xl: 96rem;
-}
+/* Theme variables are defined on :root for editor compatibility */
 
 /* Enables `dark:` Tailwind variants to work with the site's existing [data-theme="dark"] attribute */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+/* @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *)); */
 
 .container {
   width: 100%;
@@ -97,6 +85,17 @@
 }
 
 :root {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+
+  --container-sm: 40rem;
+  --container-md: 48rem;
+  --container-lg: 72rem;
+  --container-xl: 80rem;
+  --container-2xl: 96rem;
   --font-bangla: 'Noto Sans Bengali', 'Noto Sans Bengali UI', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color-scheme: light;
   font-family: var(--font-bangla);
@@ -386,6 +385,7 @@ a {
 /* Line clamp utilities */
 .line-clamp-2 {
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -393,6 +393,7 @@ a {
 
 .line-clamp-3 {
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
