@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
@@ -14,13 +13,7 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/sharp',
     },
   },
-  integrations: [
-    sitemap({
-      changefreq: 'weekly',
-      priority: 0.7,
-      filter: (page) => !page.includes('/404'),
-    }),
-  ],
+  integrations: [],
   vite: {
     plugins: [tailwindcss()],
     build: {
