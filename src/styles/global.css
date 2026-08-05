@@ -381,27 +381,7 @@ a {
 }
 
 /* Constrained article content for comfortable reading width */
-.article-content {
-  max-width: 42rem; /* ~672px for comfortable line length */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-@media (width >= 48rem) {
-  .article-content {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-@media (width >= 64rem) {
-  .article-content {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
-}
+/* (reverted) Article width constraint removed to restore original layout */
 
 /* Line clamp utilities */
 .line-clamp-2 {
